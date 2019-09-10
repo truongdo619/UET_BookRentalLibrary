@@ -1,6 +1,6 @@
 # UET_BookRentalLibrary
 
-Thành viên:
+Thành viên nhóm:
 Đỗ ĐÌnh Trường
 Đỗ Hồng Phong
 Nguyễn Đức Thắng

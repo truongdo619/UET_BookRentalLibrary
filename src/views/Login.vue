@@ -12,7 +12,7 @@
                     <el-input v-model="form.password" type="password"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" align="right" :disabled="isRequesting">Đăng
+                    <el-button @click="login" type="primary" align="right" :disabled="isRequesting">Đăng
                         nhập
                     </el-button>
                 </el-form-item>
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+    import {userLogin} from '../services/users/user_api'
+
     export default {
         name: 'Login',
         data: () => {
@@ -38,15 +40,21 @@
                 rules: {
                     email: [
                         {required: true, message: 'Hãy nhập email đăng ký', trigger: 'change'},
-                        {type: 'email', message: 'Hãy nhập chính xác địa chỉ email', trigger: 'blur'}
+                        { message: 'Hãy nhập chính xác địa chỉ email', trigger: 'blur'}
                     ],
                     password: [
                         {required: true, message: 'Hãy nhập mật khẩu ', trigger: 'change'},
-                        {min: 8, message: 'Mật khẩu tối thiểu 8 kí tự', trigger: 'blur'}
+                        {min: 5, message: 'Mật khẩu tối thiểu 8 kí tự', trigger: 'blur'}
 
                     ],
                 },
                 errorMessage: null
+            }
+        },
+        methods: {
+            async login() {
+                let response = await userLogin(this.form.email, this.form.password)
+                console.log(response)
             }
         }
     }

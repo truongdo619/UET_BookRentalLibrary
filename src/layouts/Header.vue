@@ -13,8 +13,15 @@
 </template>
 
 <script>
+    import {isAuthenticated} from '../services/auth_services'
+
     export default {
-        name: 'Header'
+        name: 'Header',
+        computed: {
+            isLogin() {
+                return isAuthenticated()
+            }
+        }
     }
 </script>
 

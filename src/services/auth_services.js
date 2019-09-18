@@ -2,7 +2,6 @@ import {getLocalStorage, putLocalStorage, removeLocalStorage} from '../helpers/l
 import axios from 'axios'
 import {AUTH_CONST} from '../config/constants'
 import {AUTH} from '../config/config_api_backend'
-import ca from 'element-ui/src/locale/lang/ca'
 import authReq from '../plugins/http'
 
 const isAuthenticated = () => {
@@ -30,12 +29,12 @@ const refreshToken = async () => {
 
 const logoutAccess = async () => {
     try {
-        let res = await axios.post(AUTH.LOGOUT_ACCESS, {
+        let res = await axios.post(AUTH.LOGOUT_ACCESS, {}, {
             headers: {
                 Authorization: 'Bearer ' + getLocalStorage(AUTH_CONST.ACCESS_TOKEN)
             }
         })
-        removeLocalStorage('refresh_key')
+
         return res.data
     } catch (e) {
         alert(e)
@@ -45,12 +44,12 @@ const logoutAccess = async () => {
 }
 const logoutRefresh = async () => {
     try {
-        let res = await axios.post(AUTH.LOGOUT_REFRESH, {
+        let res = await axios.post(AUTH.LOGOUT_REFRESH, {},{
             headers: {
                 Authorization: 'Bearer ' + getLocalStorage(AUTH_CONST.REFRESH_TOKEN)
             }
         })
-        removeLocalStorage('refresh_key')
+
         return res.data
     } catch (e) {
         alert(e)
@@ -62,7 +61,9 @@ const logoutRefresh = async () => {
 const logout = async () => {
     await logoutAccess()
     await logoutRefresh()
-
+    removeLocalStorage(AUTH_CONST.REFRESH_TOKEN)
+    removeLocalStorage(AUTH_CONST.ACCESS_TOKEN)
+    removeLocalStorage(AUTH_CONST.USER_INFO)
     location.reload()
 }
 

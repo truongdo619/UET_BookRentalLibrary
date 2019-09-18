@@ -8,18 +8,48 @@
                 <el-dropdown-item>Delete</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
-        <span>Tom</span>
+        <el-dropdown v-if="isAuth" @command="userCommand">
+            <span>{{userInfo.username}}</span>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="testapi">Test Secret Api</el-dropdown-item>
+                <el-dropdown-item command="logout" divided>Log out</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+        <b-link v-else :to="{name: 'login'}">Login</b-link>
     </div>
 </template>
 
 <script>
-    import {isAuthenticated} from '../services/auth_services'
+    import {getLocalStorageObject} from '../helpers/local_storage_helper'
+    import {AUTH_CONST} from '../config/constants'
+    import {logout} from '../services/auth_services'
 
     export default {
         name: 'Header',
+        methods: {
+            handleLogout() {
+                console.log('Logging out ....')
+                logout()
+                this.$store.dispatch('updateIsAuthenticated')
+            },
+            userCommand(type) {
+                if (type === 'logout') {
+                    this.handleLogout()
+                } else if (type === 'testapi') {
+                    this.$router.push({name: 'test_api'})
+                }
+            },
+        },
         computed: {
-            isLogin() {
-                return isAuthenticated()
+            isAuth() {
+                return this.$store.getters.isAuthenticated
+            },
+            userInfo() {
+                if (this.isAuth) {
+                    return getLocalStorageObject(AUTH_CONST.USER_INFO)
+                } else {
+                    return {}
+                }
             }
         }
     }

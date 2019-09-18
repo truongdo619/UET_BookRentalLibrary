@@ -3,8 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-// Import element-ui
+// Import theme
 import './plugins/element.js'
+import './plugins/bootstrap.js'
 
 Vue.config.productionTip = false
 

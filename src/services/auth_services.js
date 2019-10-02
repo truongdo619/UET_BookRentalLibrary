@@ -1,4 +1,9 @@
-import {getLocalStorage, putLocalStorage, removeLocalStorage} from '../helpers/local_storage_helper'
+import {
+    getLocalStorage,
+    putLocalStorage,
+    putLocalStorageObject,
+    removeLocalStorage
+} from '../helpers/local_storage_helper'
 import axios from 'axios'
 import {AUTH_CONST} from '../config/constants'
 import {AUTH} from '../config/config_api_backend'
@@ -12,9 +17,27 @@ const getAccessToken = () => {
     return getLocalStorage(AUTH_CONST.ACCESS_TOKEN)
 }
 
+const updateToken = (username, access, refresh) => {
+    putLocalStorage(
+        AUTH_CONST.ACCESS_TOKEN,
+        access
+    )
+    putLocalStorage(
+        AUTH_CONST.REFRESH_TOKEN,
+        refresh
+    )
+
+    putLocalStorageObject(
+        AUTH_CONST.USER_INFO,
+        {
+            username: username
+        }
+    )
+}
+
 const refreshToken = async () => {
 
-    let response = await axios.post(AUTH.REFRESH_TOKEN, {
+    let response = await axios.post(AUTH.REFRESH_TOKEN, {}, {
         headers: {
             Authorization: 'Bearer ' + getLocalStorage(AUTH_CONST.REFRESH_TOKEN)
         }
@@ -64,7 +87,8 @@ const logout = async () => {
     removeLocalStorage(AUTH_CONST.REFRESH_TOKEN)
     removeLocalStorage(AUTH_CONST.ACCESS_TOKEN)
     removeLocalStorage(AUTH_CONST.USER_INFO)
-    location.reload()
+    // location.reload()
+    window.location.href = '/login'
 }
 
 
@@ -72,7 +96,7 @@ const logout = async () => {
 const test_api = async () => {
     try {
         let res = await authReq.get(AUTH.TEST_API)
-        return res.data
+        return res ? res.data : null
     } catch (e) {
         alert(e)
         return null
@@ -84,6 +108,7 @@ export {
     isAuthenticated,
     getAccessToken,
     refreshToken,
+    updateToken,
     logout,
     test_api
 }

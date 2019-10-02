@@ -1,7 +1,6 @@
 import axios from 'axios'
-import {putLocalStorage, putLocalStorageObject} from '../../helpers/local_storage_helper'
-import {AUTH_CONST} from '../../config/constants'
 import {AUTH} from '../../config/config_api_backend'
+import {updateToken} from '../auth_services'
 
 const userLogin = async ({username, password}, errorFunc, successFunc) => {
     try {
@@ -10,23 +9,9 @@ const userLogin = async ({username, password}, errorFunc, successFunc) => {
             password
         })
 
-        if (response.status === 200 && response.data.message === 'Logged in') {
+        if (response.status === 200 && response.data.message.toLowerCase() === 'success') {
 
-            putLocalStorage(
-                AUTH_CONST.ACCESS_TOKEN,
-                response.data.access_token
-            )
-            putLocalStorage(
-                AUTH_CONST.REFRESH_TOKEN,
-                response.data.refresh_token
-            )
-
-            putLocalStorageObject(
-                AUTH_CONST.USER_INFO,
-                {
-                    username: username
-                }
-            )
+            updateToken(username, response.data.access_token, response.data.refresh_token)
 
             successFunc()
 
@@ -46,23 +31,9 @@ const register = async (fullname, username, password, errorFunc, successFunc) =>
             password
         })
 
-        if (response.status === 200 && response.data.message === 'User was created') {
+        if (response.status === 200 && response.data.message.toLowerCase() === 'success') {
 
-            putLocalStorage(
-                AUTH_CONST.ACCESS_TOKEN,
-                response.data.access_token
-            )
-            putLocalStorage(
-                AUTH_CONST.REFRESH_TOKEN,
-                response.data.refresh_token
-            )
-
-            putLocalStorageObject(
-                AUTH_CONST.USER_INFO,
-                {
-                    username: username
-                }
-            )
+            updateToken(username, response.data.access_token, response.data.refresh_token)
 
             successFunc()
 

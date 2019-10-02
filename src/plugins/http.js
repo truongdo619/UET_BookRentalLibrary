@@ -22,11 +22,9 @@ authReq.interceptors.response.use(response => response,
                     return authReq(originalRequest)
                 }).catch(() => {
                     logout()
-                    window.location.href = '/login'
                 })
             } else {
                 logout()
-                window.location.href = '/login'
             }
         }
         return Promise.reject(error)

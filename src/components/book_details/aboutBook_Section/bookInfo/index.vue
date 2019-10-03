@@ -1,13 +1,5 @@
 <template>
-    <el-row class="bg-gray">
-        <el-col :span="16" :offset="4" class="navbar">
-            <el-row class="full-width">
-                <el-col :span="6">
-                    <el-card :body-style="{ padding: '2px' }">
-                        <img src="@/assets/images/31294514._SY475_.jpg" class="image">
-                    </el-card>
-                </el-col>
-                <el-col :span="15" :offset="1">
+    <el-row>
                     <el-row>
                         <h1>{{book_detail.title}}</h1>
                         <h5>by: {{book_detail.author}}</h5>
@@ -46,15 +38,12 @@
                             <el-tag type="danger">Audio</el-tag>
                         </div>
                     </el-row>
-                </el-col>
-            </el-row>
-        </el-col>
     </el-row>
 </template>
 
 <script>
     export default {
-        name: "AboutBook",
+        name: "bookInfo",
         data (){
             return{
                 book_detail : {
@@ -92,13 +81,6 @@
 </script>
 
 <style lang="scss" scoped>
-.bg-gray{
-    background-color: #f6f6f6;
-    padding: 60px 0;
-}
-    .full-width{
-        width: 100%;
-    }
     .el-breadcrumb{
         padding-top: 10px;
     }

@@ -21,6 +21,10 @@ export default new Router({
                 {path: '/register', name: 'register', component: Register},
                 {path: '/test_api', name: 'test_api', component: TestApi}
             ]
+        },
+        {
+            path: '/book/:id',
+            component : () => import('./views/BookDetail')
         }
     ]
 })

@@ -125,6 +125,9 @@
             },
             onError(message) {
                 this.errorMessage = message
+            },
+            gotoLogin() {
+                this.$router.push({name: 'login'})
             }
 
         }

@@ -6,15 +6,17 @@
                 <search></search>
             </div>
         </div>
+        <header-books-slider></header-books-slider>
     </div>
 </template>
 
 <script>
     import HeaderBar from '../components/homepage/HeaderBar'
     import Search from '../components/homepage/Search'
+    import HeaderBooksSlider from '../components/homepage/HeaderBooksSlider'
     export default {
         name: 'Home',
-        components: {Search, HeaderBar}
+        components: {HeaderBooksSlider, Search, HeaderBar}
     }
 </script>
 
@@ -31,6 +33,7 @@
         background-size: cover;
         background-position: top left;
         box-shadow: inset 0 -250px 250px 0px rgba(0, 0, 0, 0.4);
+        min-height: 860px;
     }
 
     .search-area {

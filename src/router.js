@@ -13,18 +13,18 @@ export default new Router({
     base: process.env.BASE_URL,
     routes: [
         {
-            path: '/',
+            path: '/u',
             component: MainLayout,
             children: [
-                {path: '/', name: 'home', component: Home },
-                {path: '/login', name: 'login', component: Login},
-                {path: '/register', name: 'register', component: Register},
-                {path: '/test_api', name: 'test_api', component: TestApi}
+                {path: 'login', name: 'login', component: Login},
+                {path: 'register', name: 'register', component: Register},
+                {path: 'test_api', name: 'test_api', component: TestApi}
             ]
         },
         {
             path: '/book/:id',
             component : () => import('./views/BookDetail')
-        }
+        },
+        {path: '/', name: 'home', component: Home}
     ]
 })

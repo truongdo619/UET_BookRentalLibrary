@@ -6,6 +6,8 @@ import store from './store'
 // Import theme
 import './plugins/element.js'
 import './plugins/bootstrap.js'
+import './plugins/font-awesome.js'
+import './plugins/theme.js'
 
 Vue.config.productionTip = false
 

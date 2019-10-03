@@ -14,9 +14,9 @@
                         </el-col>
                     <el-col :span="5" :offset="1">
                             <h6 class="text-uppercase mb-4 font-weight-bold">Useful links</h6>
-                            <p><a href="#!">Your Account</a></p>
-                            <p><a href="#!">Become an Affiliate</a></p>
-                            <p><a href="#!">Shipping Rates</a></p>
+                            <span style="padding-right: 10px"><a href="#!"><font-awesome-icon :icon="['fab', 'facebook']" class="fa-2x"></font-awesome-icon></a></span>
+                            <span style="padding-right: 10px"><a href="#!"><font-awesome-icon :icon="['fab', 'github']" class="fa-2x"></font-awesome-icon></a></span>
+                            <span><a href="#!"><font-awesome-icon :icon="['fab', 'google']" class="fa-2x"></font-awesome-icon></a></span>
                         </el-col>
                     <el-col :span="5" :offset="1">
                             <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>

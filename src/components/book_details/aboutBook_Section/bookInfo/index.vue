@@ -11,9 +11,9 @@
                                 score-template="{value} points">
                         </el-rate>
                         <el-breadcrumb separator=".">
-                            <el-breadcrumb-item><el-link icon="el-icon-data-analysis">Rating details</el-link></el-breadcrumb-item>
-                            <el-breadcrumb-item><el-link>8 Ratings</el-link></el-breadcrumb-item>
-                            <el-breadcrumb-item><el-link><b>1 Review</b></el-link></el-breadcrumb-item>
+                            <el-breadcrumb-item><el-link icon="el-icon-data-analysis" class="cl-deepblue">Rating details</el-link></el-breadcrumb-item>
+                            <el-breadcrumb-item><el-link class="cl-deepblue">8 Ratings</el-link></el-breadcrumb-item>
+                            <el-breadcrumb-item><el-link><b class="cl-deepblue">1 Review</b></el-link></el-breadcrumb-item>
                         </el-breadcrumb>
                     </el-row>
                     <el-divider></el-divider>

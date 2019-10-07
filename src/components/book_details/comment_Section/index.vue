@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    import CommentBox from "./comment/index";
+    import CommentBox from "./commentBox/index";
     import AboutAuthor from "./author/index";
     export default {
         name : "CommentSection",

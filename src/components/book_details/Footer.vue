@@ -52,7 +52,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
     .cl-gray{
         color: #cfcfcf;
     }

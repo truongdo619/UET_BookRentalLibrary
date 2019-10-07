@@ -6,7 +6,14 @@
                 <search></search>
             </div>
         </div>
-        <header-books-slider></header-books-slider>
+        <div class="home-body">
+            <header-books-slider></header-books-slider>
+
+            <div class="category-area">
+                <list-categories></list-categories>
+                <popular-categories-list></popular-categories-list>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -14,9 +21,11 @@
     import HeaderBar from '../components/homepage/HeaderBar'
     import Search from '../components/homepage/Search'
     import HeaderBooksSlider from '../components/homepage/HeaderBooksSlider'
+    import ListCategories from '../components/homepage/ListCategories'
+    import PopularCategoriesList from '../components/homepage/PopularCategoriesList'
     export default {
         name: 'Home',
-        components: {HeaderBooksSlider, Search, HeaderBar}
+        components: {PopularCategoriesList, ListCategories, HeaderBooksSlider, Search, HeaderBar}
     }
 </script>
 
@@ -36,8 +45,18 @@
         min-height: 860px;
     }
 
+    .home-body {
+        width: 100%;
+        transform: translateY(-26%);
+    }
+
     .search-area {
         margin-top: 7%;
         margin-left: 120px;
+    }
+
+    .category-area {
+        width: 70%;
+        margin: auto;
     }
 </style>

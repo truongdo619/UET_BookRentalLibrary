@@ -23,6 +23,7 @@ export default new Router({
         },
         {
             path: '/book/:id',
+            name: 'book_detail',
             component : () => import('./views/BookDetail')
         },
         {path: '/', name: 'home', component: Home}

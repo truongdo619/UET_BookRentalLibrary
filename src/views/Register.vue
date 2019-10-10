@@ -8,12 +8,15 @@
                              @keyup.enter.native="onSubmit">
                         <h4>Đăng ký tài khoản</h4>
                         <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-                        <el-form-item label="Họ tên" prop="fullname">
-                            <el-input v-model="form.fullname" placeholder="Họ và tên"></el-input>
+                        <el-form-item label="Họ" prop="firstname">
+                            <el-input v-model="form.firstname" placeholder="Họ"></el-input>
+                        </el-form-item>
+                        <el-form-item label="Tên" prop="lastname">
+                            <el-input v-model="form.lastname" placeholder="Tên"></el-input>
                         </el-form-item>
 
-                        <el-form-item label="Username" prop="username">
-                            <el-input v-model="form.username" placeholder="Tên hiển thị"></el-input>
+                        <el-form-item label="Email" prop="email">
+                            <el-input v-model="form.email" placeholder="Email"></el-input>
                         </el-form-item>
 
 
@@ -63,18 +66,22 @@
 
             return {
                 form: {
-                    fullname: '',
+                    firstname: '',
+                    lastname: '',
                     username: '',
                     password: '',
                     confirmPassword: ''
                 },
                 isRequesting: false,
                 rules: {
-                    fullname: [
-                        {required: true, message: 'Nhập họ tên đầy đủ'}
+                    firstname: [
+                        {required: true, message: 'Nhập họ đầy đủ'}
                     ],
-                    username: [
-                        {required: true, message: 'Hãy nhập username', trigger: 'change'}
+                    lastname: [
+                        {required: true, message: 'Nhập tên đầy đủ'}
+                    ],
+                    email: [
+                        {required: true, message: 'Hãy nhập Email', trigger: 'change'}
                     ],
                     password: [
                         {required: true, message: 'Hãy nhập mật khẩu ', trigger: 'change'},
@@ -101,7 +108,7 @@
                 this.$refs['form'].validate((valid) => {
                     if (valid) {
                         this.isRequesting = true
-                        register(this.form.fullname, this.form.username, this.form.password,
+                        register(this.form.firstname, this.form.lastname, this.form.email, this.form.password,
                             this.onError,
                             this.onSuccess
                         )

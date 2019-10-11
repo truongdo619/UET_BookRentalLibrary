@@ -26,6 +26,24 @@ export default new Router({
             name: 'book_detail',
             component : () => import('./views/BookDetail')
         },
-        {path: '/', name: 'home', component: Home}
+        {path: '/', name: 'home', component: Home},
+        {
+            path : '/user',
+            component : () => import('./views/UserPage'),
+            name : 'User',
+            redirect : '/user/show',
+            children: [
+                {
+                    path: 'show',
+                    component: () => import('./components/user/show/index'),
+                    name: 'UserShow'
+                },
+                {
+                    path: 'update',
+                    component: () => import('./components/user/update/index'),
+                    name: 'UserUpdate'
+                }
+            ]
+        }
     ]
 })

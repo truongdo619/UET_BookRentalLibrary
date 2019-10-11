@@ -27,6 +27,7 @@
                 </el-row>
 
                 <el-divider></el-divider>
+
                 <el-row style="width: 100%">
                     <el-col :span="10">
                         @ 2019 UET. All right reserved.

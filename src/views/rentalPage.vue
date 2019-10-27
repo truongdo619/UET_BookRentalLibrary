@@ -1,8 +1,7 @@
 <template>
-    <div id="main">
-        <Header></Header>
+    <div id="main"><Header></Header>
         <div class="body">
-            <app-main></app-main>
+            <AppMain></AppMain>
         </div>
         <Footer></Footer>
     </div>
@@ -13,7 +12,7 @@
     import AppMain from "../components/layout/main";
     import Footer from "../components/layout/Footer";
     export default {
-        name: "UserPage",
+        name: "RentalPage",
         components: {Footer, AppMain, Header}
     }
 </script>

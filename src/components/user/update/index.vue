@@ -27,4 +27,4 @@
     #app .app-main[data-v-7fd75c4a]{
         min-height: 70vh;
     }
-</style>
+</style>.

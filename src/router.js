@@ -44,6 +44,19 @@ export default new Router({
                     name: 'UserUpdate'
                 }
             ]
+        },
+        {
+            path : '/rental',
+            component : () => import('./views/rentalPage'),
+            name : 'Rental',
+            redirect : '/rental/show',
+            children: [
+                {
+                    path: 'show',
+                    component: () => import('./components/rental/show/index'),
+                    name: 'RentalShow'
+                }
+            ]
         }
     ]
 })

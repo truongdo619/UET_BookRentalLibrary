@@ -3,23 +3,25 @@
 <!--        <AsideBar></AsideBar>-->
 
 <!--        <el-container>-->
-            <el-header>
                 <Header></Header>
-            </el-header>
             <br/>
             <el-main>
                 <router-view></router-view>
             </el-main>
+            <el-footer>
+                <Footer></Footer>
+            </el-footer>
         </el-container>
 <!--    </el-container>-->
 </template>
 
 <script>
-    import Header from './Header'
+    import Header from '../components/layout/Header'
+    import Footer from '../components/layout/Footer'
 
     export default {
         name: 'MainLayout',
-        components: {Header}
+        components: {Footer, Header}
     }
 </script>
 

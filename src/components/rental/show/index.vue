@@ -24,7 +24,7 @@
         </el-row>
     </el-col>
 </template>
-<script>s
+<script>
     import ListCate from "../components/list_cate/index";
     import ListItem from "../components/list_item/index";
     export default {

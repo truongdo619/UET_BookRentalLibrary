@@ -88,7 +88,7 @@ const logout = async () => {
     removeLocalStorage(AUTH_CONST.ACCESS_TOKEN)
     removeLocalStorage(AUTH_CONST.USER_INFO)
     // location.reload()
-    window.location.href = '/login'
+    window.location.href = '/u/login'
 }
 
 

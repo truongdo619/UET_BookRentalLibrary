@@ -33,6 +33,7 @@
         name: 'Login',
         data: () => {
             return {
+                avc: 'dfas',
                 form: {
                     username: '',
                     password: '',

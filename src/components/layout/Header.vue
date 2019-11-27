@@ -7,9 +7,18 @@
                     <span>TIME</span>
                 </div>
                 <div class="right-menu">
-                    <el-button class="border_none">Login</el-button>
-                    <el-button type="primary">Sign up</el-button>
-                    <el-button class="border_none" icon="el-icon-shopping-cart-full">Cart</el-button>
+                    <el-dropdown v-if="isAuth" @command="userCommand">
+                        <span>{{userInfo.username}}</span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="testapi">Test Secret Api</el-dropdown-item>
+                            <el-dropdown-item command="logout" divided>Log out</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                    <div v-else>
+                        <el-button class="border_none no-focus-outline" @click="handleLoginBtn">Login</el-button>
+                        <el-button type="primary" @click="handleSignUpBtn">Sign up</el-button>
+                        <el-button class="border_none" icon="el-icon-shopping-cart-full">Cart</el-button>
+                    </div>
                 </div>
             </el-col>
         </el-row>
@@ -17,8 +26,44 @@
 </template>
 
 <script>
+    import {getLocalStorageObject} from '../../helpers/local_storage_helper'
+    import {AUTH_CONST} from '../../config/constants'
+    import {logout} from '../../services/auth_services'
+
     export default {
-        name: "Header"
+        name: "Header",
+        methods: {
+            userCommand(type) {
+                if (type === 'logout') {
+                    this.handleLogout()
+                } else if (type === 'testapi') {
+                    this.$router.push({name: 'test_api'})
+                }
+            },
+            handleLogout() {
+                console.log('Logging out ....')
+                logout()
+                this.$store.dispatch('updateIsAuthenticated')
+            },
+            handleLoginBtn() {
+                this.$router.push({name: 'login'})
+            },
+            handleSignUpBtn() {
+                this.$router.push({name: 'register'})
+            }
+        },
+        computed: {
+            isAuth() {
+                return this.$store.getters.isAuthenticated
+            },
+            userInfo() {
+                if (this.isAuth) {
+                    return getLocalStorageObject(AUTH_CONST.USER_INFO)
+                } else {
+                    return {}
+                }
+            },
+        }
     }
 </script>
 

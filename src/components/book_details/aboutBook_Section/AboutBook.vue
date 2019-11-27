@@ -3,10 +3,10 @@
         <el-col :span="16" :offset="5" class="navbar">
             <el-row class="full-width">
                 <el-col :span="6">
-                    <book-image></book-image>
+                    <book-image :book-id="bookInfo.ISBN" :book-image="bookInfo.book_cover"></book-image>
                 </el-col>
                 <el-col :span="15" :offset="1">
-                    <book-info></book-info>
+                    <book-info :book-detail="bookInfo"></book-info>
                 </el-col>
             </el-row>
         </el-col>
@@ -18,7 +18,15 @@
     import BookImage from "./bookImage/index";
     export default {
         name: "AboutBook",
-        components: {BookImage, BookInfo}
+        props: {
+            bookInfo: {
+                type: Object,
+                required: true
+            }
+        },
+        components: {BookImage, BookInfo},
+        mounted() {
+        }
     }
 </script>
 

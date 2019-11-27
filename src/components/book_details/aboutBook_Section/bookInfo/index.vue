@@ -1,10 +1,10 @@
 <template>
     <el-row>
                     <el-row>
-                        <h1>{{book_detail.title}}</h1>
-                        <h5>by: {{book_detail.author}}</h5>
+                        <h1>{{bookDetail.book_title}}</h1>
+                        <h5>by: {{bookDetail.author.author_name}}</h5>
                         <el-rate
-                                v-model="book_detail.rating"
+                                v-model="bookRating"
                                 disabled
                                 show-score
                                 :disabled-void-color = "disabled_color"
@@ -12,7 +12,7 @@
                         </el-rate>
                         <el-breadcrumb separator=".">
                             <el-breadcrumb-item><el-link icon="el-icon-data-analysis" class="cl-deepblue">Rating details</el-link></el-breadcrumb-item>
-                            <el-breadcrumb-item><el-link class="cl-deepblue">8 Ratings</el-link></el-breadcrumb-item>
+                            <el-breadcrumb-item><el-link class="cl-deepblue">{{bookDetail !== null ?bookDetail.rating.length:0}} Ratings</el-link></el-breadcrumb-item>
                             <el-breadcrumb-item><el-link><b class="cl-deepblue">1 Review</b></el-link></el-breadcrumb-item>
                         </el-breadcrumb>
                     </el-row>
@@ -21,7 +21,7 @@
                         <h4>About the book</h4>
                         <div class="description">
                             <div>
-                                {{book_detail.description[short_long]}}
+                                {{bookDescription}}
                             </div>
                         </div>
 
@@ -44,20 +44,14 @@
 <script>
     export default {
         name: "bookInfo",
+        props: {
+          bookDetail: {
+            type: Object,
+            required: true
+          },
+        },
         data (){
-            return{
-                book_detail : {
-                    "title" : "Must Love Murder",
-                    "author" : "Etta Faire",
-                    "rating" : 4,
-                    "description" : {
-                        "short" : "Harriet Vanger, a scion of one of Sweden’s wealthiest families disappeared over forty years ago. All these years later, her aged uncle continues to seek the truth. He hires Mikael Blomkvist, a crusading journalist recently trapped by a libel conviction, to investigate. He is aided by the pierced and tattooed punk prodigy Lisbeth Salander. Together they tap into a vein",
-                        "long" : "Harriet Vanger, a scion of one of Sweden’s wealthiest families disappeared over forty years ago. All these years later, her aged uncle continues to seek the truth. He hires Mikael Blomkvist, a crusading journalist recently trapped by a libel conviction, to investigate. He is aided by the pierced and tattooed punk prodigy Lisbeth Salander. Together they tap into a vein of unfathomable iniquity and astonishing corruption.\n" +
-                            "\n" +
-                            "An international publishing sensation, Stieg Larsson’s The Girl with the Dragon Tattoo combines murder mystery, family saga, love story, and financial intrigue into one satisfyingly complex and entertainingly atmospheric novel.\n" +
-                            "\n" +
-                            "Alternate Cover Edition ISBN 0307269752 (ISBN13: 9780307269751)"
-                    } },
+            return {
                 disabled_color: '#C6D1DE',
                 more_less : 'See more',
                 short_long: 'short'
@@ -66,15 +60,34 @@
         methods:{
             see_more(){
 
-                if (this.more_less == 'Less')
-                {
+                if (this.more_less === 'Less') {
                     this.more_less = 'See more'
                     this.short_long = "short"
                 }
-                else{
+                else {
                     this.more_less = 'Less'
                     this.short_long = "long"
                 }
+            }
+        },
+        computed: {
+            bookRating() {
+                if (this.bookDetail && this.bookDetail.rating.length > 0) {
+                    return Math.floor(this.bookDetail.rating.reduce((sum, current) => sum + current) / this.bookDetail.rating.length)
+                } else {
+                    return 0
+                }
+            },
+            bookDescription() {
+                if (this.bookDetail) {
+                   if (this.bookDetail.book_description.length < 250) {
+                       return this.bookDetail.book_description
+                   } else if (this.short_long === 'short') {
+                       return this.bookDetail.book_description.substr(0, 250) + '...'
+                   } else
+                       return this.bookDetail.book_description
+                }
+                return ''
             }
         }
     }

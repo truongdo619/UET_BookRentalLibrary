@@ -21,6 +21,7 @@
     import headerSliderImage1 from '../../assets/images/headerSliderImage1.jpg'
     import headerSliderImage2 from '../../assets/images/headerSliderImage2.jpg'
     import headerSliderImage3 from '../../assets/images/headerSliderImage3.jpg'
+    import {getTopBooks} from '../../services/books/books_api'
 
     library.add(faChevronRight, faChevronLeft)
 
@@ -88,6 +89,10 @@
                     prevArrow: '<button type="button" data-role="none" class="control-arrows slick-prev slick-arrow" aria-label="Previous" role="button"><div class="icon-arrow"></div></button>',
                 }
             }
+        },
+        async mounted() {
+            let data = await getTopBooks()
+            console.log(data)
         }
     }
 </script>

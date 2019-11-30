@@ -57,6 +57,19 @@ export default new Router({
                     name: 'RentalShow'
                 }
             ]
+        },
+        {
+            path : '/cart',
+            component : () => import('./views/Cart'),
+            name : 'Cart',
+            redirect : '/cart/show',
+            children: [
+                {
+                    path: 'show',
+                    component: () => import('./components/cart/show/index'),
+                    name: 'cartComponent'
+                }
+            ]
         }
     ]
 })

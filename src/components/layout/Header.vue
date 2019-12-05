@@ -2,22 +2,25 @@
     <div class="header">
         <el-row>
             <el-col :span="20" :offset="2" class="navbar">
-                <div class="center-logo">
+                <div class="center-logo" @click="handleHome">
                     <span>BOOK'S</span>
                     <span>TIME</span>
                 </div>
                 <div class="right-menu">
-                    <el-dropdown v-if="isAuth" @command="userCommand">
-                        <span>{{userInfo.username}}</span>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="testapi">Test Secret Api</el-dropdown-item>
-                            <el-dropdown-item command="logout" divided>Log out</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
+                    <div v-if="isAuth" >
+                        <el-button class="border_none no-focus-outline" icon="el-icon-shopping-cart-full" @click="handleCart">Cart</el-button>
+
+                        <el-dropdown @command="userCommand">
+                            <span>{{userInfo.username}}</span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item command="testapi">User page</el-dropdown-item>
+                                <el-dropdown-item command="logout" divided>Log out</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
                     <div v-else>
                         <el-button class="border_none no-focus-outline" @click="handleLoginBtn">Login</el-button>
                         <el-button type="primary" @click="handleSignUpBtn">Sign up</el-button>
-                        <el-button class="border_none" icon="el-icon-shopping-cart-full">Cart</el-button>
                     </div>
                 </div>
             </el-col>
@@ -37,7 +40,7 @@
                 if (type === 'logout') {
                     this.handleLogout()
                 } else if (type === 'testapi') {
-                    this.$router.push({name: 'test_api'})
+                    this.$router.push({name: 'user'})
                 }
             },
             handleLogout() {
@@ -50,6 +53,12 @@
             },
             handleSignUpBtn() {
                 this.$router.push({name: 'register'})
+            },
+            handleCart() {
+                this.$router.push({name: 'cart'})
+            },
+            handleHome() {
+                this.$router.push({name: 'home'})
             }
         },
         computed: {
@@ -108,6 +117,7 @@
     .center-logo {
         font-weight: bold;
         width: 50%;
+        cursor: pointer;
     }
 
     .center-logo span {

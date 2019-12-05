@@ -30,7 +30,7 @@ export default new Router({
         {
             path : '/user',
             component : () => import('./views/UserPage'),
-            name : 'User',
+            name : 'user',
             redirect : '/user/show',
             children: [
                 {
@@ -61,7 +61,7 @@ export default new Router({
         {
             path : '/cart',
             component : () => import('./views/Cart'),
-            name : 'Cart',
+            name : 'cart',
             redirect : '/cart/show',
             children: [
                 {

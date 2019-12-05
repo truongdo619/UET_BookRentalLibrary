@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import {isAuthenticated} from '../../services/auth_services'
+    import {isAuthenticated} from '../../../services/auth_services'
 
     export default {
         name: 'HeaderBar',

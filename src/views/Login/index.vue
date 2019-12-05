@@ -26,8 +26,8 @@
 </template>
 
 <script>
-    import {userLogin} from '../services/users/user_api'
-    import {isAuthenticated} from '../services/auth_services'
+    import {userLogin} from '../../services/users/user_api'
+    import {isAuthenticated} from '../../services/auth_services'
 
     export default {
         name: 'Login',

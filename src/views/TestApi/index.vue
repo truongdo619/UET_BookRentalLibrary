@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import {test_api} from '../services/auth_services'
+    import {test_api} from '../../services/auth_services'
 
     export default {
         name: 'TestApi',

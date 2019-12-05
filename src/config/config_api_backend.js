@@ -19,9 +19,15 @@ const USER = {
     RATING: BACKEND_API + '/user/rate'
 }
 
+const CATEGORY = {
+    POPULAR: BACKEND_API + '/categories/popular',
+    ALL: BACKEND_API + '/categories/'
+}
+
 export {
     BOOKS,
     AUTH,
+    CATEGORY,
     USER,
     BACKEND_API
 }

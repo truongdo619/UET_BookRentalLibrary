@@ -1,12 +1,13 @@
 <template>
 <div class="header-books-slider">
     <slick ref="slick" :options="slickOptions">
-        <div v-for="(image, i) in images" :key="i" class="book-content">
-            <div class="book-cover"><img :src="image.image" :alt="image.name"></div>
+        <div v-for="book of books" :key="book.id" class="book-content">
+            <div class="book-cover"><img :src="book.book_cover" :alt="book.book_title"></div>
             <div class="book-intro">
-                <p>READ A BOOK</p>
-                <p>LISTEN A BOOK</p>
-                <el-rate v-model="image.star" disabled :colors="['black', 'black', 'black']"  void-color="black"></el-rate>
+                <div @click="() => {handleBookDetail(book.id)}">
+                <p style="font-weight: bold;">{{book.book_title}}</p>
+                <p @click="() => {handleBookDetail(book.id)}">READ BOOK</p></div>
+                <el-rate v-model="book.rating" disabled :colors="['black', 'black', 'black']"  void-color="black"></el-rate>
             </div>
         </div>
     </slick>
@@ -18,10 +19,7 @@
     import { library } from '@fortawesome/fontawesome-svg-core'
     import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
-    import headerSliderImage1 from '../../assets/images/headerSliderImage1.jpg'
-    import headerSliderImage2 from '../../assets/images/headerSliderImage2.jpg'
-    import headerSliderImage3 from '../../assets/images/headerSliderImage3.jpg'
-    import {getTopBooks} from '../../services/books/books_api'
+    import {getTopBooks} from '../../../services/books/books_api'
 
     library.add(faChevronRight, faChevronLeft)
 
@@ -30,47 +28,8 @@
         components: { Slick },
         data: () => {
             return {
-                images: [
-                    {
-                        'image': headerSliderImage1,
-                        'name': 'Becoming Michelle Obama',
-                        'star': 4
-                    },
-                    {
-                        'image': headerSliderImage2,
-                        'name': 'Moral Relativism',
-                        'star': 5
-                    },
-                    {
-                        'image': headerSliderImage3,
-                        'name': 'Vinegar Girl',
-                        'star': 4
-                    },
-                    {
-                        'image': headerSliderImage2,
-                        'name': 'Moral Relativism',
-                        'star': 5
-                    },
-                {
-                        'image': headerSliderImage1,
-                        'name': 'Becoming Michelle Obama',
-                        'star': 4
-                    },
-                    {
-                        'image': headerSliderImage2,
-                        'name': 'Moral Relativism',
-                        'star': 5
-                    },
-                    {
-                        'image': headerSliderImage3,
-                        'name': 'Vinegar Girl',
-                        'star': 4
-                    },
-                    {
-                        'image': headerSliderImage2,
-                        'name': 'Moral Relativism',
-                        'star': 5
-                    },
+                books: [
+
                 ],
                 slickOptions: {
                     //options can be used from the plugin documentation
@@ -90,9 +49,35 @@
                 }
             }
         },
+        methods: {
+            handleBookDetail(bookId) {
+                console.log('hey')
+                this.$router.push({name: 'book_detail', params: {id: bookId}})
+            }
+        },
         async mounted() {
             let data = await getTopBooks()
             console.log(data)
+            this.books = data.data.map(book => ({
+                id: book.ISBN,
+                book_cover: book.book_cover,
+                book_title: book.book_title,
+                rating: book.rating.length > 0 ? Math.floor(book.rating.reduce((sum, current) => sum + current) / book.rating.length) : 0
+            }))
+            // this.reInit()
+            // this.$refs.slick.reSlick()
+        },
+        watch: {
+            books: function () {
+
+                // let currIndex = this.$refs.slick.currentSlide()
+
+                this.$refs.slick.destroy()
+                this.$nextTick(() => {
+                    this.$refs.slick.create()
+                    // this.$refs.slick.goTo(currIndex, true)
+                })
+            }
         }
     }
 </script>
@@ -128,14 +113,14 @@
         .slick-next {
             right: -130px;
             .icon-arrow {
-                background-image: url('../../assets/images/angle-right.svg') !important;
+                background-image: url('../../../assets/images/angle-right.svg') !important;
             }
         }
 
         .slick-prev {
             left: -130px;
             .icon-arrow {
-                background-image: url('../../assets/images/angle-left.svg') !important;
+                background-image: url('../../../assets/images/angle-left.svg') !important;
             }
         }
 
@@ -147,8 +132,9 @@
                 border-radius: 15px;
                 img {
                     width: 100%;
-                    min-width: 408px;
-                    min-height: 660px;
+                    min-width: 400px;
+                    min-height: 560px;
+                    height: 530px;
                 }
                  // -webkit-box-shadow: -1px 2px 87px -39px rgba(168,168,168,1);
                  // -moz-box-shadow: -1px 2px 87px -39px rgba(168,168,168,1);

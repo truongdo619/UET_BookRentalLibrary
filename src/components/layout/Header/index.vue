@@ -29,9 +29,9 @@
 </template>
 
 <script>
-    import {getLocalStorageObject} from '../../helpers/local_storage_helper'
-    import {AUTH_CONST} from '../../config/constants'
-    import {logout} from '../../services/auth_services'
+    import {getLocalStorageObject} from '../../../helpers/local_storage_helper'
+    import {AUTH_CONST} from '../../../config/constants'
+    import {logout} from '../../../services/auth_services'
 
     export default {
         name: "Header",

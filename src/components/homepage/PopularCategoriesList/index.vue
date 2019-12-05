@@ -50,10 +50,10 @@
 <script>
     import Slick from 'vue-slick'
 
-    import Detective from '../../assets/images/detective_sherlock.png'
-    import Romantic from '../../assets/images/romantic_theNotebook.jpg'
-    import Horror from '../../assets/images/horror_abc.jpg'
-    import History from '../../assets/images/history_sapiens.jpg'
+    import Detective from '../../../assets/images/detective_sherlock.png'
+    import Romantic from '../../../assets/images/romantic_theNotebook.jpg'
+    import Horror from '../../../assets/images/horror_abc.jpg'
+    import History from '../../../assets/images/history_sapiens.jpg'
 
 
     import { library } from '@fortawesome/fontawesome-svg-core'
@@ -182,14 +182,14 @@
         .slick-next {
             right: -130px;
             .icon-arrow {
-                background-image: url('../../assets/images/angle-right.svg') !important;
+                background-image: url('../../../assets/images/angle-right.svg') !important;
             }
         }
 
         .slick-prev {
             left: -130px;
             .icon-arrow {
-                background-image: url('../../assets/images/angle-left.svg') !important;
+                background-image: url('../../../assets/images/angle-left.svg') !important;
             }
         }
 

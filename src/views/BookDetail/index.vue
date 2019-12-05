@@ -13,13 +13,13 @@
 
 <script>
 
-    import AboutBook from "../components/book_details/aboutBook_Section/AboutBook";
-    import CommentSection from "../components/book_details/comment_Section/index";
-    import FeaturedPraise from "../components/book_details/featured_praises_section/index";
-    import RecommendSection from "../components/book_details/recommend_section/index";
-    import Header from "../components/layout/Header";
-    import Footer from "../components/layout/Footer";
-    import {getBookDetails} from '../services/books/books_api'
+    import AboutBook from "../../components/book_details/aboutBook_Section/index";
+    import CommentSection from "../../components/book_details/comment_Section/index";
+    import FeaturedPraise from "../../components/book_details/featured_praises_section/index";
+    import RecommendSection from "../../components/book_details/recommend_section/index";
+    import Header from "../../components/layout/Header/index";
+    import Footer from "../../components/layout/Footer/index";
+    import {getBookDetails} from '../../services/books/books_api'
     export default {
         name: "BookDetail",
         data: () => {

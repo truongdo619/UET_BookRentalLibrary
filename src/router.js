@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MainLayout from './layouts/MainLayout'
-import Home from './views/Home'
-import Login from './views/Login'
-import TestApi from './views/TestApi'
-import Register from './views/Register'
+import Home from './views/Home/index'
+import Login from './views/Login/index'
+import TestApi from './views/TestApi/index'
+import Register from './views/Register/index'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
@@ -24,12 +24,12 @@ export default new Router({
         {
             path: '/book/:id',
             name: 'book_detail',
-            component : () => import('./views/BookDetail')
+            component : () => import('./views/BookDetail/index')
         },
         {path: '/', name: 'home', component: Home},
         {
             path : '/user',
-            component : () => import('./views/UserPage'),
+            component : () => import('./views/UserPage/index'),
             name : 'user',
             redirect : '/user/show',
             children: [
@@ -47,7 +47,7 @@ export default new Router({
         },
         {
             path : '/rental',
-            component : () => import('./views/rentalPage'),
+            component : () => import('./views/RentalPage/index'),
             name : 'Rental',
             redirect : '/rental/show',
             children: [
@@ -60,7 +60,7 @@ export default new Router({
         },
         {
             path : '/cart',
-            component : () => import('./views/Cart'),
+            component : () => import('./views/Cart/index'),
             name : 'cart',
             redirect : '/cart/show',
             children: [
@@ -73,3 +73,10 @@ export default new Router({
         }
     ]
 })
+
+router.beforeEach((to, from, next) => {
+    window.scrollTo(0, 0);
+    next()
+})
+
+export default router

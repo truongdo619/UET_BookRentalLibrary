@@ -29,7 +29,7 @@
 
 <script>
     export  default {
-        name: "Book_item",
+        name: "BookItem",
         props : ['item'],
         data (){
             return{

@@ -2,19 +2,19 @@
     <el-col :span="20" :offset="2">
         <h4>GIỎ HÀNG ({{this.items.length}} sản phẩm)</h4>
         <el-row style="min-height: 500px; display: flex">
-            <div style="width: 100%;" v-if="items.length == 0">
+            <div style="width: 100%;" v-if="items.length === 0">
                 <div class="not-found border_raidus">
                     <img :src="image">
                     <h5>Không có sản phẩm nào được tìm thấy</h5>
                     <el-button type="primary">Quay lại trang chủ</el-button>
                 </div>
             </div>
-            <el-col :span = "17" v-if="items.length != 0" class="user-activity border_raidus">
-                <div class="post" v-for="item in items">
-                    <book_item :item="item"></book_item>
+            <el-col :span = "17" v-if="items.length !== 0" class="user-activity border_raidus">
+                <div class="post" v-for="item in items" :key="item.id">
+                    <BookItem :item="item"></BookItem>
                 </div>
             </el-col>
-            <el-col :span="5" :offset="1" v-if="items.length != 0" class="total">
+            <el-col :span="5" :offset="1" v-if="items.length !== 0" class="total">
                 <el-card style="min-width: 250px" class="box-card">
                     <div class="text item">
                         <span>Tạm tính:</span>
@@ -36,23 +36,27 @@
 
 <script>
     import cart from '../../../assets/images/ezgif.com-crop.gif'
-    import Book_item from "../components/bookItem";
+    import BookItem from '../BookItem/index'
+
     export default {
         name: 'cartComponent',
-        components: {Book_item},
+        components: {BookItem},
         data () {
             return {
                 image: cart,
                 user: null,
-                items : [{
-                    "name" : "Life of Pi",
-                    "image" : "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1320562005l/4214._SY75_.jpg",
-                    "rate" : 4,
-                    "date" : "Feb 24, 2019",
-                    "author" : "Yann Martel",
-                    "cost" : "$379.99"
-                },
+                items : [
                     {
+                       "id": 1,
+                        "name" : "Life of Pi",
+                        "image" : "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1320562005l/4214._SY75_.jpg",
+                        "rate" : 4,
+                        "date" : "Feb 24, 2019",
+                        "author" : "Yann Martel",
+                        "cost" : "$379.99"
+                    },
+                    {
+                        "id": 2,
                         "name" : "Mình phải sống một tuổi trẻ rực rỡ",
                         "image" : "https://s.gr-assets.com/assets/nophoto/book/50x75-a91bf249278a81aabab721ef782c4a74.png",
                         "rate" : 5,

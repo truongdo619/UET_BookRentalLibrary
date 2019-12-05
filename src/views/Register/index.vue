@@ -47,8 +47,8 @@
 </template>
 
 <script>
-    import {isAuthenticated} from '../services/auth_services'
-    import {register} from '../services/users/user_api'
+    import {isAuthenticated} from '../../services/auth_services'
+    import {register} from '../../services/users/user_api'
 
     export default {
         name: "Register",

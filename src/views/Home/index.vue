@@ -18,11 +18,11 @@
 </template>
 
 <script>
-    import HeaderBar from '../components/homepage/HeaderBar'
-    import Search from '../components/homepage/Search'
-    import HeaderBooksSlider from '../components/homepage/HeaderBooksSlider'
-    import ListCategories from '../components/homepage/ListCategories'
-    import PopularCategoriesList from '../components/homepage/PopularCategoriesList'
+    import HeaderBar from '../../components/homepage/HeaderBar/index'
+    import Search from '../../components/homepage/Search/index'
+    import HeaderBooksSlider from '../../components/homepage/HeaderBooksSlider/index'
+    import ListCategories from '../../components/homepage/ListCategories/index'
+    import PopularCategoriesList from '../../components/homepage/PopularCategoriesList/index'
     export default {
         name: 'Home',
         components: {PopularCategoriesList, ListCategories, HeaderBooksSlider, Search, HeaderBar}
@@ -35,7 +35,7 @@
     }
 
     .home-header {
-        background-image: url("../assets/images/header-images.jpg");
+        background-image: url("../../assets/images/header-images.jpg");
         background-repeat: no-repeat;
         height: calc(100vh - 60px);
         background-attachment: fixed;

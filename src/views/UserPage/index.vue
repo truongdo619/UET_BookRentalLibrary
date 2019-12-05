@@ -9,9 +9,9 @@
 </template>
 
 <script>
-    import Header from "../components/layout/Header";
-    import AppMain from "../components/layout/main";
-    import Footer from "../components/layout/Footer";
+    import Header from "../../components/layout/Header/index";
+    import AppMain from "../../components/layout/Main/index";
+    import Footer from "../../components/layout/Footer/index";
     export default {
         name: "UserPage",
         components: {Footer, AppMain, Header}

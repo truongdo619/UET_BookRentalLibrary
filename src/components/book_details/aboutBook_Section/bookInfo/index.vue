@@ -74,15 +74,29 @@
 </template>
 
 <script>
-    import {getByBook} from "../../../../services/warehouses/warehouses_api";
+    import {getByBook} from '../../../../services/warehouses/warehouses_api'
 
     export default {
-        name: "bookInfo",
+        name: 'bookInfo',
         props: {
             bookDetail: {
                 type: Object,
-                required: true
-            },
+                required: true,
+                default: () => {
+                    return {
+                        'ISBN': '0',
+                        'book_title': 'Untitled',
+                        'publication_year': 0,
+                        'book_description': '',
+                        'book_cover': 'https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png',
+                        'rating': [],
+                        'author': {
+                            'author_name': 'Untitled',
+                            'author_id': 0
+                        }
+                    }
+                }
+            }
         },
         data: () => {
             return {
@@ -98,10 +112,10 @@
 
                 if (this.more_less === 'Less') {
                     this.more_less = 'See more'
-                    this.short_long = "short"
+                    this.short_long = 'short'
                 } else {
                     this.more_less = 'Less'
-                    this.short_long = "long"
+                    this.short_long = 'long'
                 }
             },
             async handleGetBook() {

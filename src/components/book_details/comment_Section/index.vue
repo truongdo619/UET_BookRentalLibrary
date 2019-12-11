@@ -3,7 +3,7 @@
         <el-col :span="16" :offset="5" class="navbar">
             <el-row class="full-width">
                 <el-col :span="14">
-                    <comment-box></comment-box>
+                    <comment-box :book-id="bookInfo.ISBN" ></comment-box>
                 </el-col>
 <!--                <el-col :span="7" :offset="1">-->
 <!--                    <about-author></about-author>-->
@@ -14,11 +14,17 @@
 </template>
 
 <script>
-    import CommentBox from "./commentBox/index";
-    import AboutAuthor from "./author/index";
+    import CommentBox from './commentBox/index'
+
     export default {
         name : "CommentSection",
-        components: {AboutAuthor, CommentBox}
+        props: {
+            bookInfo: {
+                type: Object,
+                required: true
+            }
+        },
+        components: { CommentBox}
     }
 </script>
 

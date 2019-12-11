@@ -18,6 +18,9 @@
                     <el-form-item label="Rating Number">
                         <el-rate v-model="rateNum" class="al-center"></el-rate>
                     </el-form-item>
+                    <el-form-item label="Comment">
+                        <el-input type="textarea" v-model="ratingComment"></el-input>
+                    </el-form-item>
                 </el-form>
                 <el-button @click="ratingDialogVisible = false">Cancel</el-button>
                 <el-button type="primary" @click="handleRateChange">Confirm</el-button>
@@ -47,7 +50,8 @@
         data: () => {
             return {
                 rateNum: 0,
-                ratingDialogVisible: false
+                ratingDialogVisible: false,
+                ratingComment: ''
             }
         },
         methods: {
@@ -55,9 +59,13 @@
                 if (!isAuthenticated()) {
                     this.$router.push({name: 'login'})
                 }
-                let response = await rateBook(this.bookId, this.rateNum)
+                if (this.ratingComment && this.ratingComment.length > 0) {
+                    await rateBook(this.bookId, this.rateNum, this.ratingComment)
+                } else {
+                    await rateBook(this.bookId, this.rateNum)
+                }
                 this.ratingDialogVisible = false
-                this.ratingNum = 0
+                this.rateNum = 0
             }
         }
     }

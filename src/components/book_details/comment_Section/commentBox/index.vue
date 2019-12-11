@@ -10,23 +10,23 @@
             </div>
 
             <el-divider></el-divider>
-<!--            <div class="comment-box-filter">-->
-<!--                <el-link icon="el-icon-data-analysis"><b class="cl-deepblue">Rating details</b></el-link>-->
-<!--                <div class="right-menu">-->
-<!--                    <el-link class="cl-deepblue">Filter</el-link>-->
-<!--                    <span class="cl-blue">  | </span>-->
-<!--                    <el-link class="cl-deepblue">Sort</el-link>-->
-<!--                    <el-input-->
-<!--                            placeholder="Search review text"-->
-<!--                            v-model="input">-->
-<!--                        <i slot="prefix" class="el-input__icon el-icon-search"></i>-->
-<!--                    </el-input>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <el-divider></el-divider>-->
+            <!--            <div class="comment-box-filter">-->
+            <!--                <el-link icon="el-icon-data-analysis"><b class="cl-deepblue">Rating details</b></el-link>-->
+            <!--                <div class="right-menu">-->
+            <!--                    <el-link class="cl-deepblue">Filter</el-link>-->
+            <!--                    <span class="cl-blue">  | </span>-->
+            <!--                    <el-link class="cl-deepblue">Sort</el-link>-->
+            <!--                    <el-input-->
+            <!--                            placeholder="Search review text"-->
+            <!--                            v-model="input">-->
+            <!--                        <i slot="prefix" class="el-input__icon el-icon-search"></i>-->
+            <!--                    </el-input>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--            <el-divider></el-divider>-->
 
-            <comment v-for="item in commented" :item="item"></comment>
-<!--            <rate v-for="item in rated" :item="item" ></rate>-->
+            <comment v-for="(item, index) in commented" :item="item" :key="index"></comment>
+            <!--            <rate v-for="item in rated" :item="item" ></rate>-->
             <el-pagination
                     background
                     layout="prev, pager, next"
@@ -38,23 +38,34 @@
 </template>
 
 <script>
-    import Comment from "./comment";
-    import Rate from "./rate";
-    import {getRatingDetails} from "../../../../services/books/books_api"
+    import Comment from './comment'
+    import Rate from './rate'
+    import {getRatingDetails} from '../../../../services/books/books_api'
+
     export default {
-        name : "CommentBox",
+        name: 'CommentBox',
+        props: {
+            bookId: {
+                type: String,
+                required: true,
+                default: ''
+            }
+        },
         components: {Rate, Comment},
         data() {
             return {
                 start: 1,
                 end: 24,
-                input: "",
-                commented : []
+                input: '',
+                commented: []
             }
         },
-        mounted() {
-            console.log(this.bookId)
-            this.commented = getRatingDetails(this.bookId)
+        watch: {
+            bookId: async function (newVal, oldVal) { // watch it
+                console.log('Update commented', newVal, oldVal)
+                let res = await getRatingDetails(newVal)
+                this.commented = res.data
+            }
         }
     }
 </script>
@@ -63,41 +74,50 @@
     .right-menu .el-input--prefix .el-input__inner {
         max-height: 22px;
     }
-    .right-menu .el-input--prefix{
+
+    .right-menu .el-input--prefix {
         margin-left: 10px;
     }
-    .right-menu span.el-input__prefix{
+
+    .right-menu span.el-input__prefix {
         top: -9px;
     }
 </style>
 
 <style lang="scss" scoped>
-    .comment_box{
+    .comment_box {
         margin-top: 20px;
         margin-bottom: 20px;
     }
-    .comment_box .el-divider{
+
+    .comment_box .el-divider {
         margin-top: 0px;
         margin-bottom: 10px;
     }
+
     .right-menu {
         float: right;
     }
-    a.cl-blue, b.cl-blue{
+
+    a.cl-blue, b.cl-blue {
         color: dodgerblue;
     }
-    .comment_box div.el-breadcrumb{
+
+    .comment_box div.el-breadcrumb {
         display: inline-block;
     }
-    .comment_box .el-input{
+
+    .comment_box .el-input {
         max-width: 170px;
     }
-    .el-input__inner{
-        max-height: 25px!important;
+
+    .el-input__inner {
+        max-height: 25px !important;
 
         border: none;
     }
-    .comment-box-filter{
+
+    .comment-box-filter {
         margin-bottom: 10px;
     }
 </style>

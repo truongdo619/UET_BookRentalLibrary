@@ -3,7 +3,7 @@
         <Header></Header>
         <div class="body">
             <AboutBook :book-info="bookInfo"></AboutBook>
-            <comment-section></comment-section>
+            <comment-section :book-info="bookInfo"></comment-section>
             <featured-praise></featured-praise>
             <recommend-section></recommend-section>
             <Footer></Footer>

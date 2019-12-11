@@ -57,7 +57,7 @@
                 <el-table-column min-width="150" property="price" label="Price"></el-table-column>
                 <el-table-column min-width="150" property="borrowed_times" label="Borrowed Times"></el-table-column>
                 <el-table-column min-width="150" header-align="right" label="Actions">
-                    <div slot-scope="{row}" class="text-right table-actions">
+                    <div slot-scope="{row}" class="text-center table-actions">
                         <el-tooltip content="Info" :open-delay="300" placement="top">
                             <el-button type="success" icon="el-icon-plus">Add to Cart</el-button>
                         </el-tooltip>

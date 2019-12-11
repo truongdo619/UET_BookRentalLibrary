@@ -2,19 +2,19 @@
     <div class="rate">
         <b-card>
             <b-media no-body>
-                <img :src="item.image" class="image">
+<!--                <img :src="item.image" class="image">-->
 
                 <b-media-body class="ml-3">
                     <el-row>
-                        <div><a href="#!"><b class="cl-deepblue">{{item.name}}</b></a></div>
+                        <div><a href="#!"><b class="cl-deepblue">{{item.email}}</b></a></div>
                         <div>rated it </div>
                         <el-rate
-                                v-model="item.rate"
+                                v-model="item.rating_number"
                                 disabled
                                 score-template="{value} points">
 
                         </el-rate>
-                        <div class="cl-gray">{{item.date}}</div>
+<!--                        <div class="cl-gray">{{item.date}}</div>-->
                     </el-row>
                 </b-media-body>
             </b-media>

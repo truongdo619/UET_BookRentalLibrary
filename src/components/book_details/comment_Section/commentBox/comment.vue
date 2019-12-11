@@ -2,29 +2,29 @@
     <div class="comment">
         <b-card>
             <b-media no-body>
-                    <img :src="item.image" class="image" />
+<!--                    <img :src="item.image" class="image" />-->
 
                 <b-media-body class="ml-3">
                     <el-row>
-                        <span><a href="#!"><b class="cl-deepblue">{{item.name}}</b></a> rated it <el-rate
-                                v-model="item.rate"
+                        <span><a href="#!"><b class="cl-deepblue">{{item.email}}</b></a> rated it <el-rate
+                                v-model="item.rating_number"
                                 disabled
                                 score-template="{value} points">
 
                         </el-rate></span>
-                        <span class="float-right cl-gray">{{item.date}}</span>
+<!--                        <span class="float-right cl-gray">{{item.date}}</span>-->
                     </el-row>
-                    <el-row v-if="item.shelves.length != 0">
-                        <span class="cl-gray">Shelves: <a href="#!"><b class="cl-deepblue">{{item.shelves}}</b></a></span>
-                    </el-row>
+<!--                    <el-row v-if="item.shelves.length != 0">-->
+<!--                        <span class="cl-gray">Shelves: <a href="#!"><b class="cl-deepblue">{{item.shelves}}</b></a></span>-->
+<!--                    </el-row>-->
                     <el-row style="margin-top: 10px; margin-bottom: 7px">
                         <p>
-                            {{item.text}}
+                            {{item.rating_comment}}
                         </p>
                     </el-row>
-                    <el-row>
-                        <span><el-button plain style="padding: 5px; margin-right: 10px">Like</el-button> <a href="#!"><b class="cl-deepblue">See review</b></a></span>
-                    </el-row>
+<!--                    <el-row>-->
+<!--                        <span><el-button plain style="padding: 5px; margin-right: 10px">Like</el-button> <a href="#!"><b class="cl-deepblue">See review</b></a></span>-->
+<!--                    </el-row>-->
 
                 </b-media-body>
             </b-media>

@@ -5,9 +5,9 @@
                 <el-col :span="14">
                     <comment-box></comment-box>
                 </el-col>
-                <el-col :span="7" :offset="1">
-                    <about-author></about-author>
-                </el-col>
+<!--                <el-col :span="7" :offset="1">-->
+<!--                    <about-author></about-author>-->
+<!--                </el-col>-->
             </el-row>
         </el-col>
     </el-row>

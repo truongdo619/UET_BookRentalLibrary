@@ -53,6 +53,7 @@
             }
         },
         mounted() {
+            console.log(this.bookId)
             this.commented = getRatingDetails(this.bookId)
         }
     }

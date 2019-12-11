@@ -4,11 +4,27 @@
             <img :src="bookImage" class="image" :alt="bookId">
         </el-card>
         <div>
-            <el-button class ="pos_center" type="success">Want to read <i class="el-icon-arrow-bottom el-icon-bottom"></i></el-button>
-            <div class="al-center">
-                <h6 :style="{color: 'gray'}">Rate it now</h6>
-            </div>
-            <el-rate :value="rateNum" @change="handleRateChange" class="al-center"></el-rate>
+<!--            <el-button class ="pos_center" type="success">Want to read <i class="el-icon-arrow-bottom el-icon-bottom"></i></el-button>-->
+<!--            <div class="al-center">-->
+<!--                <h6 :style="{color: 'gray'}">Rate it now</h6>-->
+<!--            </div>-->
+<!--            <el-rate :value="rateNum" @change="handleRateChange" class="al-center"></el-rate>-->
+            <el-button class ="pos_center" type="text" @click="ratingDialogVisible = true">Review this book</el-button>
+            <el-dialog
+                    title="Review this book"
+                    :visible.sync="ratingDialogVisible"
+                    width="50%">
+                <el-form :model="form">
+                    <el-form-item label="Rating Number" :label-width="formLabelWidth">
+                        <el-rate :value="rateNum" class="al-center"></el-rate>
+                    </el-form-item>
+                    <el-form-item label="Activity form">
+                        <el-input type="textarea" v-model="form.desc"></el-input>
+                    </el-form-item>
+                </el-form>
+                <el-button @click="ratingDialogVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="ratingDialogVisible = false">Confirm</el-button>
+            </el-dialog>
         </div>
     </div>
 </template>
@@ -31,7 +47,8 @@
         },
         data: () => {
             return {
-                rateNum: 0
+                rateNum: 0,
+                ratingDialogVisible: false
             }
         },
         methods: {
@@ -41,6 +58,13 @@
                 }
                 let response = await rateBook(this.bookId, rate)
                 console.log(response)
+            },
+            handleClose(done) {
+                this.$confirm('Are you sure to close this dialog?')
+                    .then(_ => {
+                        done();
+                    })
+                    .catch(_ => {});
             }
         }
     }

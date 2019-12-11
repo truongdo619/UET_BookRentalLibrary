@@ -15,6 +15,10 @@ const BOOKS = {
     DETAIL: BACKEND_API + '/books/details'
 }
 
+const WAREHOUSES = {
+    GET_BY_BOOK: BACKEND_API + '/warehouses/book'
+}
+
 const USER = {
     RATING: BACKEND_API + '/user/rate'
 }
@@ -29,6 +33,7 @@ export {
     AUTH,
     CATEGORY,
     USER,
+    WAREHOUSES,
     BACKEND_API
 }
 

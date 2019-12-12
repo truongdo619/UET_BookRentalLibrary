@@ -1,5 +1,5 @@
-import authReq from "../../plugins/http";
-import {BOOKS, WAREHOUSES} from "../../config/config_api_backend";
+import authReq from '../../plugins/http'
+import {WAREHOUSES} from '../../config/config_api_backend'
 
 const getByBook = async (bookId) => {
     try {

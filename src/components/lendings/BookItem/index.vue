@@ -6,7 +6,7 @@
 
                 <b-media-body class="ml-3">
                     <el-row>
-                        <span><a href="#!"><b class="cl-deepblue">{{item.book_title}}</b></a></span>
+                        <span><a href="#!" @click="handleBookDetail"><b class="cl-deepblue">{{item.book_title}}</b></a></span>
                     </el-row>
                     <el-row>
                         <span>by: <a href="#!"><b class="cl-deepblue">{{item.author}}</b></a></span>
@@ -40,6 +40,11 @@
         data (){
             return{
                 value : 4
+            }
+        },
+        methods: {
+            handleBookDetail() {
+                this.$router.push({name: 'book_detail', params: {id: this.item.book_id}})
             }
         }
     }

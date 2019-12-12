@@ -39,7 +39,6 @@
 
 <script>
     import Comment from './comment'
-    import Rate from './rate'
     import {getRatingDetails} from '../../../../services/books/books_api'
 
     export default {
@@ -51,7 +50,7 @@
                 default: ''
             }
         },
-        components: {Rate, Comment},
+        components: {Comment},
         data() {
             return {
                 start: 1,

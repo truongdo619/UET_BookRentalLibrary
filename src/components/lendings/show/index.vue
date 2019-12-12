@@ -1,6 +1,6 @@
 <template>
     <el-col :span="20" :offset="2">
-        <h4>San Pham Dang Muon ({{this.items.length}} sản phẩm)</h4>
+        <h4>Sản phẩm đang cho mượn ({{this.items.length}} sản phẩm)</h4>
         <el-row style="min-height: 500px; display: flex">
             <div style="width: 100%;" v-if="items.length === 0">
                 <div class="not-found border_raidus">
@@ -22,6 +22,7 @@
 <script>
     import cart from '../../../assets/images/ezgif.com-crop.gif'
     import BookItem from '../BookItem/index'
+    import {getUserLendings} from '../../../services/lendings/lendings_api'
 
     export default {
         name: 'cartComponent',
@@ -33,10 +34,15 @@
                 items : []
             }
         },
-        mounted() {
-
+        async mounted() {
+            await this.loadItems()
         },
-        methods:{}
+        methods:{
+            async loadItems() {
+                let res = await getUserLendings()
+                this.items = res.data
+            }
+        }
     }
 </script>
 

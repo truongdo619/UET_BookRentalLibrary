@@ -23,7 +23,8 @@ const WAREHOUSES = {
 const USER = {
     RATING: BACKEND_API + '/user/rate',
     BORROWING: BACKEND_API + '/user/borrowings',
-    RETURN_BOOK: BACKEND_API + '/user/return'
+    RETURN_BOOK: BACKEND_API + '/user/return',
+    LENDING: BACKEND_API + '/user/lendings'
 }
 
 const CATEGORY = {

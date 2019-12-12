@@ -1,5 +1,5 @@
 import authReq from '../../plugins/http'
-import {BOOKS, USER} from '../../config/config_api_backend'
+import {USER} from '../../config/config_api_backend'
 
 
 const getUserBorrowings = async (params) => {

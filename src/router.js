@@ -5,7 +5,6 @@ import Home from './views/Home/index'
 import Login from './views/Login/index'
 import TestApi from './views/TestApi/index'
 import Register from './views/Register/index'
-import {Main} from 'element-ui'
 
 Vue.use(Router)
 

@@ -12,7 +12,7 @@
                             </a>
                             rated it
                             <el-rate
-                                v-model="item.rating_num"
+                                :value="parseInt(item.rating_num)"
                                 disabled
                                 score-template="{value} points">
                             </el-rate>

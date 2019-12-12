@@ -21,19 +21,19 @@
                         <span>Owner Email: {{item.owner}}</span>
                     </el-row>
                     <el-row>
-                        <span>Borrow ID: {{item.borrow_id}}</span>
+                        <span>Borrow ID: {{item.borrowing_id}}</span>
                     </el-row>
                     <el-row>
                         <el-button type="text" @click="returnDialogVisible = true">Return this book</el-button>
-                        <el-dialog title="Xac nhan tra sach" :visible.sync="returnDialogVisible">
-                            <el-form :model="form">
+                        <el-dialog title="Xác nhận trả sách" :visible.sync="returnDialogVisible">
+                            <el-form>
                                 <el-form-item label="Address">
-                                    <el-input type="textarea" v-model="form.desc"></el-input>
+                                    <el-input type="textarea" v-model="address"></el-input>
                                 </el-form-item>
                             </el-form>
                             <span slot="footer" class="dialog-footer">
                                 <el-button @click="returnDialogVisible = false">Cancel</el-button>
-                                <el-button type="primary" @click="returnDialogVisible = false">Confirm</el-button>
+                                <el-button type="primary" @click="handleReturnBook">Confirm</el-button>
                               </span>
                         </el-dialog>
                     </el-row>
@@ -44,13 +44,23 @@
 </template>
 
 <script>
+    import {postUserReturn} from '../../../services/borrowings/borrowings_api'
+
     export default {
         name: "BookItem",
-        props: ['item'],
+        props: ['item', 'returnSuccess'],
         data() {
             return {
                 value: 4,
-                returnDialogVisible: false
+                returnDialogVisible: false,
+                address: ''
+            }
+        },
+        methods: {
+            async handleReturnBook() {
+                await postUserReturn(this.item.borrowing_id, this.address)
+                this.returnDialogVisible = false
+                this.returnSuccess()
             }
         }
     }

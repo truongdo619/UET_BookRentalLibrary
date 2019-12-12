@@ -21,12 +21,14 @@ const WAREHOUSES = {
 }
 
 const USER = {
-    RATING: BACKEND_API + '/user/rate'
+    RATING: BACKEND_API + '/user/rate',
+    BORROWING: BACKEND_API + '/user/borrowings',
+    RETURN_BOOK: BACKEND_API + '/user/return'
 }
 
 const CATEGORY = {
     POPULAR: BACKEND_API + '/categories/popular',
-    ALL: BACKEND_API + '/categories/'
+    ALL: BACKEND_API + '/categories'
 }
 
 export {

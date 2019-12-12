@@ -5,6 +5,7 @@ import Home from './views/Home/index'
 import Login from './views/Login/index'
 import TestApi from './views/TestApi/index'
 import Register from './views/Register/index'
+import {Main} from 'element-ui'
 
 Vue.use(Router)
 
@@ -68,6 +69,32 @@ const router = new Router({
                     path: 'show',
                     component: () => import('./components/cart/show/index'),
                     name: 'cartComponent'
+                }
+            ]
+        },
+        {
+            path: '/borrowing',
+            component: MainLayout,
+            name: 'borrowing',
+            redirect: '/borrowing/show',
+            children: [
+                {
+                    path: 'show',
+                    component: () => import('./components/borrowings/show/index'),
+                    name: 'borrowingComponent'
+                }
+            ]
+        },
+        {
+            path: '/lending',
+            component: MainLayout,
+            name: 'lending',
+            redirect: '/lending/show',
+            children: [
+                {
+                    path: 'show',
+                    component: () => import('./components/lendings/show/index'),
+                    name: 'lendingComponent'
                 }
             ]
         }

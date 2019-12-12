@@ -1,13 +1,11 @@
 import authReq from '../../plugins/http'
-import {BOOKS} from "../../config/config_api_backend";
+import {BOOKS, USER} from '../../config/config_api_backend'
 
 
-const getUserBorrowings = async (bookId) => {
+const getUserBorrowings = async (params) => {
     try {
-        let res = await authReq.get(BOOKS.RATINGS, {
-            params: {
-                'book_id': bookId
-            }
+        let res = await authReq.get(USER.BORROWING, {
+            params
         })
         return res ? res.data : null
     } catch (err) {
@@ -16,16 +14,20 @@ const getUserBorrowings = async (bookId) => {
     }
 }
 
-const postUserReturn = async (bookId) => {
+const postUserReturn = async (borrow_id, address) => {
+    let data = {
+        borrow_id,
+        address
+    }
     try {
-        let res = await authReq.get(BOOKS.RATINGS, {
-            params: {
-                'book_id': bookId
+        let response = await authReq.post(USER.RETURN_BOOK, JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json',
             }
         })
-        return res ? res.data : null
-    } catch (err) {
-        alert(err)
+        return response ? response.data : null
+    } catch (e) {
+        alert(e)
         return null
     }
 }

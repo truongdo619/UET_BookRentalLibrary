@@ -1,6 +1,6 @@
 <template>
     <el-col :span="20" :offset="2">
-        <h4>San Pham Dang Muon ({{this.items.length}} sản phẩm)</h4>
+        <h4>Sản phẩm đang mượn ({{this.items.length}} sản phẩm)</h4>
         <el-row style="min-height: 500px; display: flex">
             <div style="width: 100%;" v-if="items.length === 0">
                 <div class="not-found border_raidus">
@@ -11,7 +11,7 @@
             </div>
             <el-col :span = "17" v-if="items.length !== 0" class="user-activity border_raidus">
                 <div class="post" v-for="item in items" :key="item.id">
-                    <BookItem :item="item"></BookItem>
+                    <BookItem :item="item" :return-success="loadItems"></BookItem>
                 </div>
             </el-col>
         </el-row>
@@ -22,6 +22,7 @@
 <script>
     import cart from '../../../assets/images/ezgif.com-crop.gif'
     import BookItem from '../BookItem/index'
+    import {getUserBorrowings} from '../../../services/borrowings/borrowings_api'
 
     export default {
         name: 'cartComponent',
@@ -33,10 +34,15 @@
                 items : []
             }
         },
-        mounted() {
-
+        async mounted() {
+            await this.loadItems()
         },
-        methods:{}
+        methods:{
+            async loadItems() {
+                let res = await  getUserBorrowings()
+                this.items = res.data
+            }
+        }
     }
 </script>
 

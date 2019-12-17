@@ -37,6 +37,7 @@
 <script>
     import cart from '../../../assets/images/ezgif.com-crop.gif'
     import BookItem from '../BookItem/index'
+    import {getCartItems} from '../../../services/cart/cart_services'
 
     export default {
         name: 'cartComponent',
@@ -67,43 +68,22 @@
 
             }
         },
-        created(){
-            this.cartitems.push({ id : 1, user : "john", product_id : 123, title : "Hom nay la thu may", price : 123, quantity : 1, total : 10})
-            console.log((this.cartitems))
+        mounted(){
+            let items = getCartItems()
+            console.log(items)
         },
         methods:{
             priceSum(){
-                return this.cartitems.reduce((prev,cur) => prev + cur.total,0)
+                return this.items.reduce((prev,cur) => prev + cur.total,0)
             },
             quantitySum(){
-                return this.cartitems.reduce((prev,cur) => prev + cur.quantity,0)
-            },
-            checkItems(){
-                for(var i=0; i<=this.cartitems.length; i++){
-                    if(this.cartitem.user == this.user.alias){
-                        this.matchitems.push(this.cartitem)
-                        console.log(this.matchitems)
-                    }
-                }
+                return this.items.reduce((prev,cur) => prev + cur.quantity,0)
             },
             addComma(num) {
-                var regexp = /\B(?=(\d{3})+(?!\d))/g
+                let regexp = /\B(?=(\d{3})+(?!\d))/g
                 return num.toString().replace(regexp, ',')
             },
-            deleteCartitem(id){
-                var result = confirm('Ban co muon xoa?')
-                if(result){
-                            this.$swal({
-                                position: 'center',
-                                type: 'success',
-                                title: '삭제 완료',
-                                showConfirmButton: false,
-                                timer: 1000
-                            })
-                            this.cartitems = this.cartitems.filter(cartitem =>{
-                                return cartitem.id !=id
-                            })
-                }
+            deleteItem(){
             }
         }
     }

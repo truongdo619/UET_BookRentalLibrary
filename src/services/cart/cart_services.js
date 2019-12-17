@@ -7,23 +7,24 @@ const removeAllItems = () => {
 
 const addNewItems = (itemsArr) => {
     let currCart = getLocalStorageObject(CART_CONST.CART_ITEMS)
-    let newItems = itemsArr.map(item => ({itemId: item, num: 1}))
+    let newItems = itemsArr.map(item => ({item: item, num: 1}))
     if (currCart === null) {
-        putLocalStorageObject(newItems)
+        putLocalStorageObject(CART_CONST.CART_ITEMS, newItems)
     } else {
-        newItems = newItems.filter(item =>
-            currCart.findIndex(currItem => currItem.itemId === item.itemId) === -1
+        newItems = newItems.filter(item => {
+                return currCart.findIndex(currItem => currItem.item.warehouse_id === item.item.warehouse_id) === -1
+            }
         )
-        putLocalStorageObject(currCart.concat(newItems))
+        putLocalStorageObject(CART_CONST.CART_ITEMS, currCart.concat(newItems))
     }
 }
 
-const changeNumOfItem = (itemId, newNum) => {
+const changeNumOfItem = (item, newNum) => {
     let currCart = getLocalStorageObject(CART_CONST.CART_ITEMS)
     if (currCart === null) {
-        putLocalStorageObject(CART_CONST.CART_ITEMS, [{itemId, num: newNum}])
+        putLocalStorageObject(CART_CONST.CART_ITEMS, [{item, num: newNum}])
     } else {
-        putLocalStorageObject(currCart.map(item => item.itemId === itemId ? {itemId, num: newNum}: item))
+        putLocalStorageObject(CART_CONST.CART_ITEMS, currCart.map(item => item.item.warehouse_id === item.warehouse_id ? {item, num: newNum}: item))
     }
 }
 

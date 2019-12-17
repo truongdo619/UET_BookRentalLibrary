@@ -1,10 +1,10 @@
 <template>
     <div id="cart">
-        <Header></Header>
+        <Header/>
         <div class="body">
-            <app-main></app-main>
+            <AppMain/>
         </div>
-        <Footer></Footer>
+        <Footer/>
     </div>
 </template>
 

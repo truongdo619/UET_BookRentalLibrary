@@ -17,7 +17,9 @@
                                 <el-tab-pane label="Books are borrowed" name="Books are borrowed">
                                     <book_rental />
                                 </el-tab-pane>
-                                <el-tab-pane label="Borrowed book" name="Borrowed book">
+
+￼￼
+                     <el-tab-pane label="Borrowed book" name="Borrowed book">
                                     <borrowed_book />
                                 </el-tab-pane>
                             </el-tabs>
@@ -32,13 +34,11 @@
 
 <script>
     import UserCard from './components/UserCard'
-    import Book_rental from './components/Book_rental'
     import Timeline from './components/Timeline'
-    import Borrowed_book from './components/Borrowed_book'
 
     export default {
         name: 'Profile',
-        components: { UserCard, Book_rental, Timeline, Borrowed_book },
+        components: { UserCard, Timeline},
         data() {
             return {
                 user: {

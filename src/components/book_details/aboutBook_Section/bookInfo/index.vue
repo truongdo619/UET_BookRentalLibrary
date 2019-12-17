@@ -56,12 +56,14 @@
                 <el-table-column min-width="250" property="email" label="Email"></el-table-column>
                 <el-table-column min-width="150" property="price" label="Price"></el-table-column>
                 <el-table-column min-width="150" property="borrowed_times" label="Borrowed Times"></el-table-column>
-                <el-table-column min-width="150" header-align="right" label="Actions">
-                    <div class="text-center table-actions">
-                        <el-tooltip content="Info" :open-delay="300" placement="top">
-                            <el-button type="success" icon="el-icon-plus">Add to Cart</el-button>
-                        </el-tooltip>
-                    </div>
+                <el-table-column min-width="150" header-align="right" label="">
+                    <template slot-scope="scope">
+                        <div class="text-center table-actions">
+                            <el-tooltip content="Info" :open-delay="300" placement="top">
+                                <el-button type="success" icon="el-icon-plus" @click="() => { addToCart(scope.row) }">Add to Cart</el-button>
+                            </el-tooltip>
+                        </div>
+                    </template>
                 </el-table-column>
                 <!--                <el-table-column property="warehouse_id" label="warehouse_id"></el-table-column>-->
             </el-table>
@@ -75,6 +77,8 @@
 
 <script>
     import {getByBook} from '../../../../services/warehouses/warehouses_api'
+    import {addNewItems} from '../../../../services/cart/cart_services'
+    import {isAuthenticated} from '../../../../services/auth_services'
 
     export default {
         name: 'bookInfo',
@@ -119,11 +123,24 @@
                 }
             },
             async handleGetBook() {
+                if (!isAuthenticated()) {
+                    this.$router.push({name: 'login'})
+                }
                 this.centerDialogVisible = true
                 let res = await getByBook(this.bookDetail.ISBN)
                 console.log(res)
 
                 this.listWarehouses = res.data
+            },
+            addToCart(row) {
+                addNewItems([{
+                    book_info: {
+                        book_id: this.bookDetail.ISBN,
+                        book_title: this.bookDetail.book_title,
+                        author: this.bookDetail.author
+                    },
+                    ...row
+                }])
             }
         },
         mounted() {

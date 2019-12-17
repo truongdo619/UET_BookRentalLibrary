@@ -5,6 +5,12 @@ const removeAllItems = () => {
     removeLocalStorage(CART_CONST.CART_ITEMS)
 }
 
+const removeAItem = (warehouse_id) => {
+    let currCart = getLocalStorageObject(CART_CONST.CART_ITEMS)
+    let newItems = currCart.filter(item => (item.item.warehouse_id !== warehouse_id))
+    putLocalStorageObject(CART_CONST.CART_ITEMS, newItems)
+}
+
 const addNewItems = (itemsArr) => {
     let currCart = getLocalStorageObject(CART_CONST.CART_ITEMS)
     let newItems = itemsArr.map(item => ({item: item, num: 1}))
@@ -36,5 +42,6 @@ export {
     removeAllItems,
     addNewItems,
     changeNumOfItem,
-    getCartItems
+    getCartItems,
+    removeAItem
 }

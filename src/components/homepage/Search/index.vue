@@ -10,9 +10,9 @@
                 <el-select placeholder="Choose" v-model="category">
                     <el-option
                             v-for="item in categoryOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
+                            :key="item.category_id"
+                            :label="item.category_name"
+                            :value="item.category_id">
                     </el-option>
                 </el-select>
             </div>
@@ -47,6 +47,8 @@
 </template>
 
 <script>
+    import {getAllCategories} from '../../../services/category/categories_api'
+
     export default {
         name: 'Search',
         data: () => {
@@ -57,56 +59,11 @@
                 daterange: []
             }
         },
-        mounted() {
-            this.categoryOptions = [
-                { value: 'action-and-adventure', label: 'Action and adventure' },
-                { value: 'art', label: 'Art' },
-                { value: 'alternate-history', label: 'Alternate history' },
-                { value: 'autobiography', label: 'Autobiography' },
-                { value: 'anthology', label: 'Anthology' },
-                { value: 'biography', label: 'Biography' },
-                { value: 'chick-lit', label: 'Chick lit' },
-                { value: 'book-review', label: 'Book review' },
-                { value: 'childrens', label: 'Children\'s' },
-                { value: 'cookbook', label: 'Cookbook' },
-                { value: 'diary', label: 'Diary' },
-                { value: 'coming-of-age', label: 'Coming-of-age' },
-                { value: 'dictionary', label: 'Dictionary' },
-                { value: 'crime', label: 'Crime' },
-                { value: 'encyclopedia', label: 'Encyclopedia' },
-                { value: 'drama', label: 'Drama' },
-                { value: 'guide', label: 'Guide' },
-                { value: 'fairytale', label: 'Fairytale' },
-                { value: 'health', label: 'Health' },
-                { value: 'fantasy', label: 'Fantasy' },
-                { value: 'history', label: 'History' },
-                { value: 'graphic-novel', label: 'Graphic novel' },
-                { value: 'journal', label: 'Journal' },
-                { value: 'historical-fiction', label: 'Historical fiction' },
-                { value: 'math', label: 'Math' },
-                { value: 'horror', label: 'Horror' },
-                { value: 'memoir', label: 'Memoir' },
-                { value: 'mystery', label: 'Mystery' },
-                { value: 'prayer', label: 'Prayer' },
-                { value: 'paranormal-romance', label: 'Paranormal romance' },
-                { value: 'religion-spirituality-and-new-age', label: 'Religion, spirituality, and new age' },
-                { value: 'picture-book', label: 'Picture book' },
-                { value: 'textbook', label: 'Textbook' },
-                { value: 'poetry', label: 'Poetry' },
-                { value: 'review', label: 'Review' },
-                { value: 'political-thriller', label: 'Political thriller' },
-                { value: 'science', label: 'Science' },
-                { value: 'romance', label: 'Romance' },
-                { value: 'self-help', label: 'Self help' },
-                { value: 'satire', label: 'Satire' },
-                { value: 'travel', label: 'Travel' },
-                { value: 'science-fiction', label: 'Science fiction' },
-                { value: 'true-crime', label: 'True crime' },
-                { value: 'short-story', label: 'Short story' },
-                { value: 'suspense', label: 'Suspense' },
-                { value: 'thriller', label: 'Thriller' },
-                { value: 'young-adult', label: 'Young adult' }
-            ]
+        async mounted() {
+            let res = await getAllCategories({limit: -1})
+
+            console.log(res)
+            this.categoryOptions = res.data
         },
         methods: {
             querySearch(queryString, cb) {

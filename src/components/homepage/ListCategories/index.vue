@@ -60,7 +60,7 @@
         },
         async mounted() {
             let res = await getAllCategories({limit: 4})
-            console.log(res.data)
+            // console.log(res.data)
             this.categories = res.data.map((category, index) => ({
                 id: category.category_id,
                 name: category.category_name,

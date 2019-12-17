@@ -11,19 +11,20 @@
             </div>
             <el-col :span = "17" v-if="items.length !== 0" class="user-activity border_raidus">
                 <div class="post" v-for="item in items" :key="item.id">
-                    <BookItem :item="item"></BookItem>
+                    <BookItem :item="item.item" :reload-func="reloadItems"></BookItem>
                 </div>
             </el-col>
             <el-col :span="5" :offset="1" v-if="items.length !== 0" class="total">
                 <el-card style="min-width: 250px" class="box-card">
                     <div class="text item">
                         <span>Tạm tính:</span>
-                        <span class="float-right" >115.000đ</span>
+                        <span class="float-right" >${{priceSum}}</span>
                     </div>
                     <el-divider></el-divider>
                     <div class="text item" style="min-height: 30px">
                         <span>Thành tiền:</span>
-                        <strong class="float-right" >115.000đ</strong>
+                        <strong class="float-right" >${{priceSum}}</strong>
+                        <br/>
                         <small class="float-left">(Đã bao gồm VAT nếu có)</small>
                     </div>
                 </el-card>
@@ -46,38 +47,20 @@
             return {
                 image: cart,
                 user: null,
-                items : [
-                    {
-                       "id": 1,
-                        "name" : "Life of Pi",
-                        "image" : "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1320562005l/4214._SY75_.jpg",
-                        "rate" : 4,
-                        "date" : "Feb 24, 2019",
-                        "author" : "Yann Martel",
-                        "cost" : "$379.99"
-                    },
-                    {
-                        "id": 2,
-                        "name" : "Mình phải sống một tuổi trẻ rực rỡ",
-                        "image" : "https://s.gr-assets.com/assets/nophoto/book/50x75-a91bf249278a81aabab721ef782c4a74.png",
-                        "rate" : 5,
-                        "date" : "Apr 1, 2017",
-                        "cost" : "$379.99",
-                        "author" : "LiNi Thông Minh"
-                    }]
-
+                items : []
             }
         },
         mounted(){
-            let items = getCartItems()
-            console.log(items)
+            this.reloadItems()
         },
         methods:{
-            priceSum(){
-                return this.items.reduce((prev,cur) => prev + cur.total,0)
-            },
             quantitySum(){
                 return this.items.reduce((prev,cur) => prev + cur.quantity,0)
+            },
+            reloadItems(){
+                let items = getCartItems()
+                console.log(items)
+                this.items = items
             },
             addComma(num) {
                 let regexp = /\B(?=(\d{3})+(?!\d))/g
@@ -85,6 +68,11 @@
             },
             deleteItem(){
             }
+        },
+        computed: {
+            priceSum(){
+                return this.items.reduce((prev,cur) => prev + cur.item.price,0)
+            },
         }
     }
 </script>

@@ -137,10 +137,13 @@
                     book_info: {
                         book_id: this.bookDetail.ISBN,
                         book_title: this.bookDetail.book_title,
+                        book_cover: this.bookDetail.book_cover,
+                        book_rating: this.bookRating,
                         author: this.bookDetail.author
                     },
                     ...row
                 }])
+                this.centerDialogVisible = false
             }
         },
         mounted() {

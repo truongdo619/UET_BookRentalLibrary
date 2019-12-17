@@ -2,24 +2,27 @@
     <div class="comment">
         <b-card>
             <b-media no-body>
-                <img :src="item.image" class="image" />
+                <img :src="item.book_info.book_cover" class="image" />
 
                 <b-media-body class="ml-3">
                     <el-row>
-                        <span><a href="#!"><b class="cl-deepblue">{{item.name}}</b></a></span>
+                        <span><a href="#!" @click="handleBookDetail"><b class="cl-deepblue">{{item.book_info.book_title}}</b></a></span>
                         <span class="float-right"> rated it <el-rate
-                                v-model="item.rate"
+                                v-model="item.book_info.book_rating"
                                 disabled
                                 score-template="{value} points"></el-rate></span>
                     </el-row>
                     <el-row>
-                        <span>by: <a href="#!"><b class="cl-deepblue">{{item.author}}</b></a></span>
+                        <span>by: <a href="#!"><b class="cl-deepblue">{{item.book_info.author.author_name}}</b></a></span>
                     </el-row>
                     <el-row>
-                        <span><a href="#!"><b>{{item.cost}}</b></a></span>
+                        <span><a href="#!"><b>${{item.price}}</b></a></span>
                     </el-row>
+<!--                    <el-row>-->
+<!--                        <span>Rental date: {{item.date}}</span>-->
+<!--                    </el-row>-->
                     <el-row>
-                        <span>Rental date: {{item.date}}</span>
+                        <el-button type="text" @click="removeItem">Remove item</el-button>
                     </el-row>
                 </b-media-body>
             </b-media>
@@ -28,19 +31,30 @@
 </template>
 
 <script>
+    import {removeAItem} from '../../../services/cart/cart_services'
+
     export  default {
         name: "BookItem",
-        props : ['item'],
+        props : ['item', 'reloadFunc'],
         data (){
             return{
                 value : 4
+            }
+        },
+        methods : {
+            handleBookDetail() {
+                this.$router.push({name: 'book_detail', params: {id: this.item.book_info.book_id}})
+            },
+            removeItem() {
+                removeAItem(this.item.warehouse_id)
+                this.reloadFunc()
             }
         }
     }
 
 </script>
 
-<style>
+<style scoped>
     .comment .card{
         border: none;
     }
@@ -54,5 +68,9 @@
     }
     .cl-deepblue{
         color: #3b6d74!important;
+    }
+    .image {
+        max-width: 100%;
+        max-height: 100px;
     }
 </style>

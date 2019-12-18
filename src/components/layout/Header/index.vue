@@ -14,6 +14,7 @@
                             <span>{{userInfo.username}}</span>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item command="testapi">User page</el-dropdown-item>
+                                <el-dropdown-item command="settings">Settings</el-dropdown-item>
                                 <el-dropdown-item command="logout" divided>Log out</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
@@ -41,6 +42,8 @@
                     this.handleLogout()
                 } else if (type === 'testapi') {
                     this.$router.push({name: 'user'})
+                } else if (type === 'settings') {
+                    this.$router.push({name: 'UserUpdate'})
                 }
             },
             handleLogout() {

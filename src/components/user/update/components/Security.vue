@@ -34,7 +34,9 @@
 
 <script>
 
-export default {
+    import {updateUserInfo} from '../../../../services/users/user_api'
+
+    export default {
     name: 'Security',
     data: function() {
         let validateConfirmPassword = (rule, value, callback) => {
@@ -67,8 +69,8 @@ export default {
                         trigger: 'change'
                     },
                     {
-                        min: 8,
-                        message: 'Mật khẩu tối thiểu 8 kí tự',
+                        min: 5,
+                        message: 'Mật khẩu tối thiểu 5 kí tự',
                         trigger: 'blur'
                     }
                 ],
@@ -79,8 +81,8 @@ export default {
                         trigger: 'change'
                     },
                     {
-                        min: 8,
-                        message: 'Mật khẩu tối thiểu 8 kí tự',
+                        min: 5,
+                        message: 'Mật khẩu tối thiểu 5 kí tự',
                         trigger: 'change'
                     },
                     { validator: validateConfirmPassword, trigger: 'change' }
@@ -90,12 +92,28 @@ export default {
         }
     },
     methods: {
-        onSubmit() {
+         onSubmit() {
             this.errorMessage = null
             let _this_ = this
-            this.$refs['form'].validate((valid) => {
+            this.$refs['form'].validate( async (valid) => {
                 if (valid) {
                     _this_.isRequesting = true
+                    let res = await updateUserInfo({old_password: this.form.oldPassword, new_password: this.form.password})
+
+                    if (res === 'success') {
+                        this.$message({
+                            message: 'User information has been updated successfully',
+                            type: 'success',
+                            duration: 5 * 1000
+                        })
+                        _this_.isRequesting = false
+                    } else {
+                        this.$message({
+                            message: res,
+                            type: 'error',
+                            duration: 5 * 1000
+                        })
+                    }
                 } else {
                     return false
                 }

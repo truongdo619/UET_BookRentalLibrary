@@ -69,8 +69,34 @@ const rateBook = async (book_id, rating_num, comment) => {
     }
 }
 
+ const getUserInfo = async () => {
+     try {
+         let res = await authReq.get(USER.INFO)
+         return res ? res.data : null
+     } catch (err) {
+         alert(err)
+         return null
+     }
+ }
+
+const updateUserInfo = async (data) => {
+    let response = null
+    try {
+        response = await authReq.post(USER.UPDATE_INFO, JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        return response ? response.data : null
+    } catch (e) {
+        console.log(response)
+        return "Wrong password"
+    }
+}
 export {
     userLogin,
     register,
-    rateBook
+    rateBook,
+    getUserInfo,
+    updateUserInfo
 }

@@ -33,9 +33,17 @@
                 <form action="">
                     <div class="form-group">
                         <div class="row align-items-center">
-                            <label class="col-sm-3">Họ tên:</label>
+                            <label class="col-sm-3">First Name:</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" v-model="userInfo.name">
+                                <input type="text" class="form-control" v-model="userInfo.first_name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row align-items-center">
+                            <label class="col-sm-3">Last Name:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" v-model="userInfo.last_name">
                             </div>
                         </div>
                     </div>
@@ -49,54 +57,68 @@
                     </div>
                     <div class="form-group">
                         <div class="row align-items-center">
-                            <label class="col-sm-3">Địa chỉ :</label>
+                            <label class="col-sm-3">Cash:</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" v-model="userInfo.address">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row align-items-center">
-                            <label class="col-sm-3">Nơi làm việc:</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" v-model="userInfo.workPlace">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row align-items-center">
-                            <label class="col-sm-3">Số điện thoại:</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" v-model="userInfo.phone">
+                                <span style="color: #30688d; font-weight: 600">${{userInfo.cash}}</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="btn-list mt-4 text-right">
                         <button type="button" @click="reset" class="btn btn-secondary btn-space">Reset</button>
-                        <button type="button" @click="onSubmitEditUserInformation" class="btn btn-primary btn-space">Xác
+                        <button type="button" @click="dialogVisible = true" class="btn btn-primary btn-space">Xác
                             nhận
                         </button>
                     </div>
                 </form>
             </div>
         </div>
+        <el-dialog
+                title="Confirm"
+                :visible.sync="dialogVisible"
+                width="30%"
+                >
+            <span class="input-label">Password: </span>
+            <el-input placeholder="Password" v-model="password" show-password/>
 
+            <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">Cancel</el-button>
+    <el-button type="primary" @click="onSubmitEditUserInformation">Confirm</el-button>
+  </span>
+        </el-dialog>
     </div>
 </template>
 
 <script>
+    import {getUserInfo, updateUserInfo} from '../../../../services/users/user_api'
+
     export default {
         name: 'General',
         data: function () {
             return {
                 backupInfo: {},
-                userInfo: {}
+                userInfo: {},
+                dialogVisible: false,
+                password: ''
             }
         },
         methods: {
             async onSubmitEditUserInformation() {
-
+                let res = await updateUserInfo({first_name: this.userInfo.first_name, last_name: this.userInfo.last_name, old_password: this.password})
+                if (res === 'success') {
+                    this.$message({
+                        message: 'User information has been updated successfully',
+                        type: 'success',
+                        duration: 5 * 1000
+                    })
+                } else {
+                    this.$message({
+                        message: res,
+                        type: 'error',
+                        duration: 5 * 1000
+                    })
+                }
+                this.dialogVisible = false
             },
             reset() {
                 this.userInfo = Object.assign({}, this.backupInfo)
@@ -110,9 +132,19 @@
             }
         },
         async mounted() {
+            let res = await getUserInfo()
+            this.userInfo = res.data
+            this.backupInfo = JSON.parse(JSON.stringify(res.data))
         }
     }
 </script>
+
+<style>
+    .input-label {
+        display: inline-block;
+        width: 130px;
+    }
+</style>
 
 <style scoped>
     .card-title {

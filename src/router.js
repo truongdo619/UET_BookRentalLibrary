@@ -96,6 +96,17 @@ const router = new Router({
                     name: 'lendingComponent'
                 }
             ]
+        },
+        {
+            path: '/search',
+            component: MainLayout,
+            children: [
+                {
+                    path: '/',
+                    name: 'search',
+                    component: () => import('./views/SearchResult/index'),
+                }
+            ]
         }
     ]
 })

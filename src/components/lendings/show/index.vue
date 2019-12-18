@@ -1,97 +1,150 @@
 <template>
-    <el-col :span="20" :offset="2">
-        <h4>Sản phẩm đang cho mượn ({{this.items.length}} sản phẩm)</h4>
-        <el-row style="min-height: 500px; display: flex">
-            <div style="width: 100%;" v-if="items.length === 0">
-                <div class="not-found border_raidus">
-                    <img :src="image">
-                    <h5>Không có sản phẩm nào được tìm thấy</h5>
-                    <el-button type="primary">Quay lại trang chủ</el-button>
-                </div>
+    <div>
+        <el-col :span="20" :offset="2">
+            <div style="display:flex; justify-content: space-between">
+                <h4>Sản phẩm đang cho mượn ({{this.items.length}} sản phẩm)</h4>
+                <el-button type="primary" class="no-focus-outline" @click="dialogVisible = true">Đăng sách</el-button>
             </div>
-            <el-col :span = "17" v-if="items.length !== 0" class="user-activity border_raidus">
-                <div class="post" v-for="item in items" :key="item.id">
-                    <BookItem :item="item"></BookItem>
+            <el-row style="min-height: 500px; display: flex">
+                <div style="width: 100%;" v-if="items.length === 0">
+                    <div class="not-found border_raidus">
+                        <img :src="image">
+                        <h5>Không có sản phẩm nào được tìm thấy</h5>
+                        <el-button type="primary" class="no-focus-outline" @click="homepage">Quay lại trang chủ
+                        </el-button>
+                    </div>
                 </div>
-            </el-col>
-        </el-row>
-    </el-col>
+                <el-col :span="17" v-if="items.length !== 0" class="user-activity border_raidus">
+                    <div class="post" v-for="item in items" :key="item.id">
+                        <BookItem :item="item"></BookItem>
+                    </div>
+                </el-col>
+            </el-row>
+        </el-col>
 
+        <el-dialog
+                title="Book info"
+                :visible.sync="dialogVisible"
+                width="60%"
+                label-width="120px"
+        >
+
+            <el-form ref="form" :model="form" label-width="120px">
+                <el-form-item label="ISBN">
+                    <el-input v-model="form.book_id"></el-input>
+                </el-form-item>
+                <el-form-item label="Price">
+                    <el-input-number v-model="form.price" :controls-position="'right'" :min="0" :step="10"></el-input-number>
+                </el-form-item>
+                <el-form-item label="Address">
+                    <el-input type="textarea" v-model="form.address"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button @click="dialogVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="handleConfirm">Confirm</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+    </div>
 </template>
 
 <script>
     import cart from '../../../assets/images/ezgif.com-crop.gif'
     import BookItem from '../BookItem/index'
-    import {getUserLendings} from '../../../services/lendings/lendings_api'
+    import {getUserLendings, postUserlending} from '../../../services/lendings/lendings_api'
 
     export default {
         name: 'cartComponent',
         components: {BookItem},
-        data () {
+        data() {
             return {
                 image: cart,
                 user: null,
-                items : []
+                items: [],
+                dialogVisible: false,
+                form: {
+                    book_id: '',
+                    price: 0,
+                    address: '',
+                }
             }
         },
         async mounted() {
             await this.loadItems()
         },
-        methods:{
+        methods: {
             async loadItems() {
                 let res = await getUserLendings()
                 this.items = res.data
+            },
+            homepage() {
+                this.$router.push({name: 'home'})
+            },
+            async handleConfirm() {
+                await postUserlending(this.form)
+                this.loadItems()
+                this.dialogVisible = false
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    table th, td{
+    table th, td {
         text-align: center;
     }
-    .delete_btn{
+
+    .delete_btn {
         cursor: pointer;
     }
-    .result{
+
+    .result {
         margin-top: 40px;
         width: 50%;
         float: right;
     }
-    .border_raidus{
+
+    .border_raidus {
         border: 1px solid transparent;
         border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 8px 16px 0 rgba(7,17,27,.1);
+        box-shadow: 0 8px 16px 0 rgba(7, 17, 27, .1);
         box-sizing: border-box;
         background-color: #fff;
     }
-    .border_raidus .el-menu{
+
+    .border_raidus .el-menu {
         border-right: none;
     }
-    .bg_light_gray{
+
+    .bg_light_gray {
         background-color: #f4f9ff;
     }
-    .not-found{
+
+    .not-found {
         margin: 0 auto;
     }
-    .not-found img{
+
+    .not-found img {
         display: block;
         margin: 0 auto;
     }
-    .not-found button{
+
+    .not-found button {
         position: relative;
         left: 50%;
         transform: translateX(-50%);
         margin-bottom: 20px;
     }
-    .not-found h5{
+
+    .not-found h5 {
         text-align: center;
     }
 
     .user-activity {
         padding-top: 20px;
         margin-top: 20px;
+
         .user-block {
 
             .username,
@@ -101,7 +154,7 @@
                 padding: 2px 0;
             }
 
-            .username{
+            .username {
                 font-size: 16px;
                 color: #000;
             }
@@ -174,15 +227,20 @@
     .text-muted {
         color: #777;
     }
-    .total{
+
+    .total {
         margin-top: 20px;
     }
-    .text strong{
+
+    .text strong {
         position: relative;
         bottom: 10px;
-        color: #fe3834;font-size: 22px;font-weight: 400;
+        color: #fe3834;
+        font-size: 22px;
+        font-weight: 400;
     }
-    .summit{
+
+    .summit {
         width: 100%;
         margin-top: 15px;
     }

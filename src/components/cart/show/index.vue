@@ -54,20 +54,11 @@
             this.reloadItems()
         },
         methods:{
-            quantitySum(){
-                return this.items.reduce((prev,cur) => prev + cur.quantity,0)
-            },
             reloadItems(){
                 let items = getCartItems()
                 console.log(items)
                 this.items = items
             },
-            addComma(num) {
-                let regexp = /\B(?=(\d{3})+(?!\d))/g
-                return num.toString().replace(regexp, ',')
-            },
-            deleteItem(){
-            }
         },
         computed: {
             priceSum(){

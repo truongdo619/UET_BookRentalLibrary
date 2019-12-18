@@ -14,6 +14,21 @@ const getUserLendings = async (params) => {
     }
 }
 
+const postUserlending = async (data) => {
+    try {
+        let response = await authReq.post(USER.LEND, JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        return response ? response.data : null
+    } catch (e) {
+        alert(e)
+        return null
+    }
+}
+
 export {
-    getUserLendings
+    getUserLendings,
+    postUserlending
 }

@@ -24,7 +24,8 @@ const USER = {
     RATING: BACKEND_API + '/user/rate',
     BORROWING: BACKEND_API + '/user/borrowings',
     RETURN_BOOK: BACKEND_API + '/user/return',
-    LENDING: BACKEND_API + '/user/lendings'
+    LENDING: BACKEND_API + '/user/lendings',
+    LEND: BACKEND_API + '/user/lend'
 }
 
 const CATEGORY = {

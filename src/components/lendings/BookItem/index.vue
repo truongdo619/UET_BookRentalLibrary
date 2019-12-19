@@ -67,3 +67,10 @@
         color: #3b6d74!important;
     }
 </style>
+
+<style scoped>
+    .image {
+        max-width: 100%;
+        max-height: 150px;
+    }
+</style>

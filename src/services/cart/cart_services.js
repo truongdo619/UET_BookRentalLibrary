@@ -26,11 +26,14 @@ const addNewItems = (itemsArr) => {
 }
 
 const changeNumOfItem = (item, newNum) => {
+    console.log('changeNumOfItem ', item, newNum)
     let currCart = getLocalStorageObject(CART_CONST.CART_ITEMS)
     if (currCart === null) {
         putLocalStorageObject(CART_CONST.CART_ITEMS, [{item, num: newNum}])
     } else {
-        putLocalStorageObject(CART_CONST.CART_ITEMS, currCart.map(item => item.item.warehouse_id === item.warehouse_id ? {item, num: newNum}: item))
+        let newCart = currCart.map(currItem => (currItem.item.warehouse_id === item.warehouse_id ? {item, num: newNum}: currItem))
+        console.log(newCart)
+        putLocalStorageObject(CART_CONST.CART_ITEMS, newCart)
     }
 }
 

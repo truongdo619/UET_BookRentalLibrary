@@ -60,14 +60,12 @@ const router = new Router({
         },
         {
             path : '/cart',
-            component : () => import('./views/Cart/index'),
-            name : 'cart',
-            redirect : '/cart/show',
+            component : MainLayout,
             children: [
                 {
-                    path: 'show',
-                    component: () => import('./components/cart/show/index'),
-                    name: 'cartComponent'
+                    path: '/',
+                    component: () => import('./views/Cart/index'),
+                    name: 'cart'
                 }
             ]
         },

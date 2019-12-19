@@ -30,7 +30,7 @@
             <el-pagination
                     background
                     layout="prev, pager, next"
-                    :total="30">
+                    :total="this.commented.length">
             </el-pagination>
         </div>
 
@@ -54,9 +54,15 @@
         data() {
             return {
                 start: 1,
-                end: 24,
+                end: 10,
                 input: '',
                 commented: []
+            }
+        },
+        computed: {
+            update(){
+                return this.$store.getters.updateCommentBox;
+
             }
         },
         watch: {
@@ -64,6 +70,13 @@
                 console.log('Update commented', newVal, oldVal)
                 let res = await getRatingDetails(newVal)
                 this.commented = res.data
+            },
+            update: async function (newVal, oldVal) { // watch it
+                if (newVal == true){
+                    this.$store.dispatch("updateCommentBox", false);
+                    let res = await getRatingDetails(this.bookId)
+                    this.commented = res.data
+                }
             }
         }
     }

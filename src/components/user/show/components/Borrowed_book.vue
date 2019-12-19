@@ -1,7 +1,7 @@
 <template>
     <div class="user-activity">
         <div class="post" v-for="item in items">
-            <borrowed_book_item :item="item"></borrowed_book_item>
+            <Borrowed_book_item :item="item"></Borrowed_book_item>
         </div>
     </div>
 </template>
@@ -9,6 +9,7 @@
 <script>
 
     import Borrowed_book_item from "./Borrowed_book_item";
+
     export default {
         components: {Borrowed_book_item},
         data() {

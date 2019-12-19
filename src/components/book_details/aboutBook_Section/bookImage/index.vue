@@ -65,7 +65,8 @@
                     await rateBook(this.bookId, this.rateNum)
                 }
                 this.ratingDialogVisible = false
-                this.rateNum = 0
+                this.rateNum = 0;
+                this.$store.dispatch("updateCommentBox", true);
             }
         }
     }

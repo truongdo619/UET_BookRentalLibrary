@@ -6,19 +6,27 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        isAuthenticated: isAuthenticated()
+        isAuthenticated: isAuthenticated(),
+        updateCommentBox: false
     },
     mutations: {
         UPDATE_IS_AUTHENTICATED(state) {
             state.isAuthenticated = isAuthenticated()
+        },
+        UPDATE_COMMENT_BOX(state, value){
+            state.updateCommentBox = value;
         }
     },
     actions: {
         updateIsAuthenticated({commit}) {
             commit('UPDATE_IS_AUTHENTICATED')
+        },
+        updateCommentBox({commit}, value) {
+            commit('UPDATE_COMMENT_BOX', value);
         }
     },
     getters: {
-        isAuthenticated: state => state.isAuthenticated
+        isAuthenticated: state => state.isAuthenticated,
+        updateCommentBox: state => state.updateCommentBox
     }
 })

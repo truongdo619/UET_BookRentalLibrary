@@ -5,9 +5,10 @@
             <div class="search-area">
                 <search></search>
             </div>
+
+            <header-books-slider></header-books-slider>
         </div>
         <div class="home-body">
-            <header-books-slider></header-books-slider>
 
             <div class="category-area">
                 <list-categories></list-categories>
@@ -58,7 +59,7 @@
 
     .home-body {
         width: 100%;
-        transform: translateY(-7%);
+        margin-top:480px;
     }
 
     .search-area {
@@ -69,5 +70,8 @@
     .category-area {
         width: 70%;
         margin: auto;
+    }
+    .home-footer{
+        margin-top: 3%;
     }
 </style>

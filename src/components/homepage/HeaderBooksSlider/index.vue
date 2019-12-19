@@ -87,7 +87,6 @@
 
 <style lang="scss">
     .header-books-slider {
-
         .slick-arrow {
             padding: 25px;
             height: 90px;
@@ -172,5 +171,6 @@
 .header-books-slider {
     width: 70%;
     margin: auto;
+    margin-top: 100px;
 }
 </style>

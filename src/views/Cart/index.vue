@@ -54,6 +54,9 @@
                 this.activeStep = step - 1
             }
         },
+        mounted() {
+            this.$store.dispatch("restartNumBadge");
+        }
     }
 </script>
 

@@ -8,13 +8,16 @@
                 </div>
                 <div class="right-menu">
                     <div v-if="isAuth" >
-                        <el-button class="border_none no-focus-outline" icon="el-icon-shopping-cart-full" @click="handleCart">Cart</el-button>
+                        <el-badge :value="numBadge" :hidden="numBadge == 0" class="item">
+                            <el-button class="border_none no-focus-outline" icon="el-icon-shopping-cart-full" @click="handleCart" style="margin-right: 10px">Cart</el-button>
+                        </el-badge>
 
                         <el-dropdown @command="userCommand">
                             <span>{{userInfo.username}}</span>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item command="testapi">User page</el-dropdown-item>
                                 <el-dropdown-item command="settings">Settings</el-dropdown-item>
+                                <el-dropdown-item command="lending">Lending Page</el-dropdown-item>
                                 <el-dropdown-item command="logout" divided>Log out</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
@@ -44,6 +47,9 @@
                     this.$router.push({name: 'user'})
                 } else if (type === 'settings') {
                     this.$router.push({name: 'UserUpdate'})
+                }
+                else if (type === 'lending') {
+                    this.$router.push({name: 'lending'})
                 }
             },
             handleLogout() {
@@ -75,6 +81,9 @@
                     return {}
                 }
             },
+            numBadge(){
+                return this.$store.getters.numBadge;
+            }
         }
     }
 </script>
@@ -109,6 +118,7 @@
                 }
             }
         }
+
     }
     .border_none{
         border:none;
@@ -129,5 +139,13 @@
 
     .center-logo span:first-child {
         color: #f26767;
+    }
+</style>
+<style lang="scss">
+    .right-menu{
+        sup.el-badge__content{
+            top: 14px;
+            right: 32px;
+        }
     }
 </style>

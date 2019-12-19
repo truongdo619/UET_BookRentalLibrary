@@ -25,11 +25,23 @@
                     </el-row>
                     <el-row>
                         <span>Status: {{item.status}}</span>
-<!--                        0 / 1 : not available / available-->
+                        <!--                        0 / 1 : not available / available-->
                     </el-row>
                 </b-media-body>
             </b-media>
+            <el-button class="no-focus-outline" icon="el-icon-delete" circle style="position: absolute; right: 0; top: 0" @click="centerDialogVisible = true"></el-button>
         </b-card>
+        <el-dialog
+                title="Warning"
+                :visible.sync="centerDialogVisible"
+                width="30%"
+                center>
+            <span>Are you sure you want to delete this item?</span>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="centerDialogVisible = false">Cancel</el-button>
+            <el-button type="primary" @click="handleConfirmDelete">Confirm</el-button>
+          </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -39,12 +51,17 @@
         props : ['item'],
         data (){
             return{
-                value : 4
+                value : 4,
+                centerDialogVisible: false
             }
         },
         methods: {
             handleBookDetail() {
                 this.$router.push({name: 'book_detail', params: {id: this.item.book_id}})
+            },
+            handleConfirmDelete(){
+                this.centerDialogVisible = false;
+                this.$emit("handleDeleteItem", this.item.book_id)
             }
         }
     }

@@ -202,6 +202,7 @@
                     },
                     ...row
                 }])
+                this.$store.dispatch("updateNumBadge");
                 this.centerDialogVisible = false
             },
             update_rating_detail(){

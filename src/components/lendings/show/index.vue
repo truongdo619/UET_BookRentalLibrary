@@ -3,7 +3,7 @@
         <el-col :span="20" :offset="2">
             <div style="display:flex; justify-content: space-between">
                 <h4>Sản phẩm đang cho mượn ({{this.items.length}} sản phẩm)</h4>
-                <el-button type="primary" class="no-focus-outline" @click="dialogVisible = true">Đăng sách</el-button>
+                <el-button type="primary" class="no-focus-outline" @click="dialogVisible = true" style="margin-bottom: 5px;" :class="{add_margin : items.length !== 0}">Đăng sách</el-button>
             </div>
             <el-row style="min-height: 500px; display: flex">
                 <div style="width: 100%;" v-if="items.length === 0">
@@ -16,9 +16,17 @@
                 </div>
                 <el-col :span="17" v-if="items.length !== 0" class="user-activity border_raidus">
                     <div class="post" v-for="item in items" :key="item.id">
-                        <BookItem :item="item"></BookItem>
+                        <BookItem @handleDeleteItem="handleDeleteItem" :item="item"></BookItem>
                     </div>
                 </el-col>
+
+                <el-col :span="7" v-if="items.length !== 0" :offset="1" class="banner">
+                    <div class="lending-banner">
+
+                    </div>
+                    <h5><span style="font-size: 30px; color: #5a5e66; font-weight: bold">"</span> Join the book sharing community to read more, read better. <span style="font-size: 30px; color: #5a5e66; font-weight: bold">"</span></h5>
+                </el-col>
+
             </el-row>
         </el-col>
 
@@ -84,6 +92,9 @@
                 await postUserlending(this.form)
                 this.loadItems()
                 this.dialogVisible = false
+            },
+            handleDeleteItem(id){
+                // Do somethhing
             }
         }
     }
@@ -243,6 +254,27 @@
     .summit {
         width: 100%;
         margin-top: 15px;
+    }
+
+    .lending-banner{
+        min-height: 230px;
+        background-image: url("../../../assets/images/create_new.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: top center;
+    }
+    .banner{
+        h5{
+            text-align: center;
+            padding: 0 70px;
+            font-style: italic;
+            font-family: lato;
+            color: gray;
+            font-size: 18px;
+        }
+    }
+    .add_margin{
+        margin-right: 60px;
     }
 </style>
 

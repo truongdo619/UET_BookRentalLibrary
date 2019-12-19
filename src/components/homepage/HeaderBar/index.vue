@@ -9,11 +9,13 @@
         </div>
         <div class="right-menu">
             <div v-if="isAuthenticated">
-                <el-button type="text" class="margin-right-25 no-focus-outline"
-                           @click="handleCart">
-                    <font-awesome-icon class="right-menu-icon" :icon="['far', 'heart']"></font-awesome-icon>
-                    <span class="right-menu-title">Cart</span>
-                </el-button>
+                <el-badge :value="numBadge" :hidden="numBadge == 0" class="item">
+                    <el-button type="text" class="margin-right-25 no-focus-outline"
+                               @click="handleCart">
+                        <font-awesome-icon class="right-menu-icon" :icon="['far', 'heart']"></font-awesome-icon>
+                        <span class="right-menu-title">Cart</span>
+                    </el-button>
+                </el-badge>
                 <el-dropdown @command="userCommand">
                     <span>
                     <font-awesome-icon class="right-menu-icon" :icon="['far', 'user']"></font-awesome-icon>
@@ -84,15 +86,22 @@
                     return {}
                 }
             },
+            numBadge(){
+                return this.$store.getters.numBadge;
+            }
         }
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .header-bar {
         height: 100px;
         padding: 60px 60px 30px 60px;
         justify-content: space-between;
+        sup.el-badge__content{
+            top: 10px;
+            right: 32px;
+        }
     }
 
     #menu-bar {
@@ -131,4 +140,14 @@
         /*font-weight: 300;*/
     }
 
+</style>
+<style lang="scss">
+    .header-bar {
+        .right-menu{
+            sup.el-badge__content{
+                top: 10px;
+                right: 30px;
+            }
+        }
+    }
 </style>

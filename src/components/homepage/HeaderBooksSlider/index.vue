@@ -1,6 +1,6 @@
 <template>
 <div class="header-books-slider">
-    <slick ref="slick" :options="slickOptions">
+    <slick ref="slick" :options="slickOptions" @afterChange="handleAfterChange">
         <div v-for="book of books" :key="book.id" class="book-content">
             <div class="book-cover"><img :src="book.book_cover" :alt="book.book_title"></div>
             <div class="book-intro">
@@ -53,6 +53,9 @@
             handleBookDetail(bookId) {
                 console.log('hey')
                 this.$router.push({name: 'book_detail', params: {id: bookId}})
+            },
+            handleAfterChange(event, slick, currentSlide) {
+                console.log('handleAfterChange', event, slick, currentSlide);
             }
         },
         async mounted() {

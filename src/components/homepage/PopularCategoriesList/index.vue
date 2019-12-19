@@ -2,17 +2,15 @@
     <div class="popular-categories-list">
         <el-row>
             <el-col :span="9" class="audio-list">
-                <h1 class="col-title">Audio Books</h1>
+                <h1 class="col-title">Best Seller</h1>
                 <div class="col-content">
                     <div class="col-item flex-row-center" v-for="audio in audioBooksData" :key="audio.name">
                         <div class="play-btn" @click="audio.isPlaying = !audio.isPlaying" :style="{border: audio.isPlaying ? 'none' : '1px solid black'}">
-                            <font-awesome-icon v-if="!audio.isPlaying" icon="play"></font-awesome-icon>
-                            <font-awesome-icon v-else icon="pause"></font-awesome-icon>
+                            <font-awesome-icon icon="book"></font-awesome-icon>
                         </div>
                         <div class="audio-info">
                             <h5 class="audio-info--title">{{audio.name}}</h5>
                             <p class="audio-info--artist">{{audio.artist}}</p>
-                            <p class="audio-info--length">{{audio.time}} min sample</p>
                         </div>
                         <div class="audio-cost">
                             <span class="cost-currency">$</span>
@@ -29,17 +27,32 @@
             <el-col :span="15" class="popular-list col-title">
                 <h1 class="col-title">Popular Categories</h1>
                 <div class="popular-list">
-                    <slick ref="slick" :options="slickOptions">
+                    <slick ref="slick" :options="slickOptions" @afterChange="handleAfterChange">
                         <div v-for="category in popular_categories" :key="category.name" class="category-content">
-<!--                            <div class="-cover"><img :src="category.previewImg" :alt="category.name"></div>-->
-                            <div class="category-card" :style="{backgroundImage: category.previewImg}">
-                                <p>{{category.name}}</p>
-                                <div class="category-stat">
-                                    <div class="num-book">{{category.num_books}} Books</div>
-                                    <span class="new-book">{{category.new_arrival}} New Arrivals</span>
+<!--                            <div class="category-cover"><img :src="category.previewImg" :alt="category.name"></div>-->
+<!--                            <div class="category-card" :style="{backgroundImage: category.previewImg}">-->
+<!--                                <p>{{category.name}}</p>-->
+<!--                                <div class="category-stat">-->
+<!--                                    <div class="num-book">{{category.num_books}} Books</div>-->
+<!--                                    <span class="new-book">{{category.new_arrival}} New Arrivals</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+                            <b-card
+                                    :img-src="category.previewImg"
+                                    img-alt="Image"
+                                    img-top
+                                    tag="article"
+                                    style="max-width: 20rem;"
+                                    class="mb-2"
+                            >
+                                <div class="category-popular-item-des">
+                                    <div>{{category.name}}</div>
+                                    <el-button size="small" round>{{category.num_books}} Books</el-button>
                                 </div>
-                            </div>
+                            </b-card>
                         </div>
+
                     </slick>
                 </div>
             </el-col>
@@ -50,16 +63,16 @@
 <script>
     import Slick from 'vue-slick'
 
-    import Detective from '../../../assets/images/detective_sherlock.png'
-    import Romantic from '../../../assets/images/romantic_theNotebook.jpg'
+    import Detective from '../../../assets/images/detective.png'
+    import Romantic from '../../../assets/images/romantic.jpg'
     import Horror from '../../../assets/images/horror_abc.jpg'
-    import History from '../../../assets/images/history_sapiens.jpg'
+    import History from '../../../assets/images/history.jpg'
 
 
     import { library } from '@fortawesome/fontawesome-svg-core'
-    import { faPlay, faPause, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
+    import { faBook, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 
-    library.add(faPlay, faEllipsisV, faPause)
+    library.add(faBook, faEllipsisV)
 
     export default {
         name: 'PopularCategoriesList',
@@ -71,31 +84,33 @@
                 audioBooksData: [
                     {
                         name: 'THE BEST OF ME',
-                        artist: 'By Nicholas Sparks',
+                        artist: 'Nicholas Sparks',
                         time: '1:00',
-                        cost: 25,
-                        isPlaying: false
+                        cost: 25
                     },
                     {
                         name: 'Pride and Prejudice',
                         artist: 'Jnae Austen',
                         time: '1:00',
-                        cost: 25,
-                        isPlaying: false
+                        cost: 25
                     },
                     {
                         name: 'Emotional Design',
                         artist: 'Donald Norman',
                         time: '1:00',
-                        cost: 25,
-                        isPlaying: false
+                        cost: 25
                     },
                     {
                         name: 'Rome and Juliet',
                         artist: 'William Shakespeare',
                         time: '1:00',
-                        cost: 25,
-                        isPlaying: false
+                        cost: 25
+                    },
+                    {
+                        name: 'THE BEST OF ME',
+                        artist: 'Nicholas Sparks',
+                        time: '1:00',
+                        cost: 25
                     }
                 ],
                 popular_categories: [
@@ -141,6 +156,11 @@
                     prevArrow: '<button type="button" data-role="none" class="control-arrows slick-prev slick-arrow" aria-label="Previous" role="button"><div class="icon-arrow"></div></button>',
                 }
             }
+        },
+        methods : {
+            handleAfterChange(event, slick, currentSlide) {
+                console.log(currentSlide);
+            }
         }
     }
 </script>
@@ -154,12 +174,82 @@
         }
     }
     .popular-list {
+
+        .slick-track{
+            padding-top: 20px;
+        }
+        .slick-center{
+            .category-content{
+                position: relative;
+                bottom: 20px;
+            }
+            .category-popular-item-des{
+                button{
+                    opacity: 1!important;
+                    background-color: #d96464!important;
+
+                }
+            }
+        }
+
+        .slick-list{
+            margin-top: 50px;
+        }
+        .slick-slide{
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+    .category-content{
+        .card{
+            border-radius: 20px;
+            overflow: hidden;
+            .category-popular-item-des{
+                button{
+                    font-weight: bold;
+                    opacity: 0.8;
+                    color: white;
+                    border-color: transparent;
+                    background-color: #9e9e9e;
+
+                }
+            }
+        }
+        .card-body{
+            padding: 0;
+            height: 0px;
+            .category-popular-item-des{
+                position: relative;
+                top:-100px;
+                left: 20px;
+                color: white;
+                div{
+
+                    font-size: 28px;
+
+                    font-weight: 900;
+                }
+
+            }
+        }
+    }
+        .category-cover{
+            img{
+                /*max-height: 200px;*/
+                /*max-width: 200px;*/
+            }
+        }
+        .card-img-top{
+
+        }
         .slick-arrow {
-            padding: 25px;
-            height: 90px;
-            width: 90px;
+            top: -80px;
+            right : 0px;
+            left: auto;
+            padding: 10px;
+            height: 50px;
+            width:50px;
             border-radius: 12px;
-            background-color: #fcf3f3;
+            background-color: #fcf3f3!important;;
 
             &:before {
                 font-size: 20px;
@@ -180,14 +270,17 @@
         }
 
         .slick-next {
-            right: -130px;
+            position: absolute;
             .icon-arrow {
                 background-image: url('../../../assets/images/angle-right.svg') !important;
             }
         }
 
+        .slick-arrow:hover{
+            background-color: #d96464!important;
+        }
         .slick-prev {
-            left: -130px;
+            right : 70px;
             .icon-arrow {
                 background-image: url('../../../assets/images/angle-left.svg') !important;
             }
@@ -199,10 +292,6 @@
                 width: 30%;
             }
 
-            .slick-active.slick-center {
-                height: 260px;
-                width: 36%
-            }
         }
     }
 </style>
@@ -210,7 +299,7 @@
 <style scoped lang="scss">
 .popular-categories-list {
     width: 100%;
-    height: 100px;
+    height: 100%;
     padding-top: 110px;
 
     .col-title {
@@ -247,7 +336,7 @@
                     background-color: white;
                     justify-content: center;
                     align-items: center;
-                    padding: 0 0 2px 4px;
+                    padding: 0 0 -2px 0px;
                     margin-right: 10px;
                 }
 

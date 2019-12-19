@@ -12,7 +12,13 @@
             <div class="category-area">
                 <list-categories></list-categories>
                 <popular-categories-list></popular-categories-list>
+                <top-book></top-book>
             </div>
+
+            <praise></praise>
+        </div>
+        <div class="home-footer">
+            <Footer></Footer>
         </div>
     </div>
 </template>
@@ -23,9 +29,14 @@
     import HeaderBooksSlider from '../../components/homepage/HeaderBooksSlider/index'
     import ListCategories from '../../components/homepage/ListCategories/index'
     import PopularCategoriesList from '../../components/homepage/PopularCategoriesList/index'
+    import TopBook from "../../components/homepage/TopBook/index";
+    import Footer from "../../components/layout/Footer/index";
+    import Praise from "../../components/homepage/Praise/index";
     export default {
         name: 'Home',
-        components: {PopularCategoriesList, ListCategories, HeaderBooksSlider, Search, HeaderBar}
+        components: {
+            Praise,
+            Footer, TopBook, PopularCategoriesList, ListCategories, HeaderBooksSlider, Search, HeaderBar}
     }
 </script>
 
@@ -47,7 +58,7 @@
 
     .home-body {
         width: 100%;
-        transform: translateY(-26%);
+        transform: translateY(-7%);
     }
 
     .search-area {

@@ -105,7 +105,8 @@ const router = new Router({
                     component: () => import('./views/SearchResult/index'),
                 }
             ]
-        }
+        },
+        { path: "*", component : () => import('./views/ErrorPage/404')  }
     ]
 })
 

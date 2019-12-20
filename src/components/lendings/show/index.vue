@@ -57,7 +57,7 @@
 </template>
 
 <script>
-    import cart from '../../../assets/images/ezgif.com-crop.gif'
+    import cart from '../../../assets/images/shop.gif'
     import BookItem from '../BookItem/index'
     import {getUserLendings, postUserlending} from '../../../services/lendings/lendings_api'
 

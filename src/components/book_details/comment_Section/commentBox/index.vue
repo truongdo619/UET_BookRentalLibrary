@@ -82,7 +82,7 @@
             update: async function (newVal, oldVal) { // watch it
                 if (newVal == true){
                     this.$store.dispatch("updateCommentBox", false);
-                    let res = await getRatingDetails(this.bookId)
+                    let res = await getRatingDetails(this.bookId, this.currentPage)
                     this.commented = res.data
                 }
             }

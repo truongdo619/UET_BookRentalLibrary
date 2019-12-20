@@ -39,6 +39,7 @@
     import Book_rental from "./components/Book_rental";
     import Borrowed_book from "./components/Borrowed_book";
     import Payout from "./components/Payout";
+    import {getUserInfo} from "../../../services/users/user_api";
 
     export default {
         name: 'Profile',
@@ -46,9 +47,10 @@
         data() {
             return {
                 user: {
-                    name: 'Truong',
+                    name: 'admin',
                     email: 'admin@test.com',
-                    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+                    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+                    city: 'Ha Noi'
                 },
                 activeTab: 'activity'
             }
@@ -57,11 +59,16 @@
             this.getUser()
         },
         methods: {
-            getUser() {
-                this.user = {
-                    name: 'Truong',
-                    email: 'admin@test.com',
-                    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+            async getUser() {
+                let res = await getUserInfo();
+                console.log(res.data.first_name)
+                if (res){
+                    this.user = {
+                        name: res.data.first_name,
+                        email: res.data.email,
+                        avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+                        city: 'Ha Noi'
+                    }
                 }
             }
         }

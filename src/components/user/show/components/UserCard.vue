@@ -24,11 +24,11 @@
           <div class="text-muted">
             <div>
               <span >Email: </span>
-              <span>{{email}}</span>
+              <span>{{user.email}}</span>
             </div>
             <div>
               <span style="padding-right: 11px;">City: </span>
-              <span>{{city}}</span>
+              <span>{{user.city}}</span>
             </div>
           </div>
         </div>
@@ -70,40 +70,40 @@
         <div class="user-bio-section-body">
           <div class="progress-item">
             <i class="el-icon-star-on" style="color: #99A9BF"></i>
-            <el-progress :percentage="0" />
+            <el-progress :percentage="rating_detail[1]" />
           </div>
           <div class="progress-item">
             <i class="el-icon-star-on" style="color: #99A9BF"></i>
             <i class="el-icon-star-on" style="color: #99A9BF"></i>
-            <el-progress :percentage="10" />
+            <el-progress :percentage="rating_detail[2]" />
           </div>
           <div class="progress-item">
             <i class="el-icon-star-on" style="color: #F7BA2A"></i>
             <i class="el-icon-star-on" style="color: #F7BA2A"></i>
             <i class="el-icon-star-on" style="color: #F7BA2A"></i>
-            <el-progress :percentage="20" />
-          </div>
-          <div class="progress-item">
-            <i class="el-icon-star-on" style="color: #FF9900"></i>
-            <i class="el-icon-star-on" style="color: #FF9900"></i>
-            <i class="el-icon-star-on" style="color: #FF9900"></i>
-            <i class="el-icon-star-on" style="color: #FF9900"></i>
-            <el-progress :percentage="30" />
+            <el-progress :percentage="rating_detail[3]" />
           </div>
           <div class="progress-item">
             <i class="el-icon-star-on" style="color: #FF9900"></i>
             <i class="el-icon-star-on" style="color: #FF9900"></i>
             <i class="el-icon-star-on" style="color: #FF9900"></i>
             <i class="el-icon-star-on" style="color: #FF9900"></i>
+            <el-progress :percentage="rating_detail[4]" />
+          </div>
+          <div class="progress-item">
             <i class="el-icon-star-on" style="color: #FF9900"></i>
-            <el-progress :percentage="40" />
+            <i class="el-icon-star-on" style="color: #FF9900"></i>
+            <i class="el-icon-star-on" style="color: #FF9900"></i>
+            <i class="el-icon-star-on" style="color: #FF9900"></i>
+            <i class="el-icon-star-on" style="color: #FF9900"></i>
+            <el-progress :percentage="rating_detail[5]" />
           </div>
           <div style="margin-top: 7px">
             <span>Total: {{total_rating}}</span>
           </div>
           <div>
             <el-rate
-                    v-model="aver_rating"
+                    v-model="bookRating"
                     disabled
                     show-score
                     text-color="#ff9900"
@@ -123,15 +123,19 @@ export default {
   components: { PanThumb },
   data(){
     return{
-            total_rating : 10,
-            aver_rating : 4,
-            email: 'admin@test.com',
-            city : 'Ha Noi',
             dynamicTags: [{ name : 'Fiction', type:''}, {name : 'Romantic', type : 'success'}, {name : 'Horror', type : 'info'}],
             inputVisible: false,
             inputValue: '',
             type  : ['', 'success', 'info', 'danger', 'warning'],
-            type_index : 0
+            type_index : 0,
+            rating_detail :{
+              1 : 0,
+              2 : 0,
+              3 : 0,
+              4 : 0,
+              5 : 0
+            },
+            rating : [2,3,3,4,4,4,5,5,5,5]
     }
   },
   props: {
@@ -145,6 +149,9 @@ export default {
         }
       }
     }
+  },
+  mounted() {
+    this.update_rating_detail();
   },
   methods:{
     handleClose(tag) {
@@ -168,7 +175,40 @@ export default {
     },
     openUpdatePage(){
       this.$router.push('/user/update')
+    },
+    update_rating_detail(){
+      let result = {
+        1 : 0,
+        2 : 0,
+        3 : 0,
+        4 : 0,
+        5 : 0
+      }
+      for (let i = 0; i < this.rating.length; i++){
+        result[this.rating[i]] ++;
+      }
+      for (let i = 1; i <= 4 ;i++){
+        result[i] = Math.floor(result[i] / this.rating.length * 100) ;
+      }
+      result[5] = 100 - result[1] - result[2] - result[3] - result[4]
+
+      console.log(result)
+      this.rating_detail = result;
     }
+  },
+  computed: {
+    total_rating(){
+      return this.rating.length;
+    },
+    bookRating() {
+      if (this.rating && this.rating.length > 0) {
+        this.update_rating_detail();
+        return Math.floor(this.rating.reduce((sum, current) => sum + current) / this.rating.length)
+      } else {
+        return 0
+      }
+    }
+
   }
 }
 </script>

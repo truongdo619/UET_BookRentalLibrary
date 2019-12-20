@@ -6,7 +6,7 @@
                 <div class="not-found border_raidus">
                     <img :src="image">
                     <h5>Không có sản phẩm nào được tìm thấy</h5>
-                    <el-button type="primary">Quay lại trang chủ</el-button>
+                    <el-button type="primary" @click="homepage">Quay lại trang chủ</el-button>
                 </div>
             </div>
             <el-col :span="17" v-if="items.length !== 0" class="user-activity border_raidus">
@@ -68,6 +68,9 @@
                 }))
                 this.$emit('update:paymentInfo', newInfo)
                 this.nextStepFunc()
+            },
+            homepage() {
+                this.$router.push({name: 'home'})
             }
         },
         computed: {

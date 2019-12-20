@@ -106,6 +106,24 @@ const router = new Router({
                 }
             ]
         },
+        {
+            path: '/admin',
+            component: () => import('./components/admin/Components/layout/index'),
+            redirect:'/admin/show',
+
+            children: [
+                {
+                    path: 'show',
+                    component: () => import('./views/admin/index'),
+                    name: 'AdminIndex'
+                },
+                {
+                    path: 'confirm',
+                    component: () => import('./views/admin/confirm'),
+                    name: 'confirm'
+                }
+            ]
+        },
         { path: "*", component : () => import('./views/ErrorPage/404')  }
     ]
 })

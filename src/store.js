@@ -9,7 +9,9 @@ export default new Vuex.Store({
         isAuthenticated: isAuthenticated(),
         updateCommentBox: false,
         numBadge : 0,
-        totalRating : 0
+        totalRating : 0,
+        isCollapse: false,
+        tagViews :  [{ title : 'admin-show', path : "/admin/show", "query" : "", fullPath : "/admin/show"}],
     },
     mutations: {
         UPDATE_IS_AUTHENTICATED(state) {
@@ -26,6 +28,33 @@ export default new Vuex.Store({
         },
         UPDATE_TOTAL_RATING(state, value){
             state.totalRating = value;
+        },
+        COLLAPSE_SIDE_BAR: (state) => {
+            state.isCollapse = !state.isCollapse;
+        },
+        SET_COLLAPSED: (state) => {
+            state.isCollapse = true
+        },
+        ADD_TAG_VIEW(state, tag){
+            if (state.tagViews.some(v => v.path === tag.path)) return
+            let title = tag.path;
+            let index = title.lastIndexOf('/');
+            title = title.substring(index+1);
+            console.log(title);
+            title = !isNaN(title) ? '-' + title : '';
+            state.tagViews.push(
+                Object.assign({}, tag, {
+                    title: tag.fullPath.replace(/\//g, "-").substring(1,tag.fullPath.length) || 'no-name'
+                })
+            )
+        },
+        DEL_VISITED_VIEW: (state, view) => {
+            for (const [i, v] of state.tagViews.entries()) {
+                if (v.path === view.path) {
+                    state.tagViews.splice(i, 1)
+                    break
+                }
+            }
         }
     },
     actions: {
@@ -43,12 +72,23 @@ export default new Vuex.Store({
         },
         updateTotalRating({commit}, value) {
             commit('UPDATE_TOTAL_RATING', value);
-        }
+        },
+        collapseSideBar({commit}){
+            commit('COLLAPSE_SIDE_BAR')
+        },
+        async addView({commit}, tag) {
+            commit('ADD_TAG_VIEW', tag);
+        },
+        async delView({commit}, tag) {
+            commit('DEL_VISITED_VIEW', tag);
+        },
     },
     getters: {
         isAuthenticated: state => state.isAuthenticated,
         updateCommentBox: state => state.updateCommentBox,
         numBadge: state => state.numBadge,
-        totalRating: state => state.totalRating
+        totalRating: state => state.totalRating,
+        isCollapse:state => state.isCollapse,
+        tagViews: state => state.tagViews,
     }
 })

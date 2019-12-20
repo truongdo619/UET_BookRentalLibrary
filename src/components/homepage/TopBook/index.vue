@@ -23,6 +23,7 @@
                                                 disabled-void-color="#9a9696"
                                                 v-model="rating"
                                                 disabled
+                                                :colors="['black', 'black', 'black']"
                                                 score-template="{value} points">
                                         </el-rate>
                                     </el-row>

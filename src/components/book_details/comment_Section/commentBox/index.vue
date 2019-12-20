@@ -29,8 +29,11 @@
             <!--            <rate v-for="item in rated" :item="item" ></rate>-->
             <el-pagination
                     background
+                    :current-page.sync="currentPage"
                     layout="prev, pager, next"
-                    :total="this.commented.length">
+                    :page-size="5"
+                    @current-change="handleCurrentChange"
+                    :total="this.$store.getters.totalRating">
             </el-pagination>
         </div>
 
@@ -53,8 +56,7 @@
         components: {Comment},
         data() {
             return {
-                start: 1,
-                end: 10,
+                currentPage : 1,
                 input: '',
                 commented: []
             }
@@ -63,6 +65,12 @@
             update(){
                 return this.$store.getters.updateCommentBox;
 
+            },
+            start(){
+                return (this.currentPage - 1) * 5 + 1
+            },
+            end(){
+                return this.currentPage * 5
             }
         },
         watch: {
@@ -77,6 +85,12 @@
                     let res = await getRatingDetails(this.bookId)
                     this.commented = res.data
                 }
+            }
+        },
+        methods : {
+            async handleCurrentChange(val) {
+                let res = await getRatingDetails(this.bookId, val)
+                this.commented = res.data
             }
         }
     }

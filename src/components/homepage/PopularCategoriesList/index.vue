@@ -107,7 +107,7 @@
                         cost: 25
                     },
                     {
-                        name: 'THE BEST OF ME',
+                        name: 'THE BEST',
                         artist: 'Nicholas Sparks',
                         time: '1:00',
                         cost: 25

@@ -1,12 +1,12 @@
 <template>
 <div class="header-books-slider">
     <slick ref="slick" :options="slickOptions" @afterChange="handleAfterChange">
-        <div v-for="book of books" :key="book.id" class="book-content">
+        <div v-for="book of books" :key="book.id" class="book-content" >
             <div class="book-cover"><img :src="book.book_cover" :alt="book.book_title"></div>
             <div class="book-intro">
-                <div @click="() => {handleBookDetail(book.id)}">
-                <p style="font-weight: bold;">{{book.book_title}}</p>
-                <p @click="() => {handleBookDetail(book.id)}">READ BOOK</p></div>
+                <div :book_id="book.id" >
+                <p class="handle_click" style="font-weight: bold;">{{book.book_title}}</p>
+                <p class="handle_click">READ BOOK</p></div>
                 <el-rate v-model="book.rating" disabled :colors="['black', 'black', 'black']"  void-color="black"></el-rate>
             </div>
         </div>
@@ -20,6 +20,7 @@
     import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
     import {getTopBooks} from '../../../services/books/books_api'
+    import $ from 'jquery'
 
     library.add(faChevronRight, faChevronLeft)
 
@@ -50,15 +51,12 @@
             }
         },
         methods: {
-            handleBookDetail(bookId) {
-                console.log('hey')
-                this.$router.push({name: 'book_detail', params: {id: bookId}})
-            },
             handleAfterChange(event, slick, currentSlide) {
                 console.log('handleAfterChange', event, slick, currentSlide);
             }
         },
         async mounted() {
+
             let data = await getTopBooks()
             console.log(data)
             this.books = data.data.map(book => ({
@@ -69,6 +67,11 @@
             }))
             // this.reInit()
             // this.$refs.slick.reSlick()
+            $('.header-books-slider').on('click', (e) => {
+                if (e.target.className === 'handle_click'){
+                    this.$router.push({name: 'book_detail', params: {id: e.target.parentElement.getAttribute("book_id")}})
+                }
+            });
         },
         watch: {
             books: function () {

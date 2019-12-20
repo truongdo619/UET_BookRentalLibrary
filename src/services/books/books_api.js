@@ -25,11 +25,12 @@ const getBookDetails = async (bookId) => {
     }
 }
 
-const getRatingDetails = async (bookId) => {
+const getRatingDetails = async (bookId, page = 1) => {
     try {
         let res = await authReq.get(BOOKS.RATINGS, {
             params: {
-                'book_id': bookId
+                'book_id': bookId,
+                'page' : page
             }
         })
         return res ? res.data : null

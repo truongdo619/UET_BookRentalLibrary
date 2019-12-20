@@ -218,7 +218,7 @@
                 }
                 for (let i = 1; i <= 4 ;i++){
                     console.log(result[i])
-                    result[i] = Math.floor(result[i] / this.bookDetail.rating.length) * 100;
+                    result[i] = Math.floor(result[i] / this.bookDetail.rating.length * 100) ;
                 }
                 result[5] = 100 - result[1] - result[2] - result[3] - result[4]
                 this.rating_detail = result;

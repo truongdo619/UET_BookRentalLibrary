@@ -36,6 +36,7 @@
             let response = await getBookDetails(id)
             if (response) {
                 this.bookInfo = response.data[0]
+                await this.$store.dispatch("updateTotalRating", this.bookInfo.rating.length);
             }
         },
         computed: {
@@ -50,9 +51,11 @@
                     let {id} = this.$route.params
                     this.bookId = id
                     console.log('book detail: ' + this.bookId)
-                    let response = await getBookDetails(id)
+                    let response = await getBookDetails(id);
+
                     if (response) {
-                        this.bookInfo = response.data[0]
+                        this.bookInfo = response.data[0];
+                        await this.$store.dispatch("updateTotalRating", this.bookInfo.rating.length);
                     }
                 }
             }

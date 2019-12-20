@@ -8,7 +8,8 @@ export default new Vuex.Store({
     state: {
         isAuthenticated: isAuthenticated(),
         updateCommentBox: false,
-        numBadge : 0
+        numBadge : 0,
+        totalRating : 0
     },
     mutations: {
         UPDATE_IS_AUTHENTICATED(state) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
         },
         RESTART_NUM_BADGE(state){
             state.numBadge = 0;
+        },
+        UPDATE_TOTAL_RATING(state, value){
+            state.totalRating = value;
         }
     },
     actions: {
@@ -36,11 +40,15 @@ export default new Vuex.Store({
         },
         restartNumBadge({commit}) {
             commit('RESTART_NUM_BADGE');
+        },
+        updateTotalRating({commit}, value) {
+            commit('UPDATE_TOTAL_RATING', value);
         }
     },
     getters: {
         isAuthenticated: state => state.isAuthenticated,
         updateCommentBox: state => state.updateCommentBox,
-        numBadge: state => state.numBadge
+        numBadge: state => state.numBadge,
+        totalRating: state => state.totalRating
     }
 })

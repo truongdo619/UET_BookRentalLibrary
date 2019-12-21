@@ -18,6 +18,7 @@
                                 <el-dropdown-item command="testapi">User page</el-dropdown-item>
                                 <el-dropdown-item command="settings">Settings</el-dropdown-item>
                                 <el-dropdown-item command="lending">Lending Page</el-dropdown-item>
+                                <el-dropdown-item command="borrowing">Borrowing Page</el-dropdown-item>
                                 <el-dropdown-item command="logout" divided>Log out</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
@@ -50,6 +51,9 @@
                 }
                 else if (type === 'lending') {
                     this.$router.push({name: 'lending'})
+                }
+                else if (type === 'borrowing') {
+                    this.$router.push({name: 'borrowing'})
                 }
             },
             handleLogout() {

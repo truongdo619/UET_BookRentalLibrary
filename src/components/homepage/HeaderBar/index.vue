@@ -25,6 +25,7 @@
                         <el-dropdown-item command="testapi">User page</el-dropdown-item>
                         <el-dropdown-item command="settings">Settings</el-dropdown-item>
                         <el-dropdown-item command="lending">Lending Page</el-dropdown-item>
+                        <el-dropdown-item command="borrowing">Borrowing Page</el-dropdown-item>
                         <el-dropdown-item command="logout" divided>Log out</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
@@ -61,9 +62,10 @@
                     this.$router.push({name: 'user'})
                 } else if (type === 'settings') {
                     this.$router.push({name: 'UserUpdate'})
-                }
-                else if (type === 'lending') {
+                } else if (type === 'lending') {
                     this.$router.push({name: 'lending'})
+                } else if (type === 'borrowing') {
+                    this.$router.push({name: 'borrowing'})
                 }
             },
             handleLogout() {
@@ -86,7 +88,7 @@
                     return {}
                 }
             },
-            numBadge(){
+            numBadge() {
                 return this.$store.getters.numBadge;
             }
         }
@@ -98,7 +100,8 @@
         height: 100px;
         padding: 60px 60px 30px 60px;
         justify-content: space-between;
-        sup.el-badge__content{
+
+        sup.el-badge__content {
             top: 10px;
             right: 32px;
         }
@@ -143,8 +146,8 @@
 </style>
 <style lang="scss">
     .header-bar {
-        .right-menu{
-            sup.el-badge__content{
+        .right-menu {
+            sup.el-badge__content {
                 top: 10px;
                 right: 30px;
             }

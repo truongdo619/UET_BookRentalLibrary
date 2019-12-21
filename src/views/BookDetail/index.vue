@@ -41,7 +41,7 @@
             let res = await getRatingStat(id);
             if (res){
                 tmp.ratingStat = res.data;
-                await this.$store.dispatch("updateTotalRating", res.data.total_sum);
+                await this.$store.dispatch("updateTotalRating", res.data.total_cnt);
             }
             res = await getCategories(id);
             if (res){
@@ -57,7 +57,7 @@
             }
         },
         watch: {
-            update: async function (newVal) { // watch it
+            update: async function (newVal){
                 if (newVal == true){
                     let {id} = this.$route.params
                     this.bookId = id
@@ -66,11 +66,14 @@
                     let tmp;
                     if (response) {
                         tmp = response.data[0];
-                        await this.$store.dispatch("updateTotalRating", res.data.total_sum);
                     }
+
+                    console.log(this.bookInfo)
                     let res = await getRatingStat(id);
                     if (res){
                         tmp.ratingStat = res.data;
+
+                        await this.$store.dispatch("updateTotalRating", res.data.total_cnt);
                     }
                     this.bookInfo = tmp;
                 }

@@ -238,7 +238,7 @@
                 return ''
             },
             total_rating(){
-                return this.bookDetail.ratingStat.total_sum;
+                return this.bookDetail.ratingStat.total_cnt;
             },
             categories(){
                 return this.bookDetail.categories;

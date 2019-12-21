@@ -5,7 +5,7 @@
 
             <div>
                 <div style="margin-top: 15px;" class="search-form">
-                    <el-input placeholder="Please input" v-model="query.q" class="input-with-select">
+                    <el-input placeholder="Please input" v-model="query.q" @keyup.enter.native="sendSearch" class="input-with-select">
                         <el-select v-model="query.search_filter" slot="prepend" placeholder="Select">
                             <el-option label="All" value="all"></el-option>
                             <el-option label="Author" value="author_searchable"></el-option>
@@ -71,23 +71,24 @@
             RelatedShelves
         },
          async mounted() {
-            this.query = this.$attrs
-            this.sendSearch()
-            // console.log(query)
+             let {q, category, search_filter} = this.$attrs
+             this.query = {q, search_filter, category: parseInt(category)}
              let res = await getAllCategories({limit: -1})
 
              this.categoryOptions = res.data
              this.categoryOptions.unshift({category_name: 'All', category_id: 0})
+             this.sendSearch()
         },
         methods: {
             async sendSearch() {
                 let search_filter;
-                if (this.query.search_filter !== 'all')
+                if (this.query.search_filter && this.query.search_filter !== 'all')
                     search_filter = this.query.search_filter
 
                 let category;
-                if (this.query.category !== 0)
-                    category = this.query.category
+                if (this.query.category && this.query.category !== 0)
+                    category = parseInt(this.query.category)
+                console.log({...this.filter_object(this.query), search_filter, category, page: this.currentPage})
                 let res = await sendSearch({...this.filter_object(this.query), search_filter, category, page: this.currentPage})
                 this.searchItems = res.data.data
                 this.totalItems = res.data.total

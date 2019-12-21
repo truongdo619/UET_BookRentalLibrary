@@ -2,8 +2,10 @@
     <div class="list-categories">
         <h1 class="list-title">Find More Category</h1>
         <div class="list-content flex-row-center">
-            <div class="list-category-item flex-row-center" v-for="category in categories" :key="category.name"
-                 :style="{backgroundImage: 'linear-gradient(to top right, ' + category.color[0] + ', ' + category.color[1] + ')'}">
+            <div class="list-category-item flex-row-center" v-for="category in categories" :key="category.id"
+                 :style="{backgroundImage: 'linear-gradient(to top right, ' + category.color[0] + ', ' + category.color[1] + ')'}"
+                 @click="() => { gotoDetail(category.id) }"
+            >
                 <img :src="category.icon" :alt="category.name" class="category-icon">
                 <p class="category-name">{{category.name.toUpperCase()}}</p>
             </div>
@@ -67,6 +69,11 @@
                 icon: this.listIcons[index],
                 color: this.listColors[index]
             }))
+        },
+        methods: {
+            gotoDetail(id) {
+                this.$router.push(`/search/result?category=${id}`)
+            }
         }
     }
 </script>

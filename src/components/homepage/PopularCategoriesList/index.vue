@@ -28,8 +28,11 @@
                 <h1 class="col-title">Popular Categories</h1>
                 <div class="popular-list">
                     <slick ref="slick" :options="slickOptions" @afterChange="handleAfterChange">
-                        <div v-for="category in popular_categories" :key="category.name" class="category-content">
-<!--                            <div class="category-cover"><img :src="category.previewImg" :alt="category.name"></div>-->
+                        <div v-for="category in popular_categories" :key="category.name" class="category-content"
+                             :category_id="category.id"
+                        >
+
+                            <!--                            <div class="category-cover"><img :src="category.previewImg" :alt="category.name"></div>-->
 <!--                            <div class="category-card" :style="{backgroundImage: category.previewImg}">-->
 <!--                                <p>{{category.name}}</p>-->
 <!--                                <div class="category-stat">-->
@@ -47,8 +50,10 @@
                                     class="mb-2"
                             >
                                 <div class="category-popular-item-des">
-                                    <div>{{category.name}}</div>
-                                    <el-button size="small" round>{{category.num_books}} Books</el-button>
+                                    <div class="category-name">{{category.name}}</div>
+                                    <div class="category-button">
+                                        <el-button size="small" round >{{category.num_books}} Books</el-button>
+                                    </div>
                                 </div>
                             </b-card>
                         </div>
@@ -63,7 +68,7 @@
 <script>
     import Slick from 'vue-slick'
 
-    import Detective from '../../../assets/images/detective.png'
+    import Fiction from '../../../assets/images/detective.png'
     import Romantic from '../../../assets/images/romantic.jpg'
     import Horror from '../../../assets/images/horror_abc.jpg'
     import History from '../../../assets/images/history.jpg'
@@ -71,6 +76,7 @@
 
     import { library } from '@fortawesome/fontawesome-svg-core'
     import { faBook, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
+    import $ from 'jquery'
 
     library.add(faBook, faEllipsisV)
 
@@ -115,27 +121,31 @@
                 ],
                 popular_categories: [
                     {
-                        name: 'Detective',
+                        name: 'Fiction',
                         num_books: 60,
                         new_arrival: 70,
-                        previewImg: Detective
+                        id: 11,
+                        previewImg: Fiction
                     },
                     {
-                        name: 'Romantic',
+                        name: 'Romance',
                         num_books: 100,
                         new_arrival: 18,
+                        id: 14,
                         previewImg: Romantic
                     },
                     {
                         name: 'Horror',
                         num_books: 98,
                         new_arrival: 50,
+                        id: 27,
                         previewImg: Horror
                     },
                     {
                         name: 'History',
                         num_books: 89,
                         new_arrival: 32,
+                        id: 8,
                         previewImg: History
                     }
                 ],
@@ -156,6 +166,14 @@
                     prevArrow: '<button type="button" data-role="none" class="control-arrows slick-prev slick-arrow" aria-label="Previous" role="button"><div class="icon-arrow"></div></button>',
                 }
             }
+        },
+        mounted() {
+            $('.popular-list').on('click', (e) => {
+                console.log(e.target.className)
+                if (['card-img-top', 'category-name', 'category-button'].includes(e.target.className) ){
+                    this.$router.push(`/search/result?category=${e.target.getAttribute("category_id")}`)
+                }
+            })
         },
         methods : {
             handleAfterChange(event, slick, currentSlide) {
@@ -200,6 +218,9 @@
             padding-left: 10px;
         }
     .category-content{
+
+        cursor: pointer;
+
         .card{
             border-radius: 20px;
             overflow: hidden;

@@ -18,31 +18,18 @@
                     </el-option>
                 </el-select>
             </div>
-            <div class="search-form-item">
-                <p class="search-form-item-title">Years</p>
-                <el-date-picker
-                        v-model="daterange"
-                        type="monthrange"
-                        align="right"
-                        start-placeholder="From"
-                        end-placeholder="To"
-                        default-value="2019-10-01">
-                </el-date-picker>
-            </div>
             <div class="search-form-item" style="width: 450px">
                 <p class="search-form-item-title">Search</p>
-                <el-autocomplete
+                <el-input
                         style="width: 100%"
                         class="inline-input"
                         v-model="searchKey"
-                        :fetch-suggestions="querySearch"
-                        placeholder="Books, Stories, Authors and more"
-                        :trigger-on-focus="false"
-                        @select="handleSelect"
-                ></el-autocomplete>
+                        placeholder="Star Wars, Harry Potter, ..."
+                        @keyup.enter.native="sendSearch"
+                />
             </div>
-            <el-button type="danger" class="submit-btn no-focus-outline">
-                <font-awesome-icon icon="search"></font-awesome-icon>
+            <el-button type="danger" class="submit-btn no-focus-outline" @click="sendSearch">
+                <font-awesome-icon icon="search" />
             </el-button>
         </div>
     </div>
@@ -55,7 +42,7 @@
         name: 'Search',
         data: () => {
             return {
-                category: '',
+                category: 0,
                 searchKey: '',
                 categoryOptions: [],
                 daterange: []
@@ -66,29 +53,11 @@
 
             console.log(res)
             this.categoryOptions = res.data
+            this.categoryOptions.unshift({category_name: 'All', category_id: 0})
         },
         methods: {
-            querySearch(queryString, cb) {
-                let links = [
-                    { "value": "vue", "link": "https://github.com/vuejs/vue" },
-                    { "value": "element", "link": "https://github.com/ElemeFE/element" },
-                    { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-                    { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-                    { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-                    { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-                    { "value": "babel", "link": "https://github.com/babel/babel" }
-                ]
-                let createFilter = (queryString) => {
-                    return (link) => {
-                        return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-                    }
-                }
-                let results = queryString ? links.filter(createFilter(queryString)) : links;
-                // call callback function to return suggestions
-                cb(results);
-            },
-            handleSelect(item) {
-                console.log(item);
+            sendSearch() {
+                this.$router.push(`/search/result?q=${this.searchKey}&category=${this.category}`)
             }
         }
     }

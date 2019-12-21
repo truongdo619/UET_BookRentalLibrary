@@ -71,7 +71,7 @@
                 if (e.target.className === 'handle_click'){
                     this.$router.push({name: 'book_detail', params: {id: e.target.parentElement.getAttribute("book_id")}})
                 }
-            });
+            })
         },
         watch: {
             books: function () {

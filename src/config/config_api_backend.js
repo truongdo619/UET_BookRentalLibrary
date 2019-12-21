@@ -14,7 +14,8 @@ const BOOKS = {
     TOP: BACKEND_API + '/books/top',
     DETAIL: BACKEND_API + '/books/details',
     RATINGS: BACKEND_API + '/books/ratings',
-    CATEGORIES: BACKEND_API + '/books/details/categories'
+    CATEGORIES: BACKEND_API + '/books/details/categories',
+    RATINGSTAT: BACKEND_API + '/books/ratings/stat'
 }
 
 const WAREHOUSES = {

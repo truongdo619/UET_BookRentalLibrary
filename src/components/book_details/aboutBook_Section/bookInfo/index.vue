@@ -67,7 +67,7 @@
                     </el-popover>
                 </el-breadcrumb-item>
                 <el-breadcrumb-item>
-                    <el-link class="cl-deepblue">{{bookDetail !== null ?bookDetail.rating.length:0}} Ratings</el-link>
+                    <el-link class="cl-deepblue">{{bookDetail !== null ? this.total_rating :0}} Ratings</el-link>
                 </el-breadcrumb-item>
             </el-breadcrumb>
         </el-row>
@@ -205,7 +205,7 @@
                 this.$store.dispatch("updateNumBadge");
                 this.centerDialogVisible = false
             },
-            update_rating_detail(){
+            update_rating_detail(tmp){
                 let result = {
                     1 : 0,
                     2 : 0,
@@ -213,14 +213,9 @@
                     4 : 0,
                     5 : 0
                 }
-                for (let i = 0; i < this.bookDetail.rating.length; i++){
-                    result[this.bookDetail.rating[i]] ++;
-                }
                 for (let i = 1; i <= 4 ;i++){
-                    console.log(result[i])
-                    result[i] = Math.floor(result[i] / this.bookDetail.rating.length * 100) ;
+                    result[i] = Math.floor(tmp[i] / tmp.total_cnt * 100) ;
                 }
-                result[5] = 100 - result[1] - result[2] - result[3] - result[4]
                 this.rating_detail = result;
             }
         },
@@ -228,12 +223,8 @@
         },
         computed: {
             bookRating() {
-                if (this.bookDetail && this.bookDetail.rating.length > 0) {
-                    this.update_rating_detail();
-                    return Math.floor(this.bookDetail.rating.reduce((sum, current) => sum + current) / this.bookDetail.rating.length)
-                } else {
-                    return 0
-                }
+                this.update_rating_detail(this.bookDetail.ratingStat);
+                return  Math.floor(this.bookDetail.ratingStat.average_rating);
             },
             bookDescription() {
                 if (this.bookDetail) {
@@ -247,7 +238,7 @@
                 return ''
             },
             total_rating(){
-                return this.bookDetail.rating.length
+                return this.bookDetail.ratingStat.total_sum;
             },
             categories(){
                 return this.bookDetail.categories;

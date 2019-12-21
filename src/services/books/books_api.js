@@ -54,9 +54,24 @@ const getCategories = async (bookId) => {
     }
 }
 
+const getRatingStat = async (bookId) => {
+    try {
+        let res = await authReq.get(BOOKS.RATINGSTAT, {
+            params: {
+                'book_id': bookId
+            }
+        })
+        return res ? res.data : null
+    } catch (err) {
+        alert(err)
+        return null
+    }
+}
+
 export {
     getTopBooks,
     getBookDetails,
     getRatingDetails,
-    getCategories
+    getCategories,
+    getRatingStat
 }

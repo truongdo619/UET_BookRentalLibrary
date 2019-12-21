@@ -9,7 +9,7 @@
                         <span><a href="#!" @click="handleBookDetail"><b class="cl-deepblue">{{item.book_title}}</b></a></span>
                     </el-row>
                     <el-row>
-                        <span>by: <a href="#!"><b class="cl-deepblue">{{item.author}}</b></a></span>
+                        <span>by: <a href="#!" @click="() => {searchAuthor(item.author)}"><b class="cl-deepblue">{{item.author}}</b></a></span>
                     </el-row>
                     <el-row>
                         <span>Price: {{item.price}}</span>
@@ -62,6 +62,9 @@
             handleConfirmDelete(){
                 this.centerDialogVisible = false;
                 this.$emit("handleDeleteItem", this.item.book_id)
+            },
+            searchAuthor(name) {
+                this.$router.push(`/search/result?q=${name}&search_filter=author_searchable`)
             }
         }
     }

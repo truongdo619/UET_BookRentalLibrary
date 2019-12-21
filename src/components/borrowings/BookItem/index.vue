@@ -9,7 +9,7 @@
                         <span><a href="#!"><b class="cl-deepblue">{{item.book_title}}</b></a></span>
                     </el-row>
                     <el-row>
-                        <span>by: <a href="#!"><b class="cl-deepblue">{{item.author}}</b></a></span>
+                        <span>by: <a href="#!"  @click="() => {searchAuthor(item.author)}"><b class="cl-deepblue">{{item.author}}</b></a></span>
                     </el-row>
                     <el-row>
                         <span>Day Borrowed: {{item.day_borrow}}</span>
@@ -61,6 +61,9 @@
                 await postUserReturn(this.item.borrowing_id, this.address)
                 this.returnDialogVisible = false
                 this.returnSuccess()
+            },
+            searchAuthor(name) {
+                this.$router.push(`/search/result?q=${name}&search_filter=author_searchable`)
             }
         }
     }

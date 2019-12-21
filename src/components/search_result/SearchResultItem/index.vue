@@ -13,7 +13,7 @@
                                 score-template="{value} points"></el-rate></span>
                     </el-row>
                     <el-row>
-                        <span>by: <a href="#!"><b class="cl-deepblue">{{item.author_name}}</b></a></span>
+                        <span>by: <a href="#!" @click="() => {searchAuthor(item.author_name)}"><b class="cl-deepblue">{{item.author_name}}</b></a></span>
                     </el-row>
                     <el-row>
                         <span style="color: gray; font-size: 14px">published {{item.public_year}}</span>
@@ -44,6 +44,10 @@
             handleBookDetail() {
                 this.$router.push({name: 'book_detail', params: {id: this.item.id}})
             },
+            searchAuthor(name) {
+                console.log('author-click')
+                this.$router.push(`/search/result?q=${name}&search_filter=author_searchable`)
+            }
         }
     }
 

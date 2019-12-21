@@ -72,7 +72,7 @@
         },
          async mounted() {
              let {q, category, search_filter} = this.$attrs
-             this.query = {q, search_filter, category: parseInt(category)}
+             this.query = {q, search_filter, category: category? parseInt(category): 0}
              let res = await getAllCategories({limit: -1})
 
              this.categoryOptions = res.data
@@ -125,6 +125,11 @@
                     left: 0,
                     behavior: 'smooth'
                 })
+                this.sendSearch()
+            },
+            $route: function() {
+                let {q, category, search_filter} = this.$attrs
+                this.query = {q, search_filter, category: category ? parseInt(category) : 0}
                 this.sendSearch()
             }
         }

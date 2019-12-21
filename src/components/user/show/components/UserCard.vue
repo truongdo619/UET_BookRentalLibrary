@@ -118,6 +118,7 @@
 
 <script>
 import PanThumb from '../PanThumb/index'
+import {getRatingUser, getUserInfo} from "../../../../services/users/user_api";
 
 export default {
   components: { PanThumb },
@@ -135,7 +136,7 @@ export default {
               4 : 0,
               5 : 0
             },
-            rating : [2,3,3,4,4,4,5,5,5,5]
+            rating : []
     }
   },
   props: {
@@ -150,8 +151,14 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
     this.update_rating_detail();
+    let res = await getRatingUser({limit : 100});
+    this.rating = [];
+    for (let i = 0; i < res.data.length; i++){
+        this.rating.push(parseInt(res.data[i].rating_num))
+    }
+    console.log(this.rating)
   },
   methods:{
     handleClose(tag) {
@@ -192,7 +199,6 @@ export default {
       }
       result[5] = 100 - result[1] - result[2] - result[3] - result[4]
 
-      console.log(result)
       this.rating_detail = result;
     }
   },
@@ -203,12 +209,12 @@ export default {
     bookRating() {
       if (this.rating && this.rating.length > 0) {
         this.update_rating_detail();
+        console.log(Math.floor(this.rating.reduce((sum, current) => sum + current)))
         return Math.floor(this.rating.reduce((sum, current) => sum + current) / this.rating.length)
       } else {
         return 0
       }
     }
-
   }
 }
 </script>

@@ -31,7 +31,9 @@ const USER = {
     LENDING: BACKEND_API + '/user/lendings',
     LEND: BACKEND_API + '/user/lend',
     INFO: BACKEND_API + '/user/profile',
-    UPDATE_INFO: BACKEND_API + '/user/profile/update'
+    UPDATE_INFO: BACKEND_API + '/user/profile/update',
+    TRANSACTIONS:BACKEND_API + '/user/transactions',
+    GETRATING: BACKEND_API + '/user/ratings'
 }
 
 const CATEGORY = {

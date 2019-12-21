@@ -2,15 +2,15 @@
     <div>
         <el-col :span="20" :offset="2">
             <div style="display:flex; justify-content: space-between">
-                <h4>Sản phẩm đang cho mượn ({{this.items.length}} sản phẩm)</h4>
-                <el-button type="primary" class="no-focus-outline" @click="dialogVisible = true" style="margin-bottom: 5px;" :class="{add_margin : items.length !== 0}">Đăng sách</el-button>
+                <h4>Lending books ({{this.items.length}} books)</h4>
+                <el-button type="primary" class="no-focus-outline" @click="dialogVisible = true" style="margin-bottom: 5px;" :class="{add_margin : items.length !== 0}">Lend a book</el-button>
             </div>
             <el-row style="min-height: 500px; display: flex">
                 <div style="width: 100%;" v-if="items.length === 0">
                     <div class="not-found border_raidus">
                         <img :src="image">
-                        <h5>Không có sản phẩm nào được tìm thấy</h5>
-                        <el-button type="primary" class="no-focus-outline" @click="homepage">Quay lại trang chủ
+                        <h5>No results</h5>
+                        <el-button type="primary" class="no-focus-outline" @click="homepage">Back to home
                         </el-button>
                     </div>
                 </div>

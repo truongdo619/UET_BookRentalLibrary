@@ -1,12 +1,12 @@
 <template>
     <el-col :span="20" :offset="2">
-        <h4>GIỎ HÀNG ({{this.items.length}} sản phẩm)</h4>
+        <h4>CART ({{this.items.length}} books)</h4>
         <el-row style="min-height: 500px; display: flex">
             <div style="width: 100%;" v-if="items.length === 0">
                 <div class="not-found border_raidus">
                     <img :src="image">
-                    <h5>Không có sản phẩm nào được tìm thấy</h5>
-                    <el-button type="primary" @click="homepage">Quay lại trang chủ</el-button>
+                    <h5>No results</h5>
+                    <el-button type="primary" @click="homepage">Back to home</el-button>
                 </div>
             </div>
             <el-col :span="17" v-if="items.length !== 0" class="user-activity border_raidus">
@@ -17,18 +17,18 @@
             <el-col :span="5" :offset="1" v-if="items.length !== 0" class="total">
                 <el-card style="min-width: 250px" class="box-card">
                     <div class="text item">
-                        <span>Tạm tính:</span>
+                        <span>Sub total:</span>
                         <span class="float-right">${{priceSum}}</span>
                     </div>
                     <el-divider/>
                     <div class="text item" style="min-height: 30px">
-                        <span>Thành tiền:</span>
+                        <span>Total:</span>
                         <strong class="float-right">${{priceSum}}</strong>
                         <br/>
-                        <small class="float-left">(Đã bao gồm VAT nếu có)</small>
+                        <small class="float-left">(VAT included)</small>
                     </div>
                 </el-card>
-                <el-button class="summit" type="danger" @click="next">Tiến hành đặt hàng</el-button>
+                <el-button class="summit" type="danger" @click="next">Checkout cart</el-button>
             </el-col>
         </el-row>
     </el-col>

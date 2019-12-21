@@ -20,7 +20,7 @@
         </div>
         <el-divider/>
         <div class="text item" style="min-height: 30px">
-            <span>Toltal:</span>
+            <span>Total:</span>
             <strong class="float-right">${{priceSum}}</strong>
             <br/>
             <small class="float-left">(VAT included)</small>

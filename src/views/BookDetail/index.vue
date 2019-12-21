@@ -5,7 +5,7 @@
             <AboutBook :book-info="bookInfo"></AboutBook>
             <comment-section :book-info="bookInfo"></comment-section>
             <featured-praise></featured-praise>
-            <recommend-section></recommend-section>
+            <recommend-section :bookID="this.bookInfo.ISBN"></recommend-section>
             <Footer></Footer>
         </div>
     </div>
@@ -31,32 +31,55 @@
         components: {Footer, Header, RecommendSection, FeaturedPraise, CommentSection, AboutBook},
         async mounted() {
             let {id} = this.$route.params
-            this.bookId = id
-            console.log('book detail: ' + this.bookId)
-            let response = await getBookDetails(id)
-            let tmp;
-            if (response) {
-                tmp = response.data[0]
+            this.reload(id)
+        },
+        methods: {
+            async reload(id) {
+                const loading = this.$loading({
+                    lock: true,
+                    text: 'Loading',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
+                this.bookId = id
+                console.log('book detail: ' + this.bookId)
+                let response = await getBookDetails(id)
+                let tmp;
+                if (response) {
+                    tmp = response.data[0]
+                }
+                let res = await getRatingStat(id);
+                if (res){
+                    tmp.ratingStat = res.data;
+                    await this.$store.dispatch("updateTotalRating", res.data.total_cnt);
+                }
+                res = await getCategories(id);
+                if (res){
+                    tmp.categories = res.data;
+                }
+                this.bookInfo = tmp;
+                console.log(this.bookInfo)
+
+                setTimeout(() => {
+                    loading.close();
+                }, 1000);
             }
-            let res = await getRatingStat(id);
-            if (res){
-                tmp.ratingStat = res.data;
-                await this.$store.dispatch("updateTotalRating", res.data.total_cnt);
-            }
-            res = await getCategories(id);
-            if (res){
-                tmp.categories = res.data;
-            }
-            this.bookInfo = tmp;
-            console.log(this.bookInfo)
         },
         computed: {
             update(){
                 return this.$store.getters.updateCommentBox;
 
+            },
+            path(){
+                return this.$router.currentRoute.path;
             }
         },
         watch: {
+            $route: function (to, from) {
+
+                let {id} = this.$route.params
+                this.reload(id)
+            },
             update: async function (newVal){
                 if (newVal == true){
                     let {id} = this.$route.params

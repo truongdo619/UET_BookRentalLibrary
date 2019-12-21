@@ -216,6 +216,7 @@
                 for (let i = 1; i <= 4 ;i++){
                     result[i] = Math.floor(tmp[i] / tmp.total_cnt * 100) ;
                 }
+                result[5] = 100 - result[1] - result[2] - result[3] - result[4];
                 this.rating_detail = result;
             }
         },

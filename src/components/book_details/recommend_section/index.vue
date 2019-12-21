@@ -2,11 +2,15 @@
     <el-row>
         <el-col :span="20" :offset="2">
             <h1 style="text-align: center; margin-top: 30px">Recommended For You</h1>
-            <div class="header-reocommed-books-slider">
+            <div class="header-recommend-books-slider">
                 <slick ref="slick" :options="slickOptions"
                        @afterChange="handleAfterChange" >
-                    <div v-for="(image, i) in images" :key="i" class="book-content">
-                        <div class="book-cover"><img :src="image.image" :alt="image.name"></div>
+                    <div style="cursor: pointer" @click="handleClickImage(image.id)" @reInit="handleReInit" v-for="(image, i) in images" :key="i" class="book-content">
+                            <div class="book-cover">
+                                <el-tooltip :content="image.title" placement="top">
+                                    <img :src="image.image_url" >
+                                </el-tooltip>
+                            </div>
                     </div>
                 </slick>
             </div>
@@ -26,36 +30,19 @@
     import headerSliderImage5 from '@/assets/images/recommend5.png'
     import headerSliderImage6 from '@/assets/images/recommend6.png'
     import headerSliderImage7 from '@/assets/images/recommend7.png'
+    import {getAllCategories} from "../../../services/category/categories_api";
+    import {getRecommendedBook} from "../../../services/recommend/recommend_api";
+    import {getTopBooks} from "../../../services/books/books_api";
 
     library.add(faChevronRight, faChevronLeft)
     export default {
         name: "RecommendSection",
         components: { Slick },
+        props: ['bookID'],
         data(){
             return{
                 active_slide : 0,
                 images: [
-                    {
-                        'image': headerSliderImage1
-                    },
-                    {
-                        'image': headerSliderImage2
-                    },
-                    {
-                        'image': headerSliderImage3
-                    },
-                    {
-                        'image': headerSliderImage4
-                    },
-                    {
-                        'image': headerSliderImage5
-                    },
-                    {
-                        'image': headerSliderImage6
-                    },
-                    {
-                        'image': headerSliderImage7
-                    },
                     {
                         'image': headerSliderImage1
                     },
@@ -81,7 +68,7 @@
                 slickOptions: {
                     //options can be used from the plugin documentation
                     slidesToShow: 7,
-                    centerMode: true,
+                    centerMode: false,
                     centerPadding: '0px',
                     infinite: true,
                     accessibility: true,
@@ -99,6 +86,28 @@
         methods: {
             handleAfterChange(event, slick, currentSlide) {
                 this.active_slide = currentSlide % 3;
+            },
+            handleReInit(){
+                this.images = this.recommended;
+            },
+            handleClickImage(id){
+                this.$router.push({name: 'book_detail', params: {id: id}})
+            }
+        },
+        async created(){
+
+        },
+        watch: {
+            bookID: function(old){
+                setTimeout(async () => {
+                    let data = await getRecommendedBook({id : this.bookID, top :7});
+                    console.log(data)
+                    this.images = data.book_ids.map(image => ({
+                        title: image.title,
+                        image_url: image.image_url,
+                        id: image.isbn
+                    }))
+                }, 500)
             }
         }
     }
@@ -111,7 +120,7 @@
     .full-width {
         width: 100%;
     }
-    .header-reocommed-books-slider {
+    .header-recommend-books-slider {
 
         .slick-arrow {
             padding: 25px;

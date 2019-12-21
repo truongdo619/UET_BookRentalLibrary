@@ -8,7 +8,7 @@ import './plugins/bootstrap.js'
 import './plugins/font-awesome.js'
 import './plugins/theme.js'
 import VueSwal from 'vue-swal'
-import './styles.scss'
+// import './styles.scss'
 
 Vue.use(VueSwal)
 Vue.config.productionTip = false

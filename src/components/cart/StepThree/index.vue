@@ -33,8 +33,13 @@
                 <div class="payment-area" :class="{'disable-title': isPayWithBT}">
                     <h4>3. Payment methods</h4>
                     <div class="payment-element">
-                        <el-radio v-model="paymentMethod" :label="1">Cash on delivery </el-radio>
+                        <el-radio v-model="paymentMethod" :label="1">Cash on delivery</el-radio>
+                        <br/>
                         <el-radio v-model="paymentMethod" :label="2">PayPal</el-radio>
+                        <br/>
+                        <el-radio v-model="paymentMethod" :label="3">Debit or Credit Card</el-radio>
+                        <br/>
+                        <InteractivePaycard v-if="paymentMethod === 3"/>
                     </div>
                 </div>
             </el-col>
@@ -42,8 +47,9 @@
                 <UserInfoCard :user-info="paymentInfo" :edit-func="() => {gotoStepFunc(2)}"/>
                 <br/>
                 <PaymentInfoCard :edit-func="() => {gotoStepFunc(1)}"/>
-
-                <el-button class="summit" type="danger" @click="next">Submit</el-button>
+                <br/>
+                <el-button class="summit" type="danger" v-if="paymentMethod !== 2" @click="submitPayment">Submit</el-button>
+                <div v-else ref="paypal"></div>
             </el-col>
         </el-row>
     </el-col>
@@ -51,17 +57,19 @@
 </template>
 
 <script>
-    import {getCartItems} from '../../../services/cart/cart_services'
-    import {getUserInfo} from '../../../services/users/user_api'
+    import {getCartItems, removeAllItems} from '../../../services/cart/cart_services'
+    import {borrowBooks, getUserInfo} from '../../../services/users/user_api'
     import UserInfoCard from '../UserInfoCard/index'
     import PaymentInfoCard from '../PaymentInfoCard/index'
+    import InteractivePaycard from '../IneractivePayCard/index'
 
     export default {
         name: "StepThree",
         props: ['paymentInfo', 'gotoStepFunc'],
         components: {
             UserInfoCard,
-            PaymentInfoCard
+            PaymentInfoCard,
+            InteractivePaycard
         },
         data: () => {
             return {
@@ -69,29 +77,122 @@
                 cartItems: [],
                 userInfo: {},
                 isPayWithBT: false,
-                paymentMethod: 1
+                paymentMethod: 1,
+                loaded: false
             }
         },
         async mounted() {
             this.reloadItems()
             let res = await getUserInfo()
             this.userInfo = res.data
+            // this.loadPayPal()
         },
         methods: {
             reloadItems() {
                 let items = getCartItems()
                 this.cartItems = items
             },
+            submitPayment() {
+                let type = this.isPayWithBT ? 'cash' : 'paypal'
+                this.borrowBooks(type)
+                this.cleanCart()
+            },
+            cleanCart() {
+                this.$notify({
+                    title: 'Thank you!',
+                    message: 'Order success',
+                    type: 'success'
+                });
+                removeAllItems()
+                this.$router.push({name: 'home'})
+            },
+            async borrowBooks(type) {
+                let res = await borrowBooks({
+                    warehouse_id_list: this.paymentInfo.books,
+                    address: this.paymentInfo.address,
+                    phone: this.paymentInfo.phone,
+                    payment_type: type
+                })
+                console.log(res)
+            },
+            loadPayPal() {
+                const script = document.createElement("script");
+                script.src =
+                    "https://www.paypal.com/sdk/js?client-id=AXf5iDBdkPjcRgd3vbsMGOLZDROiZuUe6qUJgkvYMou4Y8kWzUUDLAgsmhzsMVR1eJpWZiQLbm4u6ghu";
+                script.addEventListener("load", this.setLoaded);
+                document.body.appendChild(script);
+            },
+            setLoaded: function () {
+                this.loaded = true;
+                console.log(window.paypal.Buttons)
+                window.paypal
+                    .Buttons({
+                        createOrder: (data, actions) => {
+                            return actions.order.create({
+                                purchase_units: [
+                                    {
+                                        description: 'Book\'s Time shop',
+                                        amount: {
+                                            currency_code: 'USD',
+                                            value: this.priceSum,
+                                            breakdown: {
+                                                item_total: {
+                                                    currency_code: 'USD',
+                                                    value: this.priceSum
+                                                }
+                                            },
+                                        },
+                                        shipping: {
+                                            name: {full_name: this.paymentInfo.full_name},
+                                            address: {
+                                                address_line_1: 'No 4',
+                                                address_line_2: 'Chelsea',
+                                                admin_area_2: 'Birmingham',
+                                                admin_area_1: 'AL',
+                                                postal_code: '35201',
+                                                country_code: 'US'
+                                            }
+                                        },
+                                        items: this.paypalItems
+                                    }
+                                ]
+                            })
+                        },
+                        onApprove: async (data, actions) => {
+                            const order = await actions.order.capture()
+                            console.log(data)
+                            console.log(order)
+                            this.borrowBooks('paypal')
+                            this.cleanCart()
+                        },
+                        onError: err => {
+                            console.log(err)
+                        }
+                    })
+                    .render(this.$refs.paypal)
+            }
         },
         computed: {
             priceSum() {
                 return this.cartItems.reduce((prev, cur) => prev + cur.item.price, 0)
+            },
+            paypalItems() {
+                let paypalItems = this.cartItems.map(item => ({
+                    name: item.item.book_info.book_title,
+                    unit_amount: {currency_code: 'USD', value: item.item.price},
+                    quantity: '1'
+                }))
+                console.log('paypal items: ', paypalItems)
+                return paypalItems
             }
         },
         watch: {
             paymentMethod: function (val) {
                 if (val !== -1) {
                     this.isPayWithBT = false
+                    if (val === 2) {
+                        this.loadPayPal()
+                    }
                 }
             },
             isPayWithBT: function (val) {
@@ -120,7 +221,7 @@
         padding: 15px;
     }
 
-    .disable-title h4{
+    .disable-title h4 {
         color: #8b919d;
     }
 
@@ -153,6 +254,6 @@
 
     .summit {
         width: 100%;
-        margin-top: 15px;
+        /*margin-top: 15px;*/
     }
 </style>

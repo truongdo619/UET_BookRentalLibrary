@@ -188,7 +188,8 @@
                 }
                 this.centerDialogVisible = true
                 let res = await getByBook(this.bookDetail.ISBN)
-                this.listWarehouses = res.data
+                console.log(res.data)
+                this.listWarehouses = res.data.filter(book => book.status === 1)
             },
             addToCart(row) {
 

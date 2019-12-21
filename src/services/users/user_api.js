@@ -2,6 +2,7 @@ import axios from 'axios'
 import {AUTH, USER} from '../../config/config_api_backend'
 import {updateToken} from '../auth_services'
 import authReq from '../../plugins/http'
+import ca from 'element-ui/src/locale/lang/ca'
 
 const userLogin = async ({username, password}, errorFunc, successFunc) => {
     try {
@@ -93,10 +94,28 @@ const updateUserInfo = async (data) => {
         return "Wrong password"
     }
 }
+
+const borrowBooks = async (data) => {
+    let response = null
+    try {
+        response = await authReq.post(USER.BORROW, JSON.stringify(data),{
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        return response ? response.data : null
+    } catch (e) {
+        console.log(response)
+        return 'Error'
+
+    }
+}
+
 export {
     userLogin,
     register,
     rateBook,
     getUserInfo,
-    updateUserInfo
+    updateUserInfo,
+    borrowBooks
 }

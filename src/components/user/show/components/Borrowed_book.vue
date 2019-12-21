@@ -3,32 +3,25 @@
         <div class="post" v-for="item in items">
             <Borrowed_book_item :item="item"></Borrowed_book_item>
         </div>
+        <h3 v-if="this.items.length == 0" style="text-align: center; color: gray">No Items</h3>
     </div>
 </template>
 
 <script>
 
     import Borrowed_book_item from "./Borrowed_book_item";
+    import {getBorrowingBooks} from "../../../../services/users/user_api";
 
     export default {
         components: {Borrowed_book_item},
         data() {
             return {
-                items : [{
-                    "name" : "Life of Pi",
-                    "image" : "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1320562005l/4214._SY75_.jpg",
-                    "rate" : 4,
-                    "date" : "Feb 24, 2019",
-                    "author" : "Yann Martel"
-                },
-                    {
-                        "name" : "Mình phải sống một tuổi trẻ rực rỡ",
-                        "image" : "https://s.gr-assets.com/assets/nophoto/book/50x75-a91bf249278a81aabab721ef782c4a74.png",
-                        "rate" : 5,
-                        "date" : "Apr 1, 2017",
-                        "author" : "LiNi Thông Minh"
-                    }]
+                items : []
             }
+        },
+        async mounted() {
+            let res = await getBorrowingBooks({mode : "income"});
+            this.items = res.data.details;
         }
     }
 </script>

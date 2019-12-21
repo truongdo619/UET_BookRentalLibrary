@@ -111,11 +111,26 @@ const borrowBooks = async (data) => {
     }
 }
 
+const getBorrowingBooks = async (data) => {
+    let response = null
+    try {
+        console.log(data)
+        response = await authReq.get(USER.TRANSACTIONS, {params : data})
+        console.log(response)
+        return response ? response.data : null
+    } catch (e) {
+        console.log(response)
+        return 'Error'
+
+    }
+}
+
 export {
     userLogin,
     register,
     rateBook,
     getUserInfo,
     updateUserInfo,
-    borrowBooks
+    borrowBooks,
+    getBorrowingBooks
 }

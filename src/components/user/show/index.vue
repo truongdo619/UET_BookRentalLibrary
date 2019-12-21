@@ -11,17 +11,17 @@
                     <el-col :span="18" :xs="24">
                         <el-card>
                             <el-tabs v-model="activeTab">
+                                <el-tab-pane label="Borrowing Books" name="Borrowing Books">
+                                    <Book_rental></Book_rental>
+                                </el-tab-pane>
+                                 <el-tab-pane label="Borrowed Books" name="Borrowed Books">
+                                    <Borrowed_book></Borrowed_book>
+                                </el-tab-pane>
                                 <el-tab-pane label="Activity" name="activity">
                                     <timeline />
                                 </el-tab-pane>
-                                <el-tab-pane label="Sách đang mượn" name="Book rental">
-                                    <Book_rental></Book_rental>
-                                </el-tab-pane>
-                                 <el-tab-pane label="Sách đã mượn" name="Borrowed book">
-                                    <Borrowed_book></Borrowed_book>
-                                </el-tab-pane>
-                                <el-tab-pane label="Payout" name="Payout" style="margin-top: 0px">
-                                    <Payout></Payout>
+                                <el-tab-pane label="Withdrawal" name="Withdrawal" style="margin-top: 0px">
+                                    <Payout :cash="this.user.cash"></Payout>
                                 </el-tab-pane>
                             </el-tabs>
                         </el-card>
@@ -50,7 +50,8 @@
                     name: 'admin',
                     email: 'admin@test.com',
                     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-                    city: 'Ha Noi'
+                    city: 'Ha Noi',
+                    cash : 1000
                 },
                 activeTab: 'activity'
             }
@@ -61,13 +62,13 @@
         methods: {
             async getUser() {
                 let res = await getUserInfo();
-                console.log(res.data.first_name)
                 if (res){
                     this.user = {
                         name: res.data.first_name,
                         email: res.data.email,
                         avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-                        city: 'Ha Noi'
+                        city: 'Ha Noi',
+                        cash : res.data.cash
                     }
                 }
             }

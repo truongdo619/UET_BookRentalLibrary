@@ -53,7 +53,7 @@
                     city: 'Ha Noi',
                     cash : 1000
                 },
-                activeTab: 'activity'
+                activeTab: 'Borrowing Books'
             }
         },
         created() {

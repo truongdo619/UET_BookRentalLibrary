@@ -13,7 +13,7 @@
                         <span>by: <a href="#!"><b class="cl-deepblue">{{item.author}}</b></a></span>
                     </el-row>
                     <el-row>
-                        <span><a href="#!"><b>{{item.price}}</b></a></span>
+                        <span><a href="#!"><b>${{item.price}}</b></a></span>
                     </el-row>
                     <el-row>
                         <span>Rental date: {{item.day_borrow}}</span>

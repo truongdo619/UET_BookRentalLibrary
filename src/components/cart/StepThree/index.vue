@@ -178,7 +178,7 @@
                                 });
                             } else
                                 this.cleanCart()
-                        },
+                         },
                         onError: err => {
                             console.log(err)
                         }

@@ -18,6 +18,9 @@
                     <el-row>
                         <span style="color: gray; font-size: 14px">published {{item.public_year}}</span>
                     </el-row>
+                    <el-row>
+                        <span style="color: gray; font-size: 14px">available: {{item.lenders}}</span>
+                    </el-row>
 <!--                    <el-row>-->
 <!--                        <span>Rental date: {{item.date}}</span>-->
 <!--                    </el-row>-->

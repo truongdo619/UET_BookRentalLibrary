@@ -7,13 +7,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="180px" align="center" label="Ngày cập nhập">
+      <el-table-column width="180px" align="center" label="Ngày yêu cầu">
         <template slot-scope="scope">
           <span>{{ scope.row.dateIssued }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="Tác giả">
+      <el-table-column width="120px" align="center" label="Người yêu cầu">
         <template slot-scope="scope">
           <span>{{ scope.row.author }}</span>
         </template>
@@ -35,7 +35,7 @@
 
       <el-table-column min-width="300px" label="Tên văn bản">
         <template slot-scope="{row}">
-          <router-link :to="'preview/'+row.index" class="link-type">
+          <router-link :to="'confirm'" class="link-type">
             <span>{{ row.title }}</span>
           </router-link>
         </template>
@@ -97,8 +97,8 @@
         dateIssued: "2019-11-07 05:49:09.766000",
         importance: 1,
         index: 2,
-        status: "đã xuất bản",
-        title: "Văn bản số 3"  , 
+        status: "đã xóa",
+        title: "The Hunter Game"  ,
       }]
 
       this.listLoading = false

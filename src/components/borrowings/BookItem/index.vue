@@ -21,11 +21,11 @@
                         <span>Owner Email: {{item.owner}}</span>
                     </el-row>
                     <el-row>
-                        <span>Borrow ID: {{item.borrowing_id}}</span>
+                        <span>Borrow ID: {{item.borrow_id}}</span>
                     </el-row>
                     <el-row>
                         <el-button type="text" @click="returnDialogVisible = true">Return this book</el-button>
-                        <el-dialog title="Xác nhận trả sách" :visible.sync="returnDialogVisible">
+                        <el-dialog title="Confirm" :visible.sync="returnDialogVisible">
                             <el-form>
                                 <el-form-item label="Address">
                                     <el-input type="textarea" v-model="address"></el-input>
@@ -58,7 +58,7 @@
         },
         methods: {
             async handleReturnBook() {
-                await postUserReturn(this.item.borrowing_id, this.address)
+                await postUserReturn(this.item.borrow_id, this.address)
                 this.returnDialogVisible = false
                 this.returnSuccess()
             },

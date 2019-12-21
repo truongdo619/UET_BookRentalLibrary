@@ -106,7 +106,6 @@
             relatedShelves() {
                 if (this.shelvesInfo) {
                     return this.shelvesInfo.map(item => {
-                        let name = this.categoryOptions.find(cate => cate.category_id === item.id)
                         let ret = {
                             id: item.id,
                             nums: item.count,

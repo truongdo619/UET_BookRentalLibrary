@@ -87,6 +87,7 @@
             <el-button type="primary" :style="{marginRight : '20px', marginBottom: '20px'}" @click="handleGetBook">Get
                 this book
             </el-button>
+            <el-button type="primary" class="no-focus-outline" @click="dialogVisible = true" style="margin-bottom: 5px;" >Lend this book</el-button>
             <div class="tag_list">
                 <el-tag
                         :key="index"
@@ -123,6 +124,29 @@
             </span>
 
         </el-dialog>
+        <el-dialog
+                title="Book info"
+                :visible.sync="dialogVisible"
+                width="60%"
+                label-width="120px"
+        >
+
+            <el-form ref="form" :model="form" label-width="120px">
+                <el-form-item label="ISBN">
+                    <el-input v-model="bookDetail.ISBN" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="Price">
+                    <el-input-number v-model="form.price" :controls-position="'right'" :min="0" :step="10"></el-input-number>
+                </el-form-item>
+                <el-form-item label="Address">
+                    <el-input type="textarea" v-model="form.address"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button @click="dialogVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="handleConfirm">Confirm</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </el-row>
 </template>
 
@@ -130,6 +154,7 @@
     import {getByBook} from '../../../../services/warehouses/warehouses_api'
     import {addNewItems} from '../../../../services/cart/cart_services'
     import {isAuthenticated} from '../../../../services/auth_services'
+    import {postUserlending} from '../../../../services/lendings/lendings_api'
 
     export default {
         name: 'bookInfo',
@@ -160,6 +185,7 @@
                 more_less: 'See more',
                 short_long: 'short',
                 centerDialogVisible: false,
+                dialogVisible: false,
                 listWarehouses: [],
                 rating_detail :{
                     1 : 0,
@@ -167,6 +193,11 @@
                     3 : 0,
                     4 : 0,
                     5 : 0
+                },
+                form: {
+                    book_id: '',
+                    price: 0,
+                    address: '',
                 }
             }
         },
@@ -218,7 +249,11 @@
                 }
                 result[5] = 100 - result[1] - result[2] - result[3] - result[4];
                 this.rating_detail = result;
-            }
+            },
+            async handleConfirm() {
+                await postUserlending({...this.form, book_id: this.bookDetail.ISBN})
+                this.dialogVisible = false
+            },
         },
         mounted() {
         },

@@ -178,7 +178,7 @@
                 if (e.target.className === 'card-img-top')
                     category_id = e.target.parentElement.parentElement.getAttribute('category_id')
                 else if (['category-name', 'category-button'].includes(e.target.className) ){
-                    category_id = e.target.parentElement.parentElement.parentElement.parentElement
+                    category_id = e.target.parentElement.parentElement.parentElement.parentElement.getAttribute('category_id')
                 }
                 this.$router.push(`/search/result?category=${category_id}`)
             })

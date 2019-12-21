@@ -6,7 +6,7 @@
                 <div class="not-found border_raidus">
                     <img :src="image">
                     <h5>No result</h5>
-                    <el-button type="primary">Back to home</el-button>
+                    <el-button type="primary" @click="() => {$router.push({name: 'home'})}">Back to home</el-button>
                 </div>
             </div>
             <el-col :span = "17" v-if="items.length !== 0" class="user-activity border_raidus">

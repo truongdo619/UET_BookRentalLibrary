@@ -7,10 +7,7 @@
                 <b-media-body class="ml-3">
                     <el-row>
                         <span><a href="#!"><b class="cl-deepblue">{{item.book_title}}</b></a></span>
-                        <span class="float-right"> rated it <el-rate
-                                v-model="item.rate"
-                                disabled
-                                score-template="{value} points"></el-rate></span>
+
                     </el-row>
                     <el-row>
                         <span>by: <a href="#!"><b class="cl-deepblue">{{item.author}}</b></a></span>

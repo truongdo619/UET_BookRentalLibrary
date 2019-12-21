@@ -125,6 +125,19 @@ const getBorrowingBooks = async (data) => {
     }
 }
 
+const getRatingUser = async (data) => {
+    let response = null
+    try {
+        response = await authReq.get(USER.GETRATING, {params : data})
+        console.log(response)
+        return response ? response.data : null
+    } catch (e) {
+        console.log(response)
+        return 'Error'
+
+    }
+}
+
 export {
     userLogin,
     register,
@@ -132,5 +145,6 @@ export {
     getUserInfo,
     updateUserInfo,
     borrowBooks,
-    getBorrowingBooks
+    getBorrowingBooks,
+    getRatingUser
 }

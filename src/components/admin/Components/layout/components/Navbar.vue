@@ -5,7 +5,6 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <el-button type="primary" icon="el-icon-plus" class="composeBtn" @click="toEditor">Soạn thảo</el-button>
         <el-input
                 placeholder="Nhập nội dung tìm kiếm"
                 prefix-icon="el-icon-search"
@@ -19,10 +18,10 @@
           <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/setting-567-722008.png" class="user-avatar">
         </div>
         <el-dropdown-menu slot="dropdown">
-          <a target="_blank" href="">
+          <a target="_blank" href="https://github.com/dhphong/book_rental_library">
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
-          <a target="_blank" href="">
+          <a target="_blank" href="https://github.com/dhphong/book_rental_library">
             <el-dropdown-item>Docs</el-dropdown-item>
           </a>
           <el-dropdown-item divided>
@@ -61,9 +60,6 @@ export default {
       this.$store.dispatch('logout').then(() =>{
         this.$router.push({path : '/login'})
       })
-    },
-    toEditor(){
-      window.location.href = this.$store.getters.BASE_URL + "/home/mydoc/edit/" + (this.$store.getters.sizeOfMyDoc+1) + '?new=1'
     }
   }
 }
@@ -134,7 +130,6 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        margin-top: 5px;
         position: relative;
 
         .user-avatar {

@@ -4,7 +4,7 @@
             <el-col :span="9" class="audio-list">
                 <h1 class="col-title">Best Seller</h1>
                 <div class="col-content">
-                    <div class="col-item flex-row-center" v-for="audio in audioBooksData" :key="audio.name">
+                    <div class="col-item flex-row-center" v-for="audio in audioBooksData" :key="audio.name" @click="() => {gotoBookDetails(audio.id)}">
                         <div class="play-btn" @click="audio.isPlaying = !audio.isPlaying" :style="{border: audio.isPlaying ? 'none' : '1px solid black'}">
                             <font-awesome-icon icon="book"></font-awesome-icon>
                         </div>
@@ -89,32 +89,37 @@
             return {
                 audioBooksData: [
                     {
-                        name: 'THE BEST OF ME',
-                        artist: 'Nicholas Sparks',
+                        name: 'The Finding (Law of the Lycans, #5)',
+                        artist: 'Spencer Quinn',
+                        id: '2940011191213',
                         time: '1:00',
                         cost: 25
                     },
                     {
-                        name: 'Pride and Prejudice',
-                        artist: 'Jnae Austen',
+                        name: 'Washington\'s Crossing',
+                        artist: 'Carolyn Keene',
+                        id: '0000195170342',
                         time: '1:00',
                         cost: 25
                     },
                     {
-                        name: 'Emotional Design',
-                        artist: 'Donald Norman',
+                        name: 'Swing Time',
+                        artist: 'Zadie Smith',
+                        id: '9780241144152',
                         time: '1:00',
                         cost: 25
                     },
                     {
-                        name: 'Rome and Juliet',
-                        artist: 'William Shakespeare',
+                        name: 'Four Past Midnightrated',
+                        artist: 'Stephen King',
+                        id: '9780450542886',
                         time: '1:00',
                         cost: 25
                     },
                     {
-                        name: 'THE BEST',
-                        artist: 'Nicholas Sparks',
+                        name: 'Hot Ticket (Sinners on Tour, #3)',
+                        artist: 'Olivia Cunning',
+                        id: '9781402245855',
                         time: '1:00',
                         cost: 25
                     }
@@ -169,15 +174,21 @@
         },
         mounted() {
             $('.popular-list').on('click', (e) => {
-                console.log(e.target.className)
-                if (['card-img-top', 'category-name', 'category-button'].includes(e.target.className) ){
-                    this.$router.push(`/search/result?category=${e.target.getAttribute("category_id")}`)
+                let category_id = 0
+                if (e.target.className === 'card-img-top')
+                    category_id = e.target.parentElement.parentElement.getAttribute('category_id')
+                else if (['category-name', 'category-button'].includes(e.target.className) ){
+                    category_id = e.target.parentElement.parentElement.parentElement.parentElement
                 }
+                this.$router.push(`/search/result?category=${category_id}`)
             })
         },
         methods : {
             handleAfterChange(event, slick, currentSlide) {
                 console.log(currentSlide);
+            },
+            gotoBookDetails(id) {
+                this.$router.push({name: 'book_detail', params: {id: id}})
             }
         }
     }

@@ -5,7 +5,7 @@
                 <h1 class="col-title">TOP 6 BOOKS</h1>
                 <el-row>
                     <el-col :span="12"  v-for="item of books" :key="item.id" class="book-content">
-                        <b-card>
+                        <b-card @click="() => {gotoBookDetails(item.id)}">
                             <b-media no-body>
                                 <img :src="item.book_cover" class="image" />
 
@@ -37,7 +37,7 @@
             <el-col :span="11" :offset="1" class="top-authors">
                 <h1 class="col-title">TOP 3 ACTOR</h1>
                 <el-row v-for="item of authors" :key="item.id">
-                    <b-card>
+                    <b-card @click="() => {gotoAuthor(item.name)}">
                         <b-media no-body>
                             <img :src="item.img_cover" class="image" />
 
@@ -92,6 +92,14 @@
                 ]
             }
         },
+        methods: {
+            gotoBookDetails(id) {
+                this.$router.push({name: 'book_detail', params: {id: id}})
+            },
+            gotoAuthor(name) {
+                this.$router.push(`/search/result?q=${name}&search_filter=author_searchable`)
+            }
+        },
         async mounted() {
             let data = await getTopBooks()
             console.log(data)
@@ -112,7 +120,7 @@
 
     .top-books {
             width: 100%;
-        height: 100%;
+            height: 100%;
             padding-top: 70px;
         .col-title {
             font-size: 40px;

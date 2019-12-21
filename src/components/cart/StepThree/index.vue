@@ -92,10 +92,17 @@
                 let items = getCartItems()
                 this.cartItems = items
             },
-            submitPayment() {
+            async submitPayment() {
                 let type = this.isPayWithBT ? 'cash' : 'paypal'
-                this.borrowBooks(type)
-                this.cleanCart()
+                let res = await this.borrowBooks(type)
+                if (res === 'Error') {
+                    this.$notify({
+                        title: 'Oops!',
+                        message: 'Error',
+                        type: 'error'
+                    });
+                } else
+                    this.cleanCart()
             },
             cleanCart() {
                 this.$notify({
@@ -113,7 +120,7 @@
                     phone: this.paymentInfo.phone,
                     payment_type: type
                 })
-                console.log(res)
+                return res
             },
             loadPayPal() {
                 const script = document.createElement("script");
@@ -162,8 +169,15 @@
                             const order = await actions.order.capture()
                             console.log(data)
                             console.log(order)
-                            this.borrowBooks('paypal')
-                            this.cleanCart()
+                            let res = await this.borrowBooks('paypal')
+                            if (res === 'Error') {
+                                this.$notify({
+                                    title: 'Oops!',
+                                    message: 'Error',
+                                    type: 'error'
+                                });
+                            } else
+                                this.cleanCart()
                         },
                         onError: err => {
                             console.log(err)

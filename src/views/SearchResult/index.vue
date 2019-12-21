@@ -91,7 +91,7 @@
                 let res = await sendSearch({...this.filter_object(this.query), search_filter, category, page: this.currentPage})
                 this.searchItems = res.data.data
                 this.totalItems = res.data.total
-                this.shelvesInfo = res.aggs[0]
+                this.shelvesInfo = res.aggs ? res.aggs[0] : []
             },
             filter_object(rawQueries) {
                 return Object.keys(rawQueries)
@@ -107,11 +107,13 @@
                 if (this.shelvesInfo) {
                     return this.shelvesInfo.map(item => {
                         let name = this.categoryOptions.find(cate => cate.category_id === item.id)
-                        return {
+                        let ret = {
                             id: item.id,
                             nums: item.count,
                             name: this.categoryOptions.find(cate => cate.category_id === item.id).category_name
                         }
+
+                        return ret
                     })
                 } else return []
             }

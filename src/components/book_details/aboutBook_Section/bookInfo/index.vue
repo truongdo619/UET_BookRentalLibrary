@@ -155,7 +155,6 @@
         },
         data: () => {
             return {
-                categories: ['Paperback', 'Hardcover', 'Ebook', 'Audio'],
                 type  : ['', 'success', 'info', 'danger', 'warning'],
                 disabled_color: '#C6D1DE',
                 more_less: 'See more',
@@ -249,6 +248,9 @@
             },
             total_rating(){
                 return this.bookDetail.rating.length
+            },
+            categories(){
+                return this.bookDetail.categories;
             }
         }
     }

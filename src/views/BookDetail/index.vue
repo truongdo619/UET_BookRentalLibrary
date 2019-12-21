@@ -19,7 +19,7 @@
     import RecommendSection from "../../components/book_details/recommend_section/index";
     import Header from "../../components/layout/Header/index";
     import Footer from "../../components/layout/Footer/index";
-    import {getBookDetails, getRatingDetails} from '../../services/books/books_api'
+    import {getBookDetails, getCategories, getRatingDetails} from '../../services/books/books_api'
     export default {
         name: "BookDetail",
         data: () => {
@@ -34,10 +34,16 @@
             this.bookId = id
             console.log('book detail: ' + this.bookId)
             let response = await getBookDetails(id)
+            let tmp;
             if (response) {
-                this.bookInfo = response.data[0]
-                await this.$store.dispatch("updateTotalRating", this.bookInfo.rating.length);
+                tmp = response.data[0]
+                await this.$store.dispatch("updateTotalRating", tmp.rating.length);
             }
+            let res = await getCategories(id);
+            if (res){
+                tmp.categories = res.data;
+            }
+            this.bookInfo = tmp;
         },
         computed: {
             update(){

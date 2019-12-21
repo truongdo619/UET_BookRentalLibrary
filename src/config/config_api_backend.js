@@ -13,7 +13,8 @@ const AUTH = {
 const BOOKS = {
     TOP: BACKEND_API + '/books/top',
     DETAIL: BACKEND_API + '/books/details',
-    RATINGS: BACKEND_API + '/books/ratings'
+    RATINGS: BACKEND_API + '/books/ratings',
+    CATEGORIES: BACKEND_API + '/books/details/categories'
 }
 
 const WAREHOUSES = {

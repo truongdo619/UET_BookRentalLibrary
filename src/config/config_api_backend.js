@@ -43,6 +43,10 @@ const SEARCH = {
     SEARCH: SEARCH_API + '/search'
 }
 
+const RECOMMEND = {
+    SEARCH: SEARCH_API + '/recommend'
+}
+
 export {
     BOOKS,
     AUTH,
@@ -50,7 +54,8 @@ export {
     SEARCH,
     USER,
     WAREHOUSES,
-    BACKEND_API
+    BACKEND_API,
+    RECOMMEND
 }
 
 

@@ -1,4 +1,5 @@
 const BACKEND_API = process.env.VUE_APP_ROOT_API
+const SEARCH_API = process.env.VUE_APP_SEARCH_SERVER
 
 
 const AUTH = {
@@ -38,10 +39,15 @@ const CATEGORY = {
     ALL: BACKEND_API + '/categories'
 }
 
+const SEARCH = {
+    SEARCH: SEARCH_API + '/search'
+}
+
 export {
     BOOKS,
     AUTH,
     CATEGORY,
+    SEARCH,
     USER,
     WAREHOUSES,
     BACKEND_API

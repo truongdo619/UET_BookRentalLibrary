@@ -12,7 +12,9 @@
                             v-for="item in categoryOptions"
                             :key="item.category_id"
                             :label="item.category_name"
-                            :value="item.category_id">
+                            :value="item.category_id"
+                            size="small"
+                    >
                     </el-option>
                 </el-select>
             </div>
@@ -119,6 +121,7 @@
    .submit-btn span {
        font-size: 25px;
    }
+
 </style>
 
 <style scoped>

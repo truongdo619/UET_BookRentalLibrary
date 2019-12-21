@@ -5,26 +5,41 @@
 
             <div>
                 <div style="margin-top: 15px;" class="search-form">
-                    <el-input placeholder="Please input" v-model="searchKey" class="input-with-select">
-                        <el-select v-model="searchType" slot="prepend" placeholder="Select">
-                            <el-option label="All" value="1"></el-option>
-                            <el-option label="Author" value="2"></el-option>
-                            <el-option label="Title" value="3"></el-option>
-                            <el-option label="Genre" value="4"></el-option>
+                    <el-input placeholder="Please input" v-model="query.q" class="input-with-select">
+                        <el-select v-model="query.search_filter" slot="prepend" placeholder="Select">
+                            <el-option label="All" value="all"></el-option>
+                            <el-option label="Author" value="author_searchable"></el-option>
+                            <el-option label="Title" value="title"></el-option>
                         </el-select>
                         <el-button slot="append" icon="el-icon-search" @click="sendSearch"/>
                     </el-input>
+                    <span style="color: gray">Category: </span>
+                    <el-select placeholder="Choose" v-model="query.category">
+                        <el-option
+                                v-for="item in categoryOptions"
+                                :key="item.category_id"
+                                :label="item.category_name"
+                                :value="item.category_id">
+                        </el-option>
+                    </el-select>
                 </div>
             </div>
-            <p style="margin-top: 20px; color: gray; font-size:14px">Page 1 of about 8 results</p>
+            <p style="margin-top: 20px; color: gray; font-size:14px">Page {{currentPage}} of about {{totalItems}} results</p>
             <div style="margin-top: 10px;">
-                <div v-for="item in searchItems" :key="item.item.warehouse_id">
-                    <SearchResultItem :item="item.item"/>
+                <div v-for="item in searchItems" :key="item.id">
+                    <SearchResultItem :item="item"/>
                 </div>
             </div>
+            <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :page-size="20"
+                    :current-page.sync="currentPage"
+                    :total="totalItems">
+            </el-pagination>
         </el-col>
         <el-col :span="8" :offset="1">
-            <RelatedShelves :shelves-info="shelvesInfo"/>
+            <RelatedShelves :shelves-info="relatedShelves"/>
         </el-col>
     </div>
 </template>
@@ -32,61 +47,83 @@
 <script>
     import SearchResultItem from "../../components/search_result/SearchResultItem/index"
     import RelatedShelves from "../../components/search_result/RelatedShelves/index"
+    import {sendSearch} from '../../services/search/search_api'
+    import {getAllCategories} from '../../services/category/categories_api'
 
     export default {
         name: "SearchResult",
         data: () => {
             return {
-                searchKey: '',
-                searchType: '1',
-                searchItems: [{
-                    "item": {
-                        "book_info": {
-                            "book_id": "0000195170342",
-                            "book_title": "Washington's Crossing",
-                            "book_cover": "https://images.gr-assets.com/books/1353284022m/1206073.jpg",
-                            "book_rating": 4,
-                            "author": {"author_name": "Carolyn Keene", "author_id": 2588}
-                        }, "warehouse_id": 1, "publish_year": 2010, "borrowed_times": 0, "email": "test@gmail.com"
-                    }, "num": 1
-                }],
-                shelvesInfo: [
-                    {name: 'picture-books', nums: '1,573,078'},
-                    {name: 'childrens', nums: '1,554,679'},
-                    {name: 'humor', nums:  '1,451,853'},
-                    {name: 'storytime', nums: '158,031'}
-
-                ]
+                query: {
+                    q: '',
+                    search_filter: 'all',
+                    category: 0
+                },
+                currentPage: 1,
+                totalItems: 0,
+                categoryOptions: [],
+                searchItems: [],
+                shelvesInfo: []
             }
         },
         components: {
             SearchResultItem,
             RelatedShelves
         },
+         async mounted() {
+            this.query = this.$attrs
+            this.sendSearch()
+            // console.log(query)
+             let res = await getAllCategories({limit: -1})
+
+             this.categoryOptions = res.data
+             this.categoryOptions.unshift({category_name: 'All', category_id: 0})
+        },
         methods: {
-            sendSearch() {
-                console.log('send search info: ', this.searchKey, this.searchType)
-                this.searchItems = [{
-                    "item": {
-                        "book_info": {
-                            "book_id": "0000195170342",
-                            "book_title": "Washington's Crossing",
-                            "book_cover": "https://images.gr-assets.com/books/1353284022m/1206073.jpg",
-                            "book_rating": 4,
-                            "author": {"author_name": "Carolyn Keene", "author_id": 2588}
-                        }, "warehouse_id": 1, "publish_year": 2003, "borrowed_times": 0, "email": "test@gmail.com"
-                    }, "num": 1
-                }, {
-                    "item": {
-                        "book_info": {
-                            "book_id": "0025986247522",
-                            "book_title": "One Tuesday Morning (9/11, #1)",
-                            "book_cover": "https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png",
-                            "book_rating": 0,
-                            "author": {"author_name": "Jay McInerney", "author_id": 826}
-                        }, "warehouse_id": 3, "publish_year": 2019, "borrowed_times": 0, "email": "phong@gmail.com"
-                    }, "num": 1
-                }]
+            async sendSearch() {
+                let search_filter;
+                if (this.query.search_filter !== 'all')
+                    search_filter = this.query.search_filter
+
+                let category;
+                if (this.query.category !== 0)
+                    category = this.query.category
+                let res = await sendSearch({...this.filter_object(this.query), search_filter, category, page: this.currentPage})
+                this.searchItems = res.data.data
+                this.totalItems = res.data.total
+                this.shelvesInfo = res.aggs[0]
+            },
+            filter_object(rawQueries) {
+                return Object.keys(rawQueries)
+                    .filter(key => rawQueries[key])
+                    .reduce((obj, key) => {
+                        obj[key] = rawQueries[key];
+                        return obj;
+                    }, {});
+            }
+        },
+        computed: {
+            relatedShelves() {
+                if (this.shelvesInfo) {
+                    return this.shelvesInfo.map(item => {
+                        let name = this.categoryOptions.find(cate => cate.category_id === item.id)
+                        return {
+                            id: item.id,
+                            nums: item.count,
+                            name: this.categoryOptions.find(cate => cate.category_id === item.id).category_name
+                        }
+                    })
+                } else return []
+            }
+        },
+        watch: {
+            currentPage: function () {
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                })
+                this.sendSearch()
             }
         }
     }
@@ -99,6 +136,10 @@
 
     .search-form .input-with-select .el-input-group__prepend {
         background-color: #fff;
+    }
+
+    .search-form .el-input.el-input--suffix .el-input__inner {
+        border: none;
     }
 </style>
 

@@ -98,11 +98,13 @@ const router = new Router({
         {
             path: '/search',
             component: MainLayout,
+            redirect: '/search/result',
             children: [
                 {
-                    path: '/',
+                    path: 'result',
                     name: 'search',
                     component: () => import('./views/SearchResult/index'),
+                    props: (route) => ({ q: route.query.q, search_filter: route.query.search_filter, category: route.query.category})
                 }
             ]
         },

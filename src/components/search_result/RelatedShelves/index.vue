@@ -12,6 +12,9 @@
         name: "RelatedShelves",
         props: ['shelvesInfo'],
         data: () => {
+            return {
+
+            }
         },
         methods: {
 

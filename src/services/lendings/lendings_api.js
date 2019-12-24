@@ -24,7 +24,7 @@ const postUserRemovelending = async (data) => {
         })
         return response ? response.data.message : null
     } catch (e) {
-        console.log(e.response)
+        // console.log(e.response)
         if (e.response.status === 400)
             return e.response.data.message
         else return 'Error'

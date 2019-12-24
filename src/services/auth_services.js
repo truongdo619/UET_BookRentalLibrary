@@ -60,7 +60,7 @@ const logoutAccess = async () => {
 
         return res.data
     } catch (e) {
-        alert(e)
+        // alert(e)
         return null
     }
 
@@ -75,7 +75,7 @@ const logoutRefresh = async () => {
 
         return res.data
     } catch (e) {
-        alert(e)
+        // alert(e)
         return null
     }
 
@@ -98,7 +98,7 @@ const test_api = async () => {
         let res = await authReq.get(AUTH.TEST_API)
         return res ? res.data : null
     } catch (e) {
-        alert(e)
+        // alert(e)
         return null
     }
 }

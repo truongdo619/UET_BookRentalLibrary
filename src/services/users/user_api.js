@@ -10,18 +10,24 @@ const userLogin = async ({username, password}, errorFunc, successFunc) => {
             email: username,
             password
         })
+        console.log(response)
+        if (response.status === 200 ) {
+            if (response.data.message.toLowerCase() === 'success') {
+                updateToken(username, response.data.access_token, response.data.refresh_token)
+                successFunc()
 
-        if (response.status === 200 && response.data.message.toLowerCase() === 'success') {
+            } else
+                errorFunc(response.data.message)
 
-            updateToken(username, response.data.access_token, response.data.refresh_token)
 
-            successFunc()
-
-        } else {
-            errorFunc(response.data.message)
         }
     } catch (e) {
-        alert(e)
+        // alert(e)
+        if (e.response.status === 401) {
+            errorFunc(e.response.data.message)
+        } else {
+            errorFunc('Error!')
+        }
     }
 }
 

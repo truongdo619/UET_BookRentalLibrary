@@ -191,14 +191,17 @@ export default {
         4 : 0,
         5 : 0
       }
-      for (let i = 0; i < this.rating.length; i++){
-        result[this.rating[i]] ++;
-      }
-      for (let i = 1; i <= 4 ;i++){
-        result[i] = Math.floor(result[i] / this.rating.length * 100) ;
-      }
-      result[5] = 100 - result[1] - result[2] - result[3] - result[4]
+      if (this.rating.length != 0){
 
+        for (let i = 0; i < this.rating.length; i++){
+          result[this.rating[i]] ++;
+        }
+        for (let i = 1; i <= 4 ;i++){
+          result[i] = Math.floor(result[i] / this.rating.length * 100) ;
+        }
+        result[5] = 100 - result[1] - result[2] - result[3] - result[4]
+
+      }
       this.rating_detail = result;
     }
   },

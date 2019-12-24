@@ -59,7 +59,7 @@
 <script>
     import cart from '../../../assets/images/shop.gif'
     import BookItem from '../BookItem/index'
-    import {getUserLendings, postUserlending} from '../../../services/lendings/lendings_api'
+    import {getUserLendings, postUserlending, postUserRemovelending} from '../../../services/lendings/lendings_api'
 
     export default {
         name: 'cartComponent',
@@ -93,8 +93,23 @@
                 this.loadItems()
                 this.dialogVisible = false
             },
-            handleDeleteItem(id){
-                // Do somethhing
+            async handleDeleteItem(id){
+                let res = await postUserRemovelending({warehouse_id: id})
+                console.log(res)
+                if (res !== 'success')
+                    this.$notify({
+                        title: 'Error',
+                        message: res,
+                        type: 'error'
+                    })
+                else {
+                    this.$notify({
+                        title: 'Success',
+                        message: 'Book removed successfully',
+                        type: 'success'
+                    })
+                    this.loadItems()
+                }
             }
         }
     }

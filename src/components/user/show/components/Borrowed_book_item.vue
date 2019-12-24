@@ -2,7 +2,7 @@
     <div class="comment">
         <b-card>
             <b-media no-body>
-                <img :src="item.book_cover" class="image" />
+                <img :src="item.book_cover" class="image" style="max-width: 111px;max-height: 148px;" />
 
                 <b-media-body class="ml-3">
                     <el-row>

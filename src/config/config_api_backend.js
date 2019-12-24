@@ -33,7 +33,8 @@ const USER = {
     INFO: BACKEND_API + '/user/profile',
     UPDATE_INFO: BACKEND_API + '/user/profile/update',
     TRANSACTIONS:BACKEND_API + '/user/transactions',
-    GETRATING: BACKEND_API + '/user/ratings'
+    GETRATING: BACKEND_API + '/user/ratings',
+    REMOVE_LENDING: BACKEND_API + '/user/remove'
 }
 
 const CATEGORY = {

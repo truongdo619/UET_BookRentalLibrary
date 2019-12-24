@@ -14,6 +14,22 @@ const getUserLendings = async (params) => {
     }
 }
 
+const postUserRemovelending = async (data) => {
+    let response =null
+    try {
+        response = await authReq.post(USER.REMOVE_LENDING, JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        return response ? response.data.message : null
+    } catch (e) {
+        console.log(e.response)
+        if (e.response.status === 400)
+            return e.response.data.message
+        else return 'Error'
+    }
+}
 const postUserlending = async (data) => {
     try {
         let response = await authReq.post(USER.LEND, JSON.stringify(data), {
@@ -30,5 +46,6 @@ const postUserlending = async (data) => {
 
 export {
     getUserLendings,
-    postUserlending
+    postUserlending,
+    postUserRemovelending
 }

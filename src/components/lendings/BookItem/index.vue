@@ -61,7 +61,7 @@
             },
             handleConfirmDelete(){
                 this.centerDialogVisible = false;
-                this.$emit("handleDeleteItem", this.item.book_id)
+                this.$emit("handleDeleteItem", this.item.warehouse_id)
             },
             searchAuthor(name) {
                 this.$router.push(`/search/result?q=${name}&search_filter=author_searchable`)

@@ -11,10 +11,10 @@
                     <el-col :span="18" :xs="24">
                         <el-card>
                             <el-tabs v-model="activeTab">
-                                <el-tab-pane label="Borrowing Books" name="Borrowing Books">
+                                <el-tab-pane label="Outcome Books" name="Borrowing Books">
                                     <Book_rental></Book_rental>
                                 </el-tab-pane>
-                                 <el-tab-pane label="Borrowed Books" name="Borrowed Books">
+                                 <el-tab-pane label="Income Books" name="Borrowed Books">
                                     <Borrowed_book></Borrowed_book>
                                 </el-tab-pane>
                                 <el-tab-pane label="Activity" name="activity">

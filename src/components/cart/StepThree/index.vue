@@ -100,7 +100,7 @@
                         title: 'Oops!',
                         message: 'Error',
                         type: 'error'
-                    });
+                    })
                 } else
                     this.cleanCart()
             },
